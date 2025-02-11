@@ -1,0 +1,21 @@
+// Variables & configuration files first
+@import 'variables';
+
+// Base styles
+@import 'base';
+
+// Layout and structure
+@import 'layout';
+
+// Components
+@import 'forms';
+@import 'weather';
+
+// Theme and visual styles
+@import 'backgrounds';
+
+// Utilities and helpers
+@import 'animations';
+
+// Media queries always last
+@import 'media-queries';

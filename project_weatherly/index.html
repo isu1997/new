@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="data:,">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="scss/main.css">
+    <title>Weatherly APP</title>
+</head>
+
+<body>
+    <!-- Application Header Section -->
+<h1 class="app-title">Weatherly</h1>
+<p class="app-tagline">Your weather, simplified.</p>
+
+    <!-- Application Main Section -->
+    <div class="container">
+        <!-- Search Control Section -->
+        <div class="form-control">
+            <label for="">Search:</label>
+            <input type="text" id="inputCity"/>
+            <button>SEND</button>
+        </div>
+
+        <!-- Weather Information Section -->
+        <div class="weatherInfo">
+            <!-- Primary Weather Data -->
+            <h1 id="city"></h1>
+            <p id="temp"></p>
+            <img id="weatherIcon" />
+            <p id="description"></p>
+
+            <!-- Error Handling Display -->
+            <p id="errorMessage"></p>
+            
+            <!-- Detailed Weather Metrics Grid -->
+            <div class="weather-details">
+                <!-- Humidity Information -->
+                <div class="detail">
+                    <span class="label">Humidity</span>
+                    <span id="humidity" class="value">--</span>
+                </div>
+
+                <!-- Wind Information -->
+                <div class="detail">
+                    <span class="label">Wind Speed</span>
+                    <span id="wind" class="value">--</span>
+                </div>
+
+                <!-- Solar Data - Sunrise -->
+                <div class="detail">
+                    <span class="label">Sunrise</span>
+                    <span id="sunrise" class="value">--</span>
+                </div>
+
+                <!-- Solar Data - Sunset -->
+                <div class="detail">
+                    <span class="label">Sunset</span>
+                    <span id="sunset" class="value">--</span>
+                </div>
+            </div>
+
+            <!-- Extended Forecast Section -->
+            <div class="forecast">
+                <h3>5-Day Forecast</h3>
+                <!-- Dynamic Forecast Container - Populated via JavaScript -->
+                <div class="forecast-container" id="forecast-container">
+                    <!-- Content dynamically injected by script.js using API data -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
