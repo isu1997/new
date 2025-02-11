@@ -1,0 +1,139 @@
+.sideBarWrapper {
+    position: fixed;
+    right: 50%;
+    transform: translateX(50%);
+    margin-top: 7vh;
+    height: 93vh;
+    width: 1460px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-top: 1px solid var(--black3);
+    padding-bottom: 5px;
+}
+
+.sideBar {
+    width: 20%;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg) var(--bg);
+}
+
+.sideBar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sideBar::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+.sideBar::-webkit-scrollbar-track:hover {
+    background: var(--black1);
+}
+
+.sideBar:hover::-webkit-scrollbar-thumb {
+    background: var(--scroll);
+    border-radius: 5px;
+}
+
+.sideBar:hover {
+    scrollbar-color: var(--black1) var(--bg);
+}
+
+.sideBar__left {
+    padding-top: 20px;
+
+    &:hover {
+        .mainTitle {
+            a {
+                visibility: visible;
+            }
+        }
+    }
+}
+
+.sideBar__right {
+    padding-top: 20px;
+}
+
+.mainTitle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    h3 {
+        color: #b0b3b8;
+        font-weight: 500;
+        font-size: 17px;
+    }
+
+    i {
+        color: var(--grey1);
+        font-size: 14px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--black3);
+        }
+    }
+
+    a {
+        visibility: hidden;
+        text-decoration: none;
+        color: var(--blue);
+        font-size: 15px;
+        letter-spacing: 1px;
+        padding: 10px;
+        border-radius: 5px;
+
+        &:hover {
+            background: var(--black2);
+        }
+    }
+}
+
+
+
+
+
+
+@media (max-width: 1500px) {
+    .sideBarWrapper {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1100px) {
+    .sideBarWrapper {
+        width: 30%;
+        right: 0;
+        transform: translateX(0);
+    }
+
+    .sideBar__left {
+        display: none;
+    }
+
+    .sideBar__right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    .sideBarWrapper {
+        display: none;
+    }
+}

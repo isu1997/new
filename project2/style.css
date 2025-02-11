@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.img-container {
+    background-image: url('./images/bgImg.png');
+    background-size: cover;
+    height: 60vh;
+    width: 100vw;
+}
+
+form {
+    background: #1A1A1AD4 0% 0% no-repeat padding-box;
+    opacity: 1;
+    width: 25vw;
+    height: 65vh;
+    position: relative;
+    left: 55rem;
+    top: -20rem;
+}
+
+h1 {
+    font: normal normal 900 1.6rem Heebo;
+    color: #FFFFFF;
+    opacity: 1;
+    text-align: center;
+    padding-top: 3rem;
+}
+
+p {
+    font: normal normal normal 1rem Heebo;
+    color: #F9F9F9;
+    opacity: 1;
+    text-align: center;
+    padding: 1.2rem;
+}
+
+.form-control {
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-right: 2rem;
+}
+
+label {
+    font: normal normal bold 0.8rem Heebo;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+input[type="text"],
+input[type="email"] {
+    border: 1px solid #D31C75;
+    width: 90%;
+    padding: 0.5rem;
+}
+
+input[type="submit"] {
+    background: #D31C75 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border: 0;
+    font: normal normal bold 1rem Heebo;
+    letter-spacing: 0.33px;
+    color: #FFFFFF;
+    opacity: 1;
+    width: 40%;
+    margin-top: 1rem;
+    padding: 0.3rem;
+}
+
+/* media queries */
+@media (min-width: 320px) and (max-width: 480px) {
+    .img-container {
+        background-image: url(./images/bgMobile.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    form {
+        background: #1A1A1AD4 0% 0% no-repeat padding-box;
+        opacity: 1;
+        width: 86vw;
+        height: 75vh;
+        left: 0;
+        margin: auto;
+    }
+
+    h1 {
+        font: normal normal 900 1.8rem Heebo;
+        color: #FFFFFF;
+        opacity: 1;
+        text-align: center;
+        margin-inline: auto;
+        max-width: 70%;
+        padding-top: 3rem;
+    }
+
+    p {
+        font: normal normal normal 1rem Heebo;
+        color: #F9F9F9;
+        opacity: 1;
+        text-align: center;
+        padding: 1.2rem;
+    }
+
+    input[type="submit"] {
+        margin-top: -10px
+    }
+
+    .form-control {
+        padding-top: 2.2rem;
+    }
+}

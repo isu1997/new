@@ -1,0 +1,248 @@
+/*fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.icon .fa-whatsapp {
+    position: relative;
+    left: 0.7rem;
+    top: 0.3rem;
+}
+
+.icon {
+    background-color: #FDBD03;
+    opacity: 1;
+    height: 60px;
+    width: 60px;
+    border-radius: 80px;
+    margin-top: 2rem;
+    margin: 2rem;
+}
+
+.color {
+    background: #FDBD03;
+    height: 1.3vh;
+    width: 17vw;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.color2 {
+    background: #FDBD03;
+    height: 1.2vh;
+    width: 50vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.img-container {
+    width: 40vw;
+
+}
+
+img {
+    width: 55%;
+    margin-left: 8rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 70vh;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    direction: rtl;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.content>h1 {
+    font: normal normal 900 2.5rem Heebo;
+    color: #FDBD03;
+    opacity: 1;
+}
+
+.content>p {
+    font: normal normal normal 0.9rem Heebo;
+    letter-spacing: 0px;
+    color: #020253;
+    opacity: 1;
+}
+
+label {
+    font: normal normal bold 0.9rem Heebo;
+    color: #2C2C2C;
+    opacity: 1;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    background: #E5EEFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border: 0;
+    border-bottom: 3px solid #FDBD03;
+    opacity: 1;
+    width: 20rem;
+    height: 1.8rem;
+}
+
+textarea {
+    resize: none;
+    width: 41rem;
+    height: 5rem;
+}
+
+input[type="submit"] {
+    font: normal normal bold 0.8rem Heebo;
+    letter-spacing: 0.33px;
+    color: #000000;
+    opacity: 1;
+    background: #FDBD03 0% 0% no-repeat padding-box;
+    opacity: 1;
+    width: 6rem;
+    margin-top: 1rem;
+    padding: 0.3rem;
+    border: 0;
+}
+
+.smaller-form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    width: 50vw;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 2rem;
+    gap: 1.5rem;
+    margin-left: 20px;
+}
+
+.icon2,
+.icon3,
+.icon4,
+.icon5 {
+    background-color: #FDBD03;
+    opacity: 1;
+    border-radius: 80px;
+    height: 42px;
+    width: 42px;
+    position: relative;
+    left: 1.2rem;
+    bottom: 0.2rem;
+}
+
+.icon-container .icon2,
+.icon-container .icon3,
+.icon-container .icon4,
+.icon-container .icon5 {
+    font-size: 25px;
+    padding-inline: 10px;
+    padding-top: 6px;
+}
+
+
+/*media queries*/
+@media (min-width: 370px) and (max-width:657px) {
+    .container {
+        flex-direction: column-reverse;
+    }
+
+    .content>h1,
+    .content>p {
+        text-align: center;
+    }
+
+    .smaller-form {
+        flex-direction: column;
+    }
+
+    .color {
+        width: 80vw;
+    }
+
+    .color2 {
+        width: 100%;
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        width: 66vw;
+    }
+
+    .img-container {
+        margin-right: 11rem;
+        margin-top: 8rem;
+    }
+
+    .icon {
+        display: none;
+    }
+
+    .icon-container {
+        top: 9.5rem;
+        left: 1.7rem;
+        margin-top: 12rem;
+        height: 12vh;
+    }
+
+    textarea {
+        width: 313px;
+    }
+
+    input[type="submit"] {
+        width: 19.5rem;
+    }
+
+    .icon2,
+    .icon3,
+    .icon4,
+    .icon5 {
+        border-radius: 80px;
+        height: 35px;
+        width: 35px;
+        position: relative;
+        left: 1.7rem;
+        bottom: 0.2rem;
+    }
+
+    .icon-container .icon2,
+    .icon-container .icon3,
+    .icon-container .icon4,
+    .icon-container .icon5 {
+        font-size: 22px;
+        padding-inline: 8px;
+        padding-top: 6px;
+    }
+}

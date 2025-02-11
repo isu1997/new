@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.img-container {
+    width: 100vw;
+    margin-top: -85px;
+    position: relative;
+
+}
+
+img {
+    z-index: -1;
+    position: absolute;
+    height: 70vh;
+}
+
+#fullImg {
+    width: 100%;
+    height: 80vh;
+    display: block;
+}
+
+#mobileImg {
+    display: none;
+}
+
+.title {
+    position: absolute;
+    bottom: 25.5rem;
+    text-align: center;
+    left: 29rem;
+}
+
+.title>h1 {
+    font: normal normal bold 4rem Assistant;
+    color: #D3E10E;
+    opacity: 1;
+    height: 7rem;
+}
+
+.title>p {
+    text-align: center;
+    font: normal normal normal 1rem Assistant;
+    color: #F9F9F9;
+    opacity: 1;
+    height: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    direction: rtl;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 2rem;
+    position: relative;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40rem;
+}
+
+label {
+    font: normal normal bold 12px/21px Assistant;
+    color: #011560;
+    opacity: 1;
+}
+
+input[type="text"],
+input[type="email"] {
+    background: #E5EEFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border: 0;
+    border-bottom: 3px solid #D3E10E;
+    width: 18rem;
+    height: 35px;
+}
+
+input[type="submit"] {
+    text-align: center;
+    font: normal normal bold 1rem Assistant;
+    letter-spacing: 0.33px;
+    color: #011560;
+    opacity: 1;
+    border: 0;
+    background: #D3E10E 0% 0% no-repeat padding-box;
+    width: 8rem;
+    height: 35px;
+    margin-top: 1.2rem;
+}
+
+/*media queries*/
+@media (min-width: 370px) and (max-width: 657px) {
+
+    .img-container {
+        height: 40%;
+        margin-bottom: 12vh;
+    }
+
+    img {
+        width: 100%;
+        height: 19rem;
+        top: 5rem;
+        z-index: unset;
+        position: relative;
+    }
+
+    #fullImg {
+        display: none;
+    }
+
+    #mobileImg {
+        display: block;
+
+
+    }
+
+    h1 {
+        display: none;
+
+    }
+
+    p {
+        display: none;
+    }
+
+
+    form {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 40%;
+    }
+
+    .form-control {
+        margin-top: 0;
+    }
+
+    input[type="submit"] {
+        width: 18rem;
+        margin-top: 1.2rem;
+    }
+
+}

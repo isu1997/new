@@ -1,0 +1,78 @@
+#scrollspyTop p span {
+    color: #ff9900;
+    font-weight: bold;
+}
+
+#right-hero img {
+    margin-top: -14.399vh;
+}
+
+#aboutMe {
+    height: 11vh;
+}
+
+.changecontent {
+    height: 10vh;
+}
+
+.changecontent::after {
+    content: ' ';
+    color: #ff9900;
+    font-weight: bold;
+    font-size: 40px;
+    animation: changetext 20s infinite linear;
+}
+
+
+@keyframes changetext {
+
+    0% {
+        content: "Fullstack Developer";
+    }
+
+    20% {
+        content: "SASS Web Designer";
+    }
+
+    40% {
+        content: "YouTuber";
+    }
+
+    100% {
+        content: "Bootstrap Web Designer";
+    }
+
+
+}
+
+@media screen and (max-width: 800px) {
+    #aboutMe {
+        font-size: 35px;
+        height: 7vh;
+    }
+
+    .changecontent {
+        margin-left: 16px;
+        height: 10vh;
+    }
+
+    .changecontent::after {
+        font-size: 30px;
+    }
+
+    #aboutMe2 {
+        margin-top: -3vh;
+    }
+
+    #right-hero img {
+        height: 50vh;
+        margin-top: 36.032vh;
+        margin-left: 6vw;
+    }
+
+    #left-hero {
+        margin-top: -12vh !important;
+        position: absolute;
+
+    }
+}

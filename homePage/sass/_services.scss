@@ -1,0 +1,66 @@
+#scrollspyServices {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#scrollspyServices h3 {
+    width: 130px;
+    padding-top: 60px;
+    color: white;
+    border-bottom: 2px solid #ff9900;
+    text-align: left;
+}
+
+#scrollspyServices .card {
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+#scrollspyServices .card:hover {
+    background-color: #ff9900;
+}
+
+#scrollspyServices p {
+    color: white;
+    text-align: left;
+}
+
+#scrollspyServices .card i {
+    font-size: 50px;
+    padding-top: 20px;
+}
+
+#scrollspyServices .card h2 {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+#card-link {
+    width: 150px;
+}
+
+@media screen and (max-width: 800px) {
+    #scrollspyServices {
+        height: 130vh;
+        width: 84.9%;
+    }
+
+    #scrollspyServices h3,
+    p {
+        margin-left: 1rem;
+    }
+
+    .linkServices {
+        margin: 0 auto;
+    }
+
+    #card-link {
+        width: 300px !important;
+    }
+
+    #undo {
+        width: 80vw !important;
+    }
+}

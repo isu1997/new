@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background: #0EE1E1 0% 0% no-repeat padding-box;
+    height: 65vh;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+    margin-top: 5rem;
+    margin-left: 8em;
+}
+
+.title>h2 {
+    font: normal normal 900 2.8rem/6rem Heebo;
+    color: #000000;
+    opacity: 1;
+}
+
+.title>p {
+    font: normal normal normal 1.2rem Heebo;
+    color: #000000;
+    opacity: 1;
+}
+
+#open-box {
+    width: 18vw;
+    margin-left: 10rem;
+    margin-top: 3rem;
+}
+
+.icon {
+    background: #FFFFFF;
+    box-shadow: 0px 3px 6px #00000029;
+    opacity: 1;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: relative;
+    top: 2rem;
+    left: 5rem;
+    padding-top: 0.3rem;
+    padding-left: 0.6rem;
+}
+
+section.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+}
+
+.card {
+    width: 90%;
+    height: 35vh;
+    margin: 1.5rem 8rem 5rem 9rem;
+    background: #F8F8F8 0% 0% no-repeat padding-box;
+}
+
+
+.one,
+.two,
+.three,
+.four {
+    text-align: center;
+}
+
+.card h2 {
+    font: normal normal 900 1.6rem Heebo;
+    color: #0EE1E1;
+    opacity: 1;
+}
+
+.card p {
+    font: normal normal normal 0.8rem Heebo;
+    color: #000000;
+    opacity: 1;
+}
+
+.one>.icon1,
+.two>.icon2,
+.three>.icon3,
+.four>.icon4 {
+    padding-top: 45px;
+}
+
+.one h2,
+.two h2,
+.three h2,
+.four h2 {
+    padding: 12px;
+}
+
+.second-container {
+    display: flex;
+    flex-direction: row;
+}
+
+form {
+    background: #F0FFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    width: 45vw;
+    height: 80vh;
+    direction: rtl;
+    padding: 50px;
+    padding-inline: 120px;
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+form>* {
+    transform: scale(0.85);
+    /*this solution is only for when we have to
+    similar to the !important .. and i used scale to
+    make everything inside the form smaller*/
+}
+
+form h2 {
+    font: normal normal 900 2.2rem Heebo;
+    color: #090909;
+    opacity: 1;
+}
+
+form p {
+    font: normal normal normal 1rem Heebo;
+    color: #000000;
+    opacity: 1;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font: normal normal bold 0.8rem Heebo;
+    color: #2C2C2C;
+    opacity: 1;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    border: 0;
+    background: #E5EEFF;
+    border-bottom: 4px solid #0EE1E1;
+    opacity: 1;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 426px;
+    height: 48px;
+}
+
+textarea {
+    resize: none;
+    height: 145px;
+    width: 426px;
+}
+
+input[type="button"] {
+    border: 0;
+    background: #0EE1E1 0% 0% no-repeat padding-box;
+    opacity: 1;
+    width: 427px;
+    height: 48px;
+    font: normal normal bold 1.5rem Heebo;
+    letter-spacing: 0.3px;
+    color: #000000;
+    opacity: 1;
+}
+
+#map {
+    width: 55vw;
+    height: 80vh;
+}
+
+.icons {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.2rem;
+}
+
+#facebook,
+#instagram,
+#linkedin,
+#phone {
+    background: #0EE1E1;
+    box-shadow: 0px 3px 6px #00000029;
+    opacity: 1;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding-top: 0.8rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+#facebook {
+    padding-left: 1.3rem;
+}
+
+footer {
+    background: #0EE1E1;
+    opacity: 1;
+    height: 2vh;
+}
+
+@media (min-width: 370px) and (max-width: 657px) {
+    .first-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .second-container {
+        flex-direction: column;
+    }
+
+    #map {
+        width: inherit;
+    }
+
+
+    section.card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wrapper {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+    }
+
+    #open-box {
+        width: 5rem;
+        margin-left: inherit;
+        margin-inline: 2rem;
+        height: 5rem;
+    }
+
+    .icon {
+        display: none;
+    }
+
+    .title {
+        margin-top: inherit;
+        margin-left: inherit;
+        padding-inline: 1rem;
+    }
+
+    form {
+        width: inherit;
+        align-items: flex-end;
+        padding-inline: 0px;
+        height: max-content;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .form-header {
+        align-self: flex-start;
+        width: 100%;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+        width: 100vw;
+    }
+
+    textarea {
+        width: 100vw;
+    }
+
+    input[type="button"] {
+        width: 100vw;
+        height: inherit;
+        padding: 0.5rem;
+    }
+
+    #map {
+        width: 100%;
+        height: 50vh;
+    }
+
+    .icons #facebook,
+    #instagram,
+    #linkedin,
+    #phone {
+        font-size: 12px;
+    }
+
+    #facebook,
+    #instagram,
+    #linkedin,
+    #phone {
+        background: #0EE1E1;
+        box-shadow: 0px 3px 6px #00000029;
+        opacity: 1;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        padding-top: 0.6rem;
+        padding-left: 0.6rem;
+        margin-bottom: 1.4rem;
+    }
+
+    .title>h2 {
+        font-size: 1.8rem;
+    }
+
+
+    .title>p {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .second-container {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    form {
+        width: 100vw;
+        margin: auto;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .form-header {
+        width: 100%;
+    }
+
+    .card {
+        margin: 0;
+        margin-top: 1rem;
+    }
+
+    .one {
+        margin-top: 1rem;
+    }
+
+    .four {
+        margin-bottom: 1rem;
+    }
+}

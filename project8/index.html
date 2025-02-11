@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook</title>
+    <!-- logo -->
+    <link rel="shortcut icon" type="image" href="./images/Facebook_Logo_Primary.png">
+    <!-- style links -->
+    <link rel="stylesheet" href="./sass/main.css" />
+    <!-- fonts links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- fonts links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+    <!--  ***** Header ***** -->
+    <header class="header">
+        <!-- Headr Logo / Search -->
+        <div class="header__logoSearch">
+            <div class="header__logoSearch--logo">
+                <i class="fa-brands fa-facebook"></i>
+            </div>
+            <div class="header__logoSearch--search">
+                <div class="svg">
+                    <img src="./svg/search.svg" alt="" />
+                </div>
+                <input type="text" placeholder="Search Facebook" />
+            </div>
+        </div>
+
+        <!-- Headr Main Menu -->
+        <div class="header__mainMenu">
+            <div class="svg active">
+                <img src="./svg/home.svg" alt="" />
+            </div>
+            <div class="svg">
+                <img src="./svg/tv.svg" alt="" />
+            </div>
+            <div class="svg">
+                <img src="./svg/store.svg" alt="" />
+            </div>
+            <div class="svg">
+                <img src="./svg/users.svg" alt="" />
+            </div>
+            <div class="svg">
+                <img src="./svg/map.svg" alt="" />
+            </div>
+        </div>
+
+        <!-- Headr profile / tools -->
+        <div class="header__profileTools">
+            <div class="header__profileTools--profile">
+                <div class="header__profileTools--profile--img" style="background-image: url(./images/profilePic.jpg)">
+                </div>
+                <div class="header__profileTools--profile--username">User</div>
+            </div>
+
+            <div class="header__profileTools--tools">
+                <div class="svg">
+                    <img src="./svg/plus.svg" alt="" />
+                </div>
+                <div class="svg">
+                    <img src="./svg/blackberry-messenger.svg" alt="" />
+                </div>
+                <div class="svg">
+                    <img src="./svg/bell.svg" alt="" />
+                </div>
+                <div class="svg">
+                    <img src="./svg/down-arrow.svg" alt="" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ***** Side Bar Section -->
+    <div class="sideBarWrapper">
+        <!-- SideBar left -->
+        <div class="sideBar sideBar__left">
+            <div class="container borderNone">
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/profilePic.jpg)">
+                    </div>
+                    <div class="globalProfile__name">User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./icons/1.png)"></div>
+                    <div class="globalProfile__name">favorites</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./icons/2.png)"></div>
+                    <div class="globalProfile__name">Pages</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./icons/3.png)"></div>
+                    <div class="globalProfile__name">Friends</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./icons/4.png)"></div>
+                    <div class="globalProfile__name">Messenger</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile circle">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <div class="globalProfile__name">See More</div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="mainTitle">
+                    <h3 class="padding">Your Shortcuts</h3>
+                    <a href="#">Edit</a>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile radius-10"
+                        style="background-image: url(./images/cosplay.jpg)">
+                    </div>
+                    <div class="globalProfile__name">Cosplay</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile radius-10"
+                        style="background-image: url(./images/genshinImpact.jpeg)"></div>
+                    <div class="globalProfile__name">Anime Israel</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile radius-10"
+                        style="background-image: url(./images/code.jpg)"></div>
+                    <div class="globalProfile__name">Coding</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile radius-10"
+                        style="background-image: url(./images/japanese.jpg)">
+                    </div>
+                    <div class="globalProfile__name">Japanese</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile circle">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <div class="globalProfile__name">See More</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SideBar Right -->
+        <div class="sideBar sideBar__right">
+            <div class="container borderNone">
+                <div class="mainTitle">
+                    <h3 class="padding">Your Pages</h3>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/profilePic.jpg)">
+                    </div>
+                    <div class="globalProfile__name">Page Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile globalProfile__small">
+                    <div class="svg">
+                        <img src="./svg/bell(1).svg" alt="" />
+                    </div>
+                    <div class="globalProfile__name">30 Notifications</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile globalProfile__small">
+                    <div class="svg">
+                        <img src="./svg/megaphone.svg" alt="" />
+                    </div>
+                    <div class="globalProfile__name">Create Promotion</div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="mainTitle">
+                    <h3 class="padding">Contacts</h3>
+                    <div class="items_icons">
+                        <i class="fas fa-video"></i>
+                        <i class="fas fa-search"></i>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/2.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Gil Geikhman</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/3.jpeg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/4.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/5.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/6.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/7.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/8.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/9.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/10.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/11.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/12.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/13.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+                <!-- Profile -->
+                <div class="globalProfile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/14.jpg)">
+                        <div class="active"></div>
+                    </div>
+                    <div class="globalProfile__name">Friends User Name</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- **** Section Center -->
+    <div class="sectionCenter">
+        <!-- STORY -->
+        <div class="story">
+            <div class="story__cover">
+                <div class="story__cover--create">
+                    <div class="svg">
+                        <img src="./svg/plus.svg" alt="" />
+                    </div>
+                    <h3>Create a <br />Story</h3>
+                </div>
+                <div class="story__cover--bg" style="background-image: url(./images/profilePic.jpg)">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="story__cover">
+                <div class="story__cover--pro">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/2.jpg)"></div>
+                </div>
+                <h3>Gil Geikhman</h3>
+                <div class="story__cover--bg" style="background-image: url(./images/userName2.jpg)">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="story__cover">
+                <div class="story__cover--pro">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/3.jpeg)"></div>
+                </div>
+                <h3>User Name</h3>
+                <div class="story__cover--bg" style="background-image: url(./images/userName3.jpeg)">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="story__cover">
+                <div class="story__cover--pro">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/4.jpg)"></div>
+                </div>
+                <h3>User Name</h3>
+                <div class="story__cover--bg" style="background-image: url(./images/userName4.jpg)">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="story__cover">
+                <div class="story__cover--pro">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/5.jpg)"></div>
+                </div>
+                <h3>User Name</h3>
+                <div class="story__cover--bg" style="background-image: url(./images/userName5.jpg)">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="story__cover">
+                <div class="story__cover--pro">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/6.jpg)"></div>
+                </div>
+                <h3>User Name</h3>
+                <div class="story__cover--bg" style="background-image: url(./images/userName6.jpg)">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Post -->
+        <div class="createPost">
+            <div class="createPost__input">
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/profilePic.jpg)">
+                    <span></span>
+                </div>
+                <div class="createPost__input--post">
+                    What's on your mind, User Name?
+                </div>
+            </div>
+
+            <div class="createPost__buttons">
+                <span>
+                    <div class="svg">
+                        <img src="./svg/live_video.svg" alt="" />
+                    </div>
+                    <h4>Live Video</h4>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/photo.svg" alt="" />
+                    </div>
+                    <h4>Photo/Video</h4>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/smile.svg" alt="" />
+                    </div>
+                    <h4>Feeling/Activity</h4>
+                </span>
+            </div>
+        </div>
+
+        <!-- Rooms -->
+        <div class="rooms">
+            <div class="rooms__title">
+                <div class="rooms__title--left">
+                    <i class="fas fa-video"></i>
+                    <h3>Rooms</h3>
+                    <p>Video chat with friends</p>
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="rooms__title--right">
+                    <a href="#">Create Room</a>
+                </div>
+            </div>
+
+            <div class="rooms__profiles">
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/profilePic.jpg)">
+                    <div class="svg">
+                        <img src="./svg/plus.svg" alt="" />
+                    </div>
+                    <span></span>
+                    <div id="spanDark"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/2.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/3.jpeg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/4.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/5.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/6.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/7.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/8.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/9.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/10.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/11.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/12.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/13.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+                <div class="globalProfile__circleProfile" style="background-image: url(./images/14.jpg)">
+                    <span></span>
+                    <div class="active"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Posts -->
+        <div class="mainPosts">
+            <!-- TITLE -->
+            <div class="mainPosts__title">
+                <div class="mainPosts__title--profile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/6.jpg)">
+                        <span></span>
+                    </div>
+
+                    <div class="mainPosts__title--profile--name">
+                        <a href="#">User Name</a>
+                        <span>1h <i class="fas fa-globe-americas"></i> </span>
+                    </div>
+                </div>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mainPosts__description">
+                A recap of my recent visit at Westminster Station
+            </div>
+
+            <!-- Img Video Contents -->
+            <div class="mainPosts__post" style="background-image: url(./images/post1.jpg);"></div>
+
+            <!-- Reaction -->
+            <div class="mainPosts__reaction">
+                <div class="mainPosts__reaction--icons">
+                    <div class="svg">
+                        <img src="./svg/like.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img src="./svg/heart.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img class="iconCare" src="./svg/care.svg" alt="" />
+                    </div>
+                    <a href="#">64k</a>
+                </div>
+            </div>
+
+            <!-- Like / Comment / Share -->
+            <div class="mainPosts__likeShare">
+                <span>
+                    <div class="svg">
+                        <img src="./svg/like_light.svg" alt="" />
+                    </div>
+                    <h3>Like</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/comment.svg" alt="" />
+                    </div>
+                    <h3>Comment</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/share.svg" alt="" />
+                    </div>
+                    <h3>Share</h3>
+                </span>
+            </div>
+        </div>
+        <!-- Main Posts -->
+        <div class="mainPosts">
+            <!-- TITLE -->
+            <div class="mainPosts__title">
+                <div class="mainPosts__title--profile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/7.jpg)">
+                        <span></span>
+                    </div>
+
+                    <div class="mainPosts__title--profile--name">
+                        <a href="#">User Name</a>
+                        <span>22h <i class="fas fa-globe-americas"></i> </span>
+                    </div>
+                </div>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mainPosts__description">my new Apple Vision Pro</div>
+
+            <!-- Img Video Contents -->
+            <div class="mainPosts__post" style="background-image: url(./images/post2.webp)"></div>
+
+            <!-- Reaction -->
+            <div class="mainPosts__reaction">
+                <div class="mainPosts__reaction--icons">
+                    <div class="svg">
+                        <img src="./svg/like.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img src="./svg/heart.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img class="iconCare" src="./svg/care.svg" alt="" />
+                    </div>
+                    <a href="#">115k</a>
+                </div>
+            </div>
+
+            <!-- Like / Comment / Share -->
+            <div class="mainPosts__likeShare">
+                <span>
+                    <div class="svg">
+                        <img src="./svg/like_light.svg" alt="" />
+                    </div>
+                    <h3>Like</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/comment.svg" alt="" />
+                    </div>
+                    <h3>Comment</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/share.svg" alt="" />
+                    </div>
+                    <h3>Share</h3>
+                </span>
+            </div>
+        </div>
+        <!-- Main Posts -->
+        <div class="mainPosts">
+            <!-- TITLE -->
+            <div class="mainPosts__title">
+                <div class="mainPosts__title--profile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/2.jpg)">
+                        <span></span>
+                    </div>
+
+                    <div class="mainPosts__title--profile--name">
+                        <a href="#">Gil Geikhman</a>
+                        <span>16h <i class="fas fa-globe-americas"></i> </span>
+                    </div>
+                </div>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mainPosts__description">Spiral Dynamics</div>
+
+            <!-- Img Video Contents -->
+            <div class="mainPosts__post" style="background-image: url(./images/post3.JPG)"></div>
+
+            <!-- Reaction -->
+            <div class="mainPosts__reaction">
+                <div class="mainPosts__reaction--icons">
+                    <div class="svg">
+                        <img src="./svg/like.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img src="./svg/heart.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img class="iconCare" src="./svg/care.svg" alt="" />
+                    </div>
+                    <a href="#">85k</a>
+                </div>
+            </div>
+
+            <!-- Like / Comment / Share -->
+            <div class="mainPosts__likeShare">
+                <span>
+                    <div class="svg">
+                        <img src="./svg/like_light.svg" alt="" />
+                    </div>
+                    <h3>Like</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/comment.svg" alt="" />
+                    </div>
+                    <h3>Comment</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/share.svg" alt="" />
+                    </div>
+                    <h3>Share</h3>
+                </span>
+            </div>
+        </div>
+        <!-- Main Posts -->
+        <div class="mainPosts">
+            <!-- TITLE -->
+            <div class="mainPosts__title">
+                <div class="mainPosts__title--profile">
+                    <div class="globalProfile__circleProfile" style="background-image: url(./images/15.jpg)">
+                        <span></span>
+                    </div>
+
+                    <div class="mainPosts__title--profile--name">
+                        <a href="#">Elon Musk</a>
+                        <span>8h <i class="fas fa-globe-americas"></i> </span>
+                    </div>
+                </div>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mainPosts__description">awesome Cybertruck</div>
+
+            <!-- Img Video Contents -->
+            <div class="mainPosts__post" style="background-image: url(./images/post4.jpg)"></div>
+
+            <!-- Reaction -->
+            <div class="mainPosts__reaction">
+                <div class="mainPosts__reaction--icons">
+                    <div class="svg">
+                        <img src="./svg/like.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img src="./svg/heart.svg" alt="" />
+                    </div>
+                    <div class="svg">
+                        <img class="iconCare" src="./svg/care.svg" alt="" />
+                    </div>
+                    <a href="#">73k</a>
+                </div>
+            </div>
+
+            <!-- Like / Comment / Share -->
+            <div class="mainPosts__likeShare">
+                <span>
+                    <div class="svg">
+                        <img src="./svg/like_light.svg" alt="" />
+                    </div>
+                    <h3>Like</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/comment.svg" alt="" />
+                    </div>
+                    <h3>Comment</h3>
+                </span>
+                <span>
+                    <div class="svg">
+                        <img src="./svg/share.svg" alt="" />
+                    </div>
+                    <h3>Share</h3>
+                </span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
