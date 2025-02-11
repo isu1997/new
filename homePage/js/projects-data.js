@@ -68,7 +68,7 @@ const projects = {
        description: "Get real-time weather updates for any location. Plan your day with confidence!",
        image: "./images/weatherly.png",
        projectPath: "../project_weatherly/index.html",
-       downloadPath: "../weatherly/weatherly.rar",
+       downloadPath: "../project_weatherly/project_weatherly.rar",
        technologies: ["html5", "css3-alt", "sass", "js"]
    },
 };
