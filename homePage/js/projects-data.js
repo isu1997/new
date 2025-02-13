@@ -78,6 +78,14 @@ const projects = {
     projectPath: "../countries_project/index.html",
     downloadPath: "../countries_project/countries_project.rar",
     technologies: ["html5", "css3-alt", "js"]
+},
+"pageBuilder": {
+    title: "Page Builder",
+    description: "Create and customize pages easily with this page builder. Save your work and share it with others.",
+    image: "./images/pageBuilder.png",
+    projectPath: "../pageBuilder/index.html",
+    downloadPath: "../pageBuilder/pageBuilder.rar",
+    technologies: ["html5", "css3-alt", "js"]
 }
 };
 

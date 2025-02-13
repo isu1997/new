@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Builder</title>
+    <link rel="stylesheet" href="pageBuilder.css">
+    <script src="pageBuilder.js" defer async></script>
+</head>
+
+<body>
+    <!-------wrapper----->
+
+    <div class="wrapper">
+
+        <div class="wrapper-content">
+            <h1>Page Builder</h1>
+            <p>Create custom elements and design your perfect page. </p>
+
+        </div>
+        <!----------------Element Type----------------------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="element-type"> Element Type </label>
+                <select id="element-type">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                    <option value="p">p</option>
+                    <option value="div">div</option>
+                    <option value="span">span</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label for="w-size"> Width </label>
+                <input type="number" id="w-size" placeholder="width">
+            </div>
+
+        </div>
+
+        <!------------------height and width-------------------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="h-size"> Height </label>
+                <input type="number" id="h-size" placeholder="height">
+            </div>
+
+            <div class="input-box">
+                <label for="u-color"> Color </label>
+                <input type="color" id="u-color">
+            </div>
+
+        </div>
+
+        <!----------content + its color and size---------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="txt-area"> Content </label>
+                <textarea id="txt-area" placeholder=" Write your content here..."></textarea>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="txt-color"> Text Color </label>
+                <input type="color" id="txt-color">
+            </div>
+
+            <div class="input-box">
+                <label for="txt-size"> Text Size </label>
+                <input type="number" id="txt-size" placeholder="text size">
+            </div>
+
+        </div>
+
+        <!--------------border style for the elements------------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="border-size"> Border Size </label>
+                <input type="number" id="border-size" placeholder="border size">
+            </div>
+
+            <div class="input-box">
+                <label for="border-style"> Border Style </label>
+                <select id="border-style">
+                    <option value="dotted">dotted</option>
+                    <option value="dashed">dashed</option>
+                    <option value="solid">solid</option>
+                    <option value="double">double</option>
+                    <option value="groove">groove</option>
+                    <option value="ridge">ridge</option>
+                    <option value="inset">inset</option>
+                    <option value="outset">outset</option>
+                    <option value="none">none</option>
+                    <option value="hidden">hidden</option>
+                </select>
+            </div>
+        </div>
+        <!------------border color and border radius------------>
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="border-color"> Border Color </label>
+                <input type="color" id="border-color">
+            </div>
+
+            <div class="input-box">
+                <label for="border-radius"> Border Radius </label>
+                <input type="number" id="border-radius" placeholder="border radius">
+            </div>
+
+        </div>
+
+        <!---------margin + padding for the elements---------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="box-margin"> Margin </label>
+                <input type="text" id="box-margin" placeholder="margin">
+            </div>
+
+            <div class="input-box">
+                <label for="box-padding"> Padding </label>
+                <input type="text" id="box-padding" placeholder="padding">
+            </div>
+
+        </div>
+        <!---------BoxShadow color + x and y axis sizes-------->
+
+        <div class="input-field">
+
+            <div class="input-box">
+                <label for="shadow-x"> Shadow X Axis </label>
+                <input type="number" id="shadow-x" placeholder="shadow x">
+            </div>
+
+            <div class="input-box">
+                <label for="shadow-y"> Shadow Y Axis </label>
+                <input type="number" id="shadow-y" placeholder="shadow y">
+            </div>
+
+            <div class="input-box">
+                <label for="shadow-color"> Box Shadow Color </label>
+                <input type="color" id="shadow-color">
+            </div>
+
+        </div>
+        <!------------------------button--------------------------->
+
+        <div class="input-buttons">
+            <button id="add-btn">Add</button>
+            <button id="save-btn">Save</button>
+            <button id="delete-btn">Delete</button>
+        </div>
+
+        <!--the end of the wrapper container -->
+    </div>
+
+    <!----Empty container to append to a box container creation from js---->
+
+    <div class="container"></div>
+
+</body>
+
+</html>

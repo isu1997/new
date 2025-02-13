@@ -1,0 +1,296 @@
+/*-------------------fonts import------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/*----------------CSS Variables------------------*/
+:root {
+    --fontFamily: 'Quicksand', sans-serif;
+    --fontTitle: 'Pacifico', cursive;
+    --primary: #5928E5;
+    --secondary: #9D4EDD;
+    --accent: #FF6B6B;
+    --bg-dark: #1A1B26;
+    --bg-light: #292A37;
+    --text-light: #FFFFFF;
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --neon-shadow: 0 0 15px rgba(89, 40, 229, 0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*----------------reset-----------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*--------------body------------------*/
+body {
+    display: flex;
+    background: var(--bg-dark);
+    min-height: 100vh;
+    color: var(--text-light);
+}
+
+/*-----------------wrapper-----------------*/
+.wrapper {
+    width: 25vw;
+    min-height: 100vh;
+    background: var(--bg-light);
+    background-image:
+        radial-gradient(circle at 100% 100%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 0% 0%, rgba(89, 40, 229, 0.1) 0%, transparent 50%);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/*----------------wrapper content------------------*/
+.wrapper-content>h1 {
+    font-family: var(--fontTitle);
+    font-weight: 400;
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, #FF6B6B, #9D4EDD, #5928E5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+    letter-spacing: 3px;
+    position: relative;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(89, 40, 229, 0.7);
+    }
+
+    to {
+        text-shadow: 0 0 20px rgba(157, 78, 221, 0.9);
+    }
+}
+
+.wrapper-content p {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-family: var(--fontFamily);
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+/*----------------input-field------------------*/
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+/*----------------label------------------*/
+label {
+    margin-top: 12px;
+    font-family: var(--fontFamily);
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/*----------------input + select------------------*/
+input,
+select {
+    width: 100%;
+    height: 2.5rem;
+    background-color: rgba(41, 42, 55, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0 1rem;
+    font-family: var(--fontFamily);
+    color: var(--text-light);
+    transition: var(--transition);
+    outline: none;
+}
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+select option {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: 0.5rem;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--secondary);
+    box-shadow: var(--neon-shadow);
+}
+
+input[type="color"] {
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+/*-----------------text area-----------------*/
+textarea {
+    height: 3.5rem;
+    resize: none;
+    width: 100%;
+    background-color: var(--input-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: var(--fontFamily);
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+textarea:focus {
+    border-color: var(--secondary);
+    box-shadow: var(--neon-shadow);
+}
+
+/*------------------input-buttons----------------*/
+.input-buttons {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+/*----------------button------------------*/
+.input-buttons>button {
+    width: 100%;
+    height: 3rem;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--fontFamily);
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+}
+
+#add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+#save-btn {
+    background: linear-gradient(135deg, #00B4DB, #0083B0);
+    color: white;
+}
+
+#delete-btn {
+    background: linear-gradient(135deg, #FF416C, #FF4B2B);
+    color: white;
+}
+
+.input-buttons>button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--neon-shadow);
+}
+
+.input-buttons>button:active {
+    transform: translateY(0);
+}
+
+/*---------------container-------------------*/
+.container {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5rem auto;
+    min-height: 300px;
+    background-color: rgba(41, 42, 55, 0.8);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    gap: 1rem;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.container>* {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    transition: var(--transition);
+}
+
+.container>*:hover {
+    transform: scale(1.02);
+    box-shadow: var(--neon-shadow);
+}
+
+/* Keeping your existing media queries */
+@media screen and (max-width: 1000px) {
+    body {
+        flex-direction: row;
+    }
+
+    .wrapper {
+        width: 40vw;
+    }
+
+    .wrapper-content>h1,
+    p {
+        text-align: center;
+    }
+
+    .container {
+        width: 80%;
+        margin: 2rem;
+        min-height: 100vh;
+    }
+
+    .input-field {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .input-box {
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        flex-direction: column;
+    }
+
+    .wrapper {
+        width: 100vw;
+        min-height: fit-content;
+    }
+
+    .container {
+        width: 80%;
+        height: 100vh;
+        margin: 3rem auto;
+    }
+}
