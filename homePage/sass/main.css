@@ -520,14 +520,18 @@ footer {
 
 @media screen and (max-width: 800px) {
   #scrollspyServices {
-    height: 130vh;
+    height: auto;
     width: 84.9%;
   }
   #scrollspyServices h3,
-  p {
+  #scrollspyServices p {
     margin-left: 1rem;
   }
   .linkServices {
+    margin: 0 auto;
+  }
+  #scrollspyServices .card {
+    width: 80%;
     margin: 0 auto;
   }
   #card-link {

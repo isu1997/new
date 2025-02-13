@@ -71,6 +71,14 @@ const projects = {
        downloadPath: "../project_weatherly/project_weatherly.rar",
        technologies: ["html5", "css3-alt", "sass", "js"]
    },
+   "countries_project": {
+    title: "Countries Explorer",
+    description: "Explore countries and their flags around the world. Save your favorites with just one click!",
+    image: "./images/countries.png",
+    projectPath: "../countries_project/index.html",
+    downloadPath: "../countries_project/countries_project.rar",
+    technologies: ["html5", "css3-alt", "js"]
+}
 };
 
 export default projects;
