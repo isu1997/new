@@ -1,0 +1,23 @@
+// _table.scss
+.results-section {
+    margin-top: 30px;
+    overflow-x: auto;
+}
+
+#results {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    th {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        color: $text-light;
+    }
+
+    td {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 12px;
+        color: $text-light;
+    }
+}

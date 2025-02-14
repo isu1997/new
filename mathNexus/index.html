@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Nexus</title>
+    <link rel="stylesheet" href="scss/main.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- Game Stats Bar -->
+        <div class="stats-bar">
+            <div class="level-display">
+                Level: <span id="current-level">Easy</span>
+            </div>
+            <div class="timer">
+                Time: <span id="time-display">00:00</span>
+            </div>
+            <div class="score-display">
+                Score: <span id="score">0</span>
+            </div>
+            <div class="high-score">
+                High Score: <span id="high-score">0</span>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <main class="game-area">
+            <h1>Math Nexus</h1>
+            <p class="subtitle">Train Your Brain, Level Up Your Game</p>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="level-progress"></div>
+                <span class="progress-text">Progress: <span id="questions-count">0</span>/10</span>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="difficulty-controls">
+                <select id="num-range" class="difficulty-select">
+                    <option value="10">Easy (1-10)</option>
+                    <option value="100">Medium (1-100)</option>
+                    <option value="1000">Hard (1-1000)</option>
+                </select>
+
+                <select id="operators-range" class="operator-select">
+                    <option value="+">Addition (+)</option>
+                    <option value="-">Subtraction (-)</option>
+                    <option value="*">Multiplication (*)</option>
+                    <option value="/">Division (/)</option>
+                </select>
+            </div>
+
+            <!-- Problem Display -->
+            <div class="problem-container">
+                <div class="exercise">
+                    <span id="num1">5</span>
+                    <span id="operator">+</span>
+                    <span id="num2">3</span>
+                    <span>=</span>
+                </div>
+                <input type="number" id="answer" class="answer-input" placeholder="Enter your answer">
+                <button id="sub-btn" class="check-button">Check Answer</button>
+            </div>
+
+            <!-- Results Table -->
+            <div class="results-section">
+                <table id="results">
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Correct Answer</th>
+                            <th>Your Answer</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- Modal for Level Complete/Game Over -->
+        <div class="modal" id="game-modal">
+            <div class="modal-content">
+                <h2 id="modal-title">Level Complete!</h2>
+                <p id="modal-message">Congratulations! You're moving to the next level!</p>
+                <button id="modal-button" class="modal-btn">Continue</button>
+            </div>
+        </div>
+        <!-- מודל הפתיחה החדש -->
+        <div class="modal" id="welcome-modal">
+            <div class="modal-content">
+                <h2>Welcome to Math Nexus!</h2>
+                <p class="game-intro">
+                    Challenge yourself with adaptive math exercises. Start from basic calculations and progress to advanced
+                    problems. Track your improvement and compete with your previous scores.
+                </p>
+                <button id="start-game-btn" class="modal-btn">Start Playing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="correct-sound" src="./sounds/correct.mp3"></audio>
+    <audio id="wrong-sound" src="./sounds/wrong.mp3"></audio>
+    <audio id="level-up-sound" src="./sounds/level-up.mp3"></audio>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+// _layout.scss
+.game-container {
+    width: 90%;
+    max-width: 1000px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.stats-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 1.1rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.game-area {
+    padding: 30px;
+    text-align: center;
+}
+
+.problem-container {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 15px;
+    margin: 20px 0;
+
+    &.correct-answer {
+        animation: successPulse 0.6s ease;
+    }
+
+    &.wrong-answer {
+        animation: wrongPulse 0.5s ease;
+    }
+}

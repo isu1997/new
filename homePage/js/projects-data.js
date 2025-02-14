@@ -86,6 +86,14 @@ const projects = {
     projectPath: "../pageBuilder/index.html",
     downloadPath: "../pageBuilder/pageBuilder.rar",
     technologies: ["html5", "css3-alt", "js"]
+},
+"mathNexus": {
+    title: "Math Nexus Game",
+    description: "Boost your math skills through fun, fast-paced exercises. Start from basic calculations, advance through levels, and watch your progress grow!",
+    image: "./images/MathNexus.png",
+    projectPath: "../mathNexus/index.html",
+    downloadPath: "../mathNexus/mathNexus.rar",
+    technologies: ["html5", "css3-alt", "sass", "js"]
 }
 };
 

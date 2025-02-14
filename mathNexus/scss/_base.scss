@@ -1,0 +1,25 @@
+// _base.scss
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    min-height: 100vh;
+    background: $gradient-bg;
+    color: $text-light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: $text-light;
+}
