@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XO Arena | Strategic Board Game</title>
+
+    <!-- Google Fonts - Unique gaming style fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Game Header -->
+        <header class="game-header">
+            <h1 class="main-title">XO Arena</h1>
+            <div class="score-board">
+                <div class="player-score">
+                    <span class="player-x">Player X:</span>
+                    <span id="scoreX">0</span>
+                </div>
+                <div class="player-score">
+                    <span class="player-o">Player O:</span>
+                    <span id="scoreO">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Modes -->
+        <div class="game-modes">
+            <button class="neon-button" id="pvp-mode">
+                <i class="fas fa-users"></i> vs Friend
+            </button>
+            <button class="neon-button active" id="pvc-mode">
+                <i class="fas fa-robot"></i> vs AI
+            </button>
+        </div>
+
+        <!-- Difficulty Selection -->
+        <div class="difficulty-selection">
+            <button class="difficulty-btn" data-level="easy">
+                <i class="fas fa-baby"></i> Easy
+            </button>
+            <button class="difficulty-btn" data-level="medium">
+                <i class="fas fa-user"></i> Medium
+            </button>
+            <button class="difficulty-btn" data-level="hard">
+                <i class="fas fa-crown"></i> Hard
+            </button>
+        </div>
+
+        <!-- Game Board -->
+        <div class="game-board-container">
+            <div class="game-board">
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+            </div>
+        </div>
+
+        <!-- Game Status -->
+        <div class="game-status">
+            <span id="status-message">Player X's Turn</span>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-buttons">
+            <button class="neon-button" id="reset-game">
+                <i class="fas fa-redo"></i> New Game
+            </button>
+            <button class="neon-button" id="show-stats">
+                <i class="fas fa-chart-bar"></i> Stats
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal fade" id="statsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Game Statistics</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-container">
+                        <!-- Stats will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="sound-x" src="assets/x-move.wav"></audio>
+    <audio id="sound-o" src="assets/o-move.wav"></audio>
+    <audio id="sound-win" src="assets/win.wav"></audio>
+    <audio id="sound-lose" src="assets/lose.wav"></audio>
+    <audio id="sound-button" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Game Modules -->
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

@@ -94,7 +94,15 @@ const projects = {
     projectPath: "../mathNexus/index.html",
     downloadPath: "../mathNexus/mathNexus.rar",
     technologies: ["html5", "css3-alt", "sass", "js"]
-}
+},
+"XO_Arena": {
+        title: "XO Arena",
+        description: "In a world where X's and O's wage an eternal battle, legends tell of an ancient game that holds the power to crown the ultimate strategist. Step into XO Arena, where three mighty AI guardians test the wit and wisdom of those who dare to challenge them. Every move shapes your destiny, every victory brings you closer to immortal glory. Will you answer the call and claim your place in the eternal battle of minds?",
+        image: "./images/ticTacToe.png",
+        projectPath: "../XO_Arena/index.html",
+        downloadPath: "../XO_Arena/XO_Arena.rar",
+        technologies: ["html5", "css3-alt", "bootstrap", "js"]
+    },
 };
 
 export default projects;
