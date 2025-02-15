@@ -43,32 +43,40 @@ function initializeAudioContext() {
 
 // Play Sound Effects
 function playSound(type) {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    switch(type) {
-        case 'correct':
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            oscillator.type = 'sine';
-            break;
-        case 'wrong':
-            oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            oscillator.type = 'triangle';
-            break;
-        case 'levelUp':
-            oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            oscillator.type = 'square';
-            break;
-    }
-    
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.2);
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const soundPatterns = {
+        'correct': [
+            { freq: 600, time: 0 },
+            { freq: 800, time: 0.1 },
+            { freq: 1000, time: 0.2 }
+        ],
+        'wrong': [
+            { freq: 400, time: 0 },
+            { freq: 300, time: 0.1 },
+            { freq: 200, time: 0.2 }
+        ],
+        'levelUp': [
+            { freq: 400, time: 0 },
+            { freq: 600, time: 0.1 },
+            { freq: 800, time: 0.2 },
+            { freq: 1000, time: 0.3 }
+        ]
+    };
+
+    soundPatterns[type].forEach(({ freq, time }) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + time);
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime + time);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + time + 0.2);
+        
+        oscillator.start(audioContext.currentTime + time);
+        oscillator.stop(audioContext.currentTime + time + 0.2);
+    });
 }
 
 // High Score Management
