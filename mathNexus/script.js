@@ -44,38 +44,58 @@ function initializeAudioContext() {
 // Play Sound Effects
 function playSound(type) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const soundPatterns = {
+    const masterGain = audioContext.createGain();
+    masterGain.connect(audioContext.destination);
+
+    const sounds = {
         'correct': [
-            { freq: 600, time: 0 },
-            { freq: 800, time: 0.1 },
-            { freq: 1000, time: 0.2 }
+            // אקורד מז'ורי מרשים עם הרמוניות
+            { freq: 440, time: 0, type: 'sine', gain: 0.2, duration: 0.3 },     // בסיס
+            { freq: 554, time: 0, type: 'sine', gain: 0.15, duration: 0.3 },    // הרמוניה
+            { freq: 659, time: 0, type: 'sine', gain: 0.15, duration: 0.3 },    // הרמוניה
+            // צליל עולה מוטיבציוני
+            { freq: 880, time: 0.1, type: 'sine', gain: 0.2, duration: 0.4 },   // עלייה
+            { freq: 1108, time: 0.2, type: 'sine', gain: 0.15, duration: 0.4 }, // שיא
+            // צליל נוסף לתחושת הישג
+            { freq: 1318, time: 0.3, type: 'sine', gain: 0.1, duration: 0.5 }   // סיום
         ],
         'wrong': [
-            { freq: 400, time: 0 },
-            { freq: 300, time: 0.1 },
-            { freq: 200, time: 0.2 }
+        { freq: 400, time: 0, type: 'sawtooth', gain: 0.15, duration: 0.3 },
+        { freq: 300, time: 0.1, type: 'sawtooth', gain: 0.2, duration: 0.3 },
+        { freq: 200, time: 0.2, type: 'sawtooth', gain: 0.25, duration: 0.4 }
         ],
         'levelUp': [
-            { freq: 400, time: 0 },
-            { freq: 600, time: 0.1 },
-            { freq: 800, time: 0.2 },
-            { freq: 1000, time: 0.3 }
+            // מנגינת עלייה מרשימה
+            { freq: 440, time: 0, type: 'sine', gain: 0.15, duration: 0.15 },
+            { freq: 554, time: 0.15, type: 'sine', gain: 0.15, duration: 0.15 },
+            { freq: 659, time: 0.3, type: 'sine', gain: 0.15, duration: 0.15 },
+            { freq: 880, time: 0.45, type: 'sine', gain: 0.2, duration: 0.3 },
+            // אקורד סיום מרשים
+            { freq: 1108, time: 0.6, type: 'sine', gain: 0.15, duration: 0.4 },
+            { freq: 1318, time: 0.6, type: 'sine', gain: 0.12, duration: 0.4 },
+            { freq: 1760, time: 0.6, type: 'sine', gain: 0.1, duration: 0.4 }
         ]
     };
 
-    soundPatterns[type].forEach(({ freq, time }) => {
+    sounds[type].forEach(note => {
         const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
+        const noteGain = audioContext.createGain();
         
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + time);
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime + time);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + time + 0.2);
-        
-        oscillator.start(audioContext.currentTime + time);
-        oscillator.stop(audioContext.currentTime + time + 0.2);
+        oscillator.connect(noteGain);
+        noteGain.connect(masterGain);
+
+        oscillator.type = note.type;
+        oscillator.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
+
+        // עקומת ווליום משופרת
+        const now = audioContext.currentTime + note.time;
+        noteGain.gain.setValueAtTime(0, now);
+        noteGain.gain.linearRampToValueAtTime(note.gain, now + 0.05);
+        noteGain.gain.linearRampToValueAtTime(note.gain * 0.6, now + note.duration - 0.05);
+        noteGain.gain.linearRampToValueAtTime(0, now + note.duration);
+
+        oscillator.start(now);
+        oscillator.stop(now + note.duration + 0.1);
     });
 }
 
