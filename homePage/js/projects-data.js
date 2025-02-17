@@ -103,6 +103,14 @@ const projects = {
         downloadPath: "../XO_Arena/XO_Arena.rar",
         technologies: ["html5", "css3-alt", "bootstrap", "js"]
     },
+    "snake-evolution": {
+        title: "Snake Evolution",
+        description: "Evolve your snake, grow your territory, and dominate the leaderboard. Collect food, unlock power-ups, and challenge your friends in this modern twist on a classic game.",
+        image: "./images/snakeEvolution.png",
+        projectPath: "../snake-evolution/index.html",
+        downloadPath: "../snake-evolution/snake-evolution.rar",
+        technologies: ["html5", "css3-alt", "js"]
+    },
 };
 
 export default projects;
