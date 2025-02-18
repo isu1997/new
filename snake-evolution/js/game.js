@@ -29,6 +29,8 @@ function initializeMobileControls() {
         { direction: 'down', icon: 'fa-chevron-down' }
     ];
 
+    let isDirectionLocked = false; // משתנה חדש למניעת תנועה בו-זמנית
+
     buttonsConfig.forEach(({ direction, icon }) => {
         const button = document.createElement('button');
         button.className = `control-btn ${direction}`;
@@ -43,21 +45,28 @@ function initializeMobileControls() {
                 if (direction === 'center') {
                     if (gameInstance) {
                         gameInstance.togglePause();
+                        // עדכון האייקון בהתאם למצב המשחק
+                        const iconElement = button.querySelector('i');
+                        iconElement.className = `fas ${gameInstance.isPaused ? 'fa-play' : 'fa-pause'}`;
                     }
                 } else {
-                    const directionMap = {
-                        'up': { x: 0, y: -1 },
-                        'down': { x: 0, y: 1 },
-                        'left': { x: -1, y: 0 },
-                        'right': { x: 1, y: 0 }
-                    };
-                    
-                    if (gameInstance && directionMap[direction]) {
-                        gameInstance.inputDirection = directionMap[direction];
-                        console.log(`Direction changed to: ${direction}`);
+                    if (gameInstance && !isDirectionLocked) {
+                        isDirectionLocked = true;
+                        gameInstance.handleDirectionChange(direction);
+                        // שחרור הנעילה אחרי זמן קצר
+                        setTimeout(() => {
+                            isDirectionLocked = false;
+                        }, 100);
                     }
                 }
             }, { passive: false });
+        });
+
+        // שחרור הנעילה כשמרימים את האצבע/עכבר
+        ['touchend', 'mouseup'].forEach(eventType => {
+            button.addEventListener(eventType, () => {
+                isDirectionLocked = false;
+            });
         });
         
         mobileControls.appendChild(button);
