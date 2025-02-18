@@ -73,6 +73,24 @@ function initializeMobileControls() {
     });
 
     document.body.appendChild(mobileControls);
+
+    // בדיקה אם זה מכשיר מובייל
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        mobileControls.style.display = 'grid';
+    }
+
+    document.body.appendChild(mobileControls);
+
+    // הוספת טיפול בשינוי אוריינטציה
+    window.addEventListener('orientationchange', () => {
+        if (isMobile) {
+            setTimeout(() => {
+                mobileControls.style.display = 'grid';
+            }, 100);
+        }
+    });
 }
 
 // יצירת המשחק
@@ -251,11 +269,6 @@ class Game {
     playCollisionSound();
     this.lives--;
     
-    // מניעת lives שליליים
-    if (this.lives < 0) this.lives = 0;
-    
-    console.log('Lives remaining:', this.lives);
-    
     // עדכון תצוגת הלבבות
     const hearts = document.querySelectorAll('.lives .heart');
     Array.from(hearts).forEach((heart, index) => {
@@ -263,9 +276,14 @@ class Game {
     });
     
     if (this.lives <= 0) {
-        console.log('Game Over triggered');
-        this.stopGame(); // פונקציה חדשה שנוסיף
-        this.gameOver();
+        // מוודאים שהמשחק באמת נגמר לפני הצגת המסך
+        this.isGameOver = true;
+        this.isStarted = false;
+        
+        // מעכבים מעט את הצגת מסך הסיום
+        setTimeout(() => {
+            this.gameOver();
+        }, 500);
     } else {
         this.resetSnakePosition();
     }
@@ -470,12 +488,12 @@ stopGame() {
         }
     }
 
-     handleDirectionChange(direction) {
+    handleDirectionChange(direction) {
         const directionMap = {
-            'up': { x: 0, y: -1 },
-            'down': { x: 0, y: 1 },
-            'left': { x: -1, y: 0 },
-            'right': { x: 1, y: 0 }
+        'up': { x: 0, y: -1 },
+        'down': { x: 0, y: 1 },
+        'right': { x: 1, y: 0 },
+        'left': { x: -1, y: 0 }
         };
 
         if (directionMap[direction] && !this.isGameOver && this.isStarted) {
