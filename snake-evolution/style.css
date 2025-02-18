@@ -428,7 +428,6 @@ body {
              background: rgba(122, 162, 247, 0.4);
              transform: scale(0.95);
          }
-         }
 
     .joystick-container {
         display: none !important;
@@ -490,7 +489,7 @@ body {
     margin-bottom: 1rem;
     animation: rotate 2s infinite linear;
 }
-
+}
 
 @media (max-width: 768px) and (orientation: portrait) {
     .game-canvas {
