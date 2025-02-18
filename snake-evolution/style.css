@@ -433,9 +433,14 @@ body {
         display: none !important;
     }
 
-    .game-container {
-        padding: 0.5rem;
-    }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 1rem;
+        }
 
     .game-header {
         padding: 0 1rem;
@@ -462,9 +467,16 @@ body {
             font-size: 16px;
         }
 
-    .game-canvas {
-        width: 95vmin;
-        height: 95vmin;
+        .game-canvas {
+            width: 100%;
+            /* במקום שיעור קבוע */
+            max-width: 95vmin;
+            height: auto !important;
+            /* חשוב להוסיף !important */
+            aspect-ratio: 1/1;
+            /* שומר על יחס של 1:1 */
+            display: block !important;
+            visibility: visible !important;
         }
 
 

@@ -230,14 +230,22 @@ class Game {
 
     startGame() {
         if (!this.isStarted) {
-            console.log('Starting game...');
-            this.isStarted = true;
-            this.resetGameState();
-            document.getElementById('startGame').style.display = 'none';
-            audioManager.stopBackgroundMusic();
-            this.lastRenderTime = 0;
-            requestAnimationFrame(this.gameLoop);
+        console.log('Starting game...');
+        this.isStarted = true;
+        this.resetGameState();
+        
+        // וידוא שה-canvas מוצג
+        const canvas = document.getElementById('gameCanvas');
+        if (canvas) {
+            canvas.style.display = 'block';
+            canvas.style.visibility = 'visible';
         }
+        
+        document.getElementById('startGame').style.display = 'none';
+        audioManager.stopBackgroundMusic();
+        this.lastRenderTime = 0;
+        requestAnimationFrame(this.gameLoop);
+    }
     }
 
     eatFood() {
@@ -324,11 +332,25 @@ stopGame() {
     }
 
     resizeCanvas() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        const minDimension = Math.min(window.innerWidth * 0.95, window.innerHeight * 0.7);
+        this.canvas.width = minDimension;
+        this.canvas.height = minDimension;
+    } else {
         const minDimension = Math.min(window.innerWidth, window.innerHeight) * 0.8;
         this.canvas.width = minDimension;
         this.canvas.height = minDimension;
-        this.cellSize = Math.floor(minDimension / this.gridSize);
     }
+    
+    this.cellSize = Math.floor(this.canvas.width / this.gridSize);
+    
+    // מיד אחרי שינוי הגודל, נצייר מחדש
+    if (this.isStarted && !this.isGameOver) {
+        this.render();
+    }
+}
 
     gameLoop(currentTime) {
         if (!this.isStarted || this.isPaused || this.isGameOver) {
@@ -392,32 +414,41 @@ stopGame() {
     }
 
     render() {
-        // Clear canvas
-        this.ctx.fillStyle = '#1a1b26';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    if (!this.ctx || !this.canvas) return;
+    
+    // ניקוי ה-canvas
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    // וידוא שה-canvas גלוי
+    this.canvas.style.visibility = 'visible';
+    this.canvas.style.display = 'block';
+    
+    // ציור הרקע
+    this.ctx.fillStyle = '#1a1b26';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Draw snake
-        this.ctx.fillStyle = '#4ade80';
-        this.snake.body.forEach(segment => {
-            this.ctx.fillRect(
-                segment.x * this.cellSize,
-                segment.y * this.cellSize,
-                this.cellSize - 1,
-                this.cellSize - 1
-            );
-        });
+    // ציור הנחש
+    this.ctx.fillStyle = '#4ade80';
+    this.snake.body.forEach(segment => {
+        this.ctx.fillRect(
+            segment.x * this.cellSize,
+            segment.y * this.cellSize,
+            this.cellSize - 1,
+            this.cellSize - 1
+        );
+    });
 
-        // Draw food
-        if (this.food) {
-            this.ctx.fillStyle = '#ef4444';
-            this.ctx.fillRect(
-                this.food.x * this.cellSize,
-                this.food.y * this.cellSize,
-                this.cellSize - 1,
-                this.cellSize - 1
-            );
-        }
+    // ציור האוכל
+    if (this.food) {
+        this.ctx.fillStyle = '#ef4444';
+        this.ctx.fillRect(
+            this.food.x * this.cellSize,
+            this.food.y * this.cellSize,
+            this.cellSize - 1,
+            this.cellSize - 1
+        );
     }
+}
 
     handleKeyPress(event) {
         if (!this.isStarted) return;
