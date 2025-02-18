@@ -347,63 +347,7 @@ body {
 }
 
 
-/* === Mobile Controls === */
-.mobile-controls {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    grid-template-areas:
-        ". up ."
-        "left center right"
-        ". down .";
-    gap: 10px;
-    z-index: 1000;
-    padding: 20px;
-}
 
-.mobile-controls button {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(122, 162, 247, 0.2);
-    border: 2px solid var(--primary-color);
-    color: var(--text-light);
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.mobile-controls button:active {
-    transform: scale(0.95);
-    background: rgba(122, 162, 247, 0.4);
-}
-
-.mobile-controls .up {
-    grid-area: up;
-}
-
-.mobile-controls .down {
-    grid-area: down;
-}
-
-.mobile-controls .left {
-    grid-area: left;
-}
-
-.mobile-controls .right {
-    grid-area: right;
-}
-
-.mobile-controls .center {
-    grid-area: center;
-    background: rgba(122, 162, 247, 0.1);
-}
 
 /* === Mobile Specific Styles === */
 @media (max-width: 768px) {
@@ -435,12 +379,72 @@ body {
         }
 
                 .mobile-controls {
-                    display: grid;
+                    display: grid !important;
                 }
         
                 .joystick-container {
                     display: none !important;
                 }
+
+                                /* === Mobile Controls === */
+                                .mobile-controls {
+                                    position: fixed;
+                                    bottom: 20px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    display: grid;
+                                    grid-template-areas:
+                                        ". up ."
+                                        "left center right"
+                                        ". down .";
+                                    gap: 10px;
+                                    z-index: 1000;
+                                    padding: 20px;
+                                }
+                
+                                .mobile-controls button {
+                                    width: 60px;
+                                    height: 60px;
+                                    border-radius: 50%;
+                                    background: rgba(122, 162, 247, 0.2);
+                                    border: 2px solid var(--primary-color);
+                                    color: var(--text-light);
+                                    font-size: 24px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    cursor: pointer;
+                                    transition: all 0.2s ease;
+                                    -webkit-tap-highlight-color: transparent;
+                                    opacity: 0.8;
+                                }
+                
+                                .mobile-controls button:active {
+                                    transform: scale(0.95);
+                                    background: rgba(122, 162, 247, 0.4);
+                                    opacity: 1;
+                                }
+                
+                                .mobile-controls .up {
+                                    grid-area: up;
+                                }
+                
+                                .mobile-controls .down {
+                                    grid-area: down;
+                                }
+                
+                                .mobile-controls .left {
+                                    grid-area: left;
+                                }
+                
+                                .mobile-controls .right {
+                                    grid-area: right;
+                                }
+                
+                                .mobile-controls .center {
+                                    grid-area: center;
+                                    background: rgba(122, 162, 247, 0.1);
+                                }
 }
 
 /* === Landscape Mode Warning === */
