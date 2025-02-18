@@ -2,141 +2,146 @@ class AudioManager {
     constructor() {
         // Web Audio API setup
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        this.sounds = {
-            background: this.createAudio('./assets/sounds/background-music.mp3', { loop: true, volume: 0.3 })
-        };
+        
+        // מצב השמע
         this.isMusicMuted = false;
         this.isSoundMuted = false;
-
+        this.isInitialized = false;
+        
+        // יצירת נגן המוזיקה
+        this.backgroundMusic = new Audio('assets/sounds/background-music.mp3');
+        this.backgroundMusic.loop = true;
+        this.backgroundMusic.volume = 0.3;
+        
+        // טעינת העדפות
         this.loadPreferences();
+
+        // הפעלה אוטומטית בלחיצה ראשונה
+        document.addEventListener('click', () => this.initializeAudioContext(), { once: true });
+
+        // הוספת מאזינים לכפתורים
+        this.setupButtonListeners();
+
+        // קשירת המתודות לאובייקט
+        this.playButtonSound = this.playButtonSound.bind(this);
+        this.playFoodSound = this.playFoodSound.bind(this);
+        this.playCollisionSound = this.playCollisionSound.bind(this);
+        this.playGameOverSound = this.playGameOverSound.bind(this);
+        this.playLevelUpSound = this.playLevelUpSound.bind(this);
+    }
+
+    setupButtonListeners() {
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                this.playButtonSound();
+            }
+        });
+    }
+
+    async initializeAudioContext() {
+        if (this.audioContext.state === 'suspended') {
+            try {
+                await this.audioContext.resume();
+                console.log('AudioContext resumed successfully');
+                this.isInitialized = true;
+            } catch (error) {
+                console.error('Failed to resume AudioContext:', error);
+            }
+        }
+    }
+
+    createTone(frequency, duration, type = 'sine') {
+        if (this.isSoundMuted || !this.isInitialized) return;
+        
+        try {
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+            
+            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.01);
+            gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            
+            oscillator.start(this.audioContext.currentTime);
+            oscillator.stop(this.audioContext.currentTime + duration);
+        } catch (error) {
+            console.warn('Error creating tone:', error);
+        }
     }
 
     playButtonSound() {
-        if (this.isSoundMuted) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(440, this.audioContext.currentTime); // A4 note
-        
-        gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.05);
-        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.15);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.15);
-    }
-
-    playCollisionSound() {
-        if (this.isSoundMuted) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(200, this.audioContext.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(50, this.audioContext.currentTime + 0.2);
-        
-        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.2);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.2);
+        if (!this.isSoundMuted) {
+            this.createTone(800, 0.1, 'sine');
+        }
     }
 
     playFoodSound() {
-        if (this.isSoundMuted) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(600, this.audioContext.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(800, this.audioContext.currentTime + 0.1);
-        
-        gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.2, this.audioContext.currentTime + 0.05);
-        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.1);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.1);
+        if (!this.isSoundMuted) {
+            this.createTone(400, 0.1, 'sine');
+            setTimeout(() => this.createTone(600, 0.1, 'sine'), 100);
+        }
+    }
+
+    playCollisionSound() {
+        if (!this.isSoundMuted) {
+            this.createTone(200, 0.3, 'sawtooth');
+        }
     }
 
     playGameOverSound() {
-        if (this.isSoundMuted) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.type = 'triangle';
-        oscillator.frequency.setValueAtTime(400, this.audioContext.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(100, this.audioContext.currentTime + 0.5);
-        
-        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.5);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.5);
+        if (!this.isSoundMuted) {
+            this.createTone(600, 0.2, 'sine');
+            setTimeout(() => this.createTone(400, 0.2, 'sine'), 200);
+            setTimeout(() => this.createTone(200, 0.3, 'sine'), 400);
+        }
     }
 
     playLevelUpSound() {
-        if (this.isSoundMuted) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(400, this.audioContext.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(800, this.audioContext.currentTime + 0.2);
-        
-        gainNode.gain.setValueAtTime(0.2, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.2);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.2);
-    }
-
-    // המשך הפונקציות הקיימות למוזיקת רקע
-    createAudio(filename, options = {}) {
-        const audio = new Audio(filename);
-        audio.loop = options.loop || false;
-        audio.volume = options.volume || 1;
-        return audio;
-    }
-
-    loadPreferences() {
-        const preferences = JSON.parse(localStorage.getItem('audioPreferences') || '{}');
-        this.isMusicMuted = preferences.isMusicMuted || false;
-        this.isSoundMuted = preferences.isSoundMuted || false;
+        if (!this.isSoundMuted) {
+            this.createTone(400, 0.1, 'sine');
+            setTimeout(() => this.createTone(600, 0.1, 'sine'), 100);
+            setTimeout(() => this.createTone(800, 0.2, 'sine'), 200);
+        }
     }
 
     startBackgroundMusic() {
         if (!this.isMusicMuted) {
-            this.sounds.background.play().catch(error => {
+            this.backgroundMusic.play().catch(error => {
                 console.info('Auto-play prevented:', error);
             });
         }
     }
 
     stopBackgroundMusic() {
-        this.sounds.background.pause();
-        this.sounds.background.currentTime = 0;
+        this.backgroundMusic.pause();
+        this.backgroundMusic.currentTime = 0;
+    }
+
+    loadPreferences() {
+        try {
+            const preferences = JSON.parse(localStorage.getItem('audioPreferences') || '{}');
+            this.isMusicMuted = preferences.isMusicMuted || false;
+            this.isSoundMuted = preferences.isSoundMuted || false;
+        } catch (error) {
+            console.warn('Error loading audio preferences:', error);
+        }
+    }
+
+    savePreferences() {
+        try {
+            const preferences = {
+                isMusicMuted: this.isMusicMuted,
+                isSoundMuted: this.isSoundMuted
+            };
+            localStorage.setItem('audioPreferences', JSON.stringify(preferences));
+        } catch (error) {
+            console.warn('Error saving audio preferences:', error);
+        }
     }
 
     toggleMusic() {
@@ -146,13 +151,30 @@ class AudioManager {
         } else {
             this.startBackgroundMusic();
         }
+        this.savePreferences();
         return this.isMusicMuted;
     }
 
     toggleSound() {
         this.isSoundMuted = !this.isSoundMuted;
+        this.savePreferences();
         return this.isSoundMuted;
     }
 }
 
-export const audioManager = new AudioManager();
+// יצירת instance יחיד של מנהל האודיו
+const audioManager = new AudioManager();
+
+// חשיפת הפונקציות הנדרשות לשימוש חיצוני
+export const {
+    playFoodSound,
+    playCollisionSound,
+    playGameOverSound,
+    playLevelUpSound,
+    startBackgroundMusic,
+    stopBackgroundMusic,
+    toggleMusic,
+    toggleSound
+} = audioManager;
+
+export { audioManager };

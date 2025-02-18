@@ -362,9 +362,53 @@ body {
     }
 
     .auth-form {
+        width: 90%;
+        max-width: none;
         margin: 1rem;
         padding: 1.5rem;
+        max-height: 80vh;
+        overflow-y: auto;
     }
+
+    .game-canvas {
+        width: 95vmin;
+        height: 95vmin;
+        }
+    
+    .joystick-container {
+        display: block;
+    }
+}
+
+/* === Mobile Joystick === */
+.joystick-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    display: none;
+}
+
+.joystick-base {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    position: relative;
+    touch-action: none;
+}
+
+.joystick-stick {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
 }
 
 /* === Landscape Mode Warning === */
@@ -389,10 +433,32 @@ body {
     animation: rotate 2s infinite linear;
 }
 
+
 @media (max-width: 768px) and (orientation: portrait) {
+    .game-canvas {
+            display: none;
+        }
+    
+    .joystick-container {
+            display: none;
+        }
+
     .landscape-warning {
         display: flex;
     }
+
+    /* מאפשר גישה לטפסים במצב לאורך */
+    .auth-container {
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            display: flex !important;
+            /* מוודא שהטפסים תמיד מוצגים */
+            align-items: flex-start;
+            /* מתחיל מלמעלה במקום מהמרכז */
+            overflow-y: auto;
+            /* מאפשר גלילה אם צריך */
+        }
 }
 
 /* === Power-up Effects === */

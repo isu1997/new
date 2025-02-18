@@ -8,7 +8,8 @@
     <title>Snake Evolution - משחק הנחש המתפתח</title>
 
     <!-- Favicon & Stylesheets -->
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" href="data:,">
+    <!-- <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico"> -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -152,151 +153,122 @@
     <script type="module" src="js/animations.js"></script>
     <script type="module" src="js/game.js"></script>
     <script type="module">
-            import { authManager } from './js/auth.js';
-            import { gameUtils } from './js/utils.js';
-            import { audioManager } from './js/audio.js';
-            import Game from './js/game.js';
+        import { authManager } from './js/auth.js';
+        import { gameUtils } from './js/utils.js';
+        import { audioManager } from './js/audio.js';
+        import Game from './js/game.js';
 
-            // Initialize game after DOM loads
-            document.addEventListener('DOMContentLoaded', () => {
-                const game = new Game('gameCanvas');
+        // Initialize game after DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const game = new Game('gameCanvas');
 
-                // יצירת התייחסות לאלמנטים
-                const leaderboardButton = document.getElementById('showLeaderboard');
-                const leaderboardElement = document.getElementById('leaderboard');
+            // יצירת התייחסות לאלמנטים
+            const leaderboardButton = document.getElementById('showLeaderboard');
+            const leaderboardElement = document.getElementById('leaderboard');
+            const musicButton = document.getElementById('toggleMusic');
+            const soundButton = document.getElementById('toggleSound');
+            const buttons = document.querySelectorAll('.button');
 
-                if (!leaderboardElement || !leaderboardButton) {
-                    console.error('Leaderboard elements not found');
-                    return;
+            // הפעלת מוזיקת רקע בטעינה
+            audioManager.startBackgroundMusic();
+
+            // עדכון אייקונים לפי מצב השמע
+            const updateAudioIcons = () => {
+                const musicIcon = document.querySelector('#toggleMusic i');
+                const soundIcon = document.querySelector('#toggleSound i');
+
+                musicIcon.className = audioManager.isMusicMuted ? 'fas fa-volume-mute' : 'fas fa-music';
+                soundIcon.className = audioManager.isSoundMuted ? 'fas fa-volume-off' : 'fas fa-volume-up';
+            };
+
+            // אתחול ראשוני
+            updateAudioIcons();
+
+            // הפעלת AudioContext בלחיצה ראשונה
+            document.addEventListener('click', () => {
+                if (audioManager.audioContext.state === 'suspended') {
+                    audioManager.audioContext.resume();
                 }
+            }, { once: true });
 
-                // טעינת טבלת שיאים ראשונית
-                try {
-                    gameUtils.updateLeaderboardDisplay();
-                } catch (error) {
-                    console.error('Error updating leaderboard:', error);
-                }
+            // הוספת מאזיני אירועים לכפתורים
+            musicButton.addEventListener('click', () => {
+                const isMuted = audioManager.toggleMusic();
+                musicButton.querySelector('i').className = isMuted ? 'fas fa-volume-mute' : 'fas fa-music';
+                audioManager.playButtonSound();
+            });
 
-                document.addEventListener('DOMContentLoaded', () => {
-                    const game = new Game('gameCanvas');
+            soundButton.addEventListener('click', () => {
+                const isMuted = audioManager.toggleSound();
+                soundButton.querySelector('i').className = isMuted ? 'fas fa-volume-off' : 'fas fa-volume-up';
+                audioManager.playButtonSound();
+            });
 
-                    // יצירת התייחסות לאלמנטים
-                    const leaderboardButton = document.getElementById('showLeaderboard');
-                    const leaderboardElement = document.getElementById('leaderboard');
-
-                    // === Audio Controls Setup ===
-                    const setupAudioControls = () => {
-                        const musicButton = document.getElementById('toggleMusic');
-                        const soundButton = document.getElementById('toggleSound');
-
-                        updateAudioIcons();
-
-                        musicButton.addEventListener('click', () => {
-                            const isMuted = audioManager.toggleMusic();
-                            musicButton.querySelector('i').className = isMuted ? 'fas fa-volume-mute' : 'fas fa-music';
-                            audioManager.playButtonSound();
-                        });
-
-                        soundButton.addEventListener('click', () => {
-                            const isMuted = audioManager.toggleSound();
-                            soundButton.querySelector('i').className = isMuted ? 'fas fa-volume-off' : 'fas fa-volume-up';
-                            audioManager.playButtonSound();
-                        });
-                    };
-
-                    // עדכון אייקונים לפי מצב השמע
-                    const updateAudioIcons = () => {
-                        const musicIcon = document.querySelector('#toggleMusic i');
-                        const soundIcon = document.querySelector('#toggleSound i');
-
-                        musicIcon.className = audioManager.isMusicMuted ? 'fas fa-volume-mute' : 'fas fa-music';
-                        soundIcon.className = audioManager.isSoundMuted ? 'fas fa-volume-off' : 'fas fa-volume-up';
-                    };
-
-                    // === Button Click Sounds ===
-                    const addButtonSounds = () => {
-                        const buttons = document.querySelectorAll('.button');
-                        buttons.forEach(button => {
-                            button.addEventListener('click', () => {
-                                audioManager.playButtonSound();
-                            });
-                        });
-                    };
-
-                    // === Form Submission Sounds ===
-                    const addFormSounds = () => {
-                        const forms = document.querySelectorAll('form');
-                        forms.forEach(form => {
-                            form.addEventListener('submit', (e) => {
-                                if (!e.defaultPrevented) {
-                                    audioManager.playButtonSound();
-                                }
-                            });
-                        });
-                    };
-
-                    // === Game Event Sounds ===
-                    const setupGameSounds = () => {
-                        document.getElementById('startGame').addEventListener('click', () => {
-                            audioManager.stopBackgroundMusic();
-                            audioManager.playButtonSound();
-                        });
-
-                        document.getElementById('playAgain').addEventListener('click', () => {
-                            audioManager.playButtonSound();
-                        });
-                    };
-
-                    // === Initialize Audio Setup ===
-                    const initializeAudio = () => {
-                        setupAudioControls();
-                        addButtonSounds();
-                        addFormSounds();
-                        setupGameSounds();
-
-                        // התחלת מוזיקת רקע אם המשתמש לא השתיק
-                        if (!audioManager.isMusicMuted) {
-                            audioManager.startBackgroundMusic();
-                        }
-                    };
-
-                    // הוספת מאזין לכפתור טבלת שיאים
-                    leaderboardButton.addEventListener('click', () => {
-                        try {
-                            gameUtils.updateLeaderboardDisplay();
-                            audioManager.playButtonSound();
-                            leaderboardElement.classList.toggle('show');
-                            const isVisible = leaderboardElement.classList.contains('show');
-                            console.log('Leaderboard visibility:', isVisible);
-                        } catch (error) {
-                            console.error('Error in leaderboard click handler:', error);
-                        }
-                    });
-
-                    // === Event Listeners ===
-                    document.getElementById('logout').addEventListener('click', () => {
-                        audioManager.playButtonSound();
-                        authManager.logout();
-                        window.location.reload();
-                    });
-
-                    // === Form Navigation Sound Effects ===
-                    const setupFormNavigationSounds = () => {
-                        const formLinks = document.querySelectorAll('.auth-switch a, .forgot-password');
-                        formLinks.forEach(link => {
-                            link.addEventListener('click', () => {
-                                audioManager.playButtonSound();
-                            });
-                        });
-                    };
-
-                    // === Initialize Everything ===
-                    initializeAudio();
-                    setupFormNavigationSounds();
-                    authManager.setupEventListeners();
+            // הוספת סאונד לכל הכפתורים
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    audioManager.playButtonSound();
                 });
             });
+
+            // מאזיני אירועים לטפסים
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    if (!e.defaultPrevented) {
+                        audioManager.playButtonSound();
+                    }
+                });
+            });
+
+            // אירועי משחק
+            document.getElementById('startGame').addEventListener('click', () => {
+                console.log('Start game clicked');  // לוג לבדיקה
+                audioManager.stopBackgroundMusic();
+                audioManager.playButtonSound();
+                game.startGame();  // קריאה ישירה למתודת startGame
+            });
+
+            document.getElementById('playAgain').addEventListener('click', () => {
+                audioManager.playButtonSound();
+            });
+
+            // טבלת שיאים
+            leaderboardButton.addEventListener('click', () => {
+                try {
+                    gameUtils.updateLeaderboardDisplay();
+                    audioManager.playButtonSound();
+                    leaderboardElement.classList.toggle('show');
+                } catch (error) {
+                    console.error('Error in leaderboard click handler:', error);
+                }
+            });
+
+            // התנתקות
+            document.getElementById('logout').addEventListener('click', () => {
+                audioManager.playButtonSound();
+                authManager.logout();
+                window.location.reload();
+            });
+
+            // ניווט בטפסים
+            const formLinks = document.querySelectorAll('.auth-switch a, .forgot-password');
+            formLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    audioManager.playButtonSound();
+                });
+            });
+
+            // אתחול המערכת
+            authManager.setupEventListeners();
+        });
     </script>
+    <div id="root"></div>
+    <div id="leaderboardEntries"></div>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/audio.js"></script>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 </body>
 
 </html>

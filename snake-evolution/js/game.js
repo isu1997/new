@@ -1,4 +1,10 @@
-// game.js
+import { 
+    playFoodSound, 
+    playCollisionSound, 
+    playGameOverSound, 
+    playLevelUpSound,
+    audioManager 
+} from './audio.js';
 import { gameUtils } from './utils.js';
 
 class Game {
@@ -20,72 +26,135 @@ class Game {
         this.isGameOver = false;
         this.isStarted = false;
         this.lastRenderTime = 0;
-         this.baseGameSpeed = 200; // מהירות התחלתית איטית יותר
-        this.gameSpeed = this.baseGameSpeed;
+        this.gameSpeed = 100;
+        this.baseGameSpeed = 100;
         this.inputDirection = { x: 0, y: 0 };
         this.lastInputDirection = { x: 0, y: 0 };
 
         // Bind methods
-        this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.startGame = this.startGame.bind(this);
+        this.resetGameState = this.resetGameState.bind(this);
         this.gameLoop = this.gameLoop.bind(this);
         this.update = this.update.bind(this);
         this.render = this.render.bind(this);
-        this.startGame = this.startGame.bind(this);
-        this.resetGame = this.resetGame.bind(this);
-        this.generateFood = this.generateFood.bind(this);
-        this.resetGameState = this.resetGameState.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
 
         // Initialize
-        this.init();
-
-        document.getElementById('playAgain').addEventListener('click', () => {
-        document.getElementById('gameOver').style.display = 'none';
-        this.resetGame();
-        this.startGame();
-    });
-
-    document.getElementById('backToMenu').addEventListener('click', () => {
-        document.getElementById('gameOver').style.display = 'none';
-        document.getElementById('gameContainer').style.display = 'flex';
-        document.getElementById('startGame').style.display = 'block';
-        this.resetGame();
-    });
-    }
-
-    init() {
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
-        this.setupEventListeners();
-        this.resetGameState();
-    }
-
-    setupEventListeners() {
         document.addEventListener('keydown', this.handleKeyPress);
-        const startButton = document.getElementById('startGame');
-        if (startButton) {
-            startButton.addEventListener('click', this.startGame);
-        }
+
+        // Set initial direction
+        this.snake = {
+            body: [
+                { x: 10, y: 10 },
+                { x: 9, y: 10 },
+                { x: 8, y: 10 }
+            ],
+            direction: { x: 1, y: 0 }
+        };
+
+        // Add button handlers initialization
+        this.initializeButtons();
+
+         // Joystick state
+        this.joystick = {
+            active: false,
+            baseX: 0,
+            baseY: 0,
+            stickX: 0,
+            stickY: 0,
+            maxDistance: 35
+        };
+        
+        this.setupJoystick();
     }
 
-    resizeCanvas() {
-        const minDimension = Math.min(window.innerWidth, window.innerHeight) * 0.8;
-        this.canvas.width = minDimension;
-        this.canvas.height = minDimension;
-        this.cellSize = Math.floor(minDimension / this.gridSize);
-    }
-
-    startGame() {
-        if (!this.isStarted) {
-            console.log('Starting game...');
-            this.isStarted = true;
+    initializeButtons() {
+        // Play Again button
+        document.getElementById('playAgain')?.addEventListener('click', () => {
+            document.getElementById('gameOver').style.display = 'none';
             this.resetGameState();
-            document.getElementById('startGame').style.display = 'none';
+            this.isGameOver = false;
+            this.isStarted = true;
             this.lastRenderTime = 0;
             requestAnimationFrame(this.gameLoop);
-            // SoundEffects.stopBackgroundMusic();
-        }
+        });
+
+        // Back to Menu button
+        document.getElementById('backToMenu')?.addEventListener('click', () => {
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('startGame').style.display = 'block';
+            this.isGameOver = false;
+            this.isStarted = false;
+            this.resetGameState();
+            audioManager.startBackgroundMusic();
+        });
     }
 
+    setupJoystick() {
+        const container = document.createElement('div');
+        container.className = 'joystick-container';
+        
+        const base = document.createElement('div');
+        base.className = 'joystick-base';
+        
+        const stick = document.createElement('div');
+        stick.className = 'joystick-stick';
+        
+        base.appendChild(stick);
+        container.appendChild(base);
+        document.body.appendChild(container);
+
+        // Touch Events
+        const handleStart = (e) => {
+            const touch = e.touches[0];
+            const rect = base.getBoundingClientRect();
+            this.joystick.active = true;
+            this.joystick.baseX = rect.left + rect.width / 2;
+            this.joystick.baseY = rect.top + rect.height / 2;
+            this.updateJoystickPosition(touch);
+        };
+
+        const handleMove = (e) => {
+            if (!this.joystick.active) return;
+            e.preventDefault();
+            this.updateJoystickPosition(e.touches[0]);
+        };
+
+        const handleEnd = () => {
+            this.joystick.active = false;
+            stick.style.transform = 'translate(-50%, -50%)';
+            this.inputDirection = { x: 0, y: 0 };
+        };
+
+        base.addEventListener('touchstart', handleStart);
+        document.addEventListener('touchmove', handleMove, { passive: false });
+        document.addEventListener('touchend', handleEnd);
+    }
+
+    updateJoystickPosition(touch) {
+        const dx = touch.clientX - this.joystick.baseX;
+        const dy = touch.clientY - this.joystick.baseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx);
+
+        const stick = document.querySelector('.joystick-stick');
+        if (!stick) return;
+
+        const moveDistance = Math.min(distance, this.joystick.maxDistance);
+        const moveX = moveDistance * Math.cos(angle);
+        const moveY = moveDistance * Math.sin(angle);
+
+        stick.style.transform = `translate(calc(${moveX}px - 50%), calc(${moveY}px - 50%))`;
+
+        // Update game direction based on joystick position
+        if (Math.abs(dx) > Math.abs(dy)) {
+            this.inputDirection = { x: dx > 0 ? 1 : -1, y: 0 };
+        } else if (Math.abs(dy) > Math.abs(dx)) {
+            this.inputDirection = { x: 0, y: dy > 0 ? 1 : -1 };
+        }
+    }
     resetGameState() {
         this.snake = {
             body: [
@@ -95,26 +164,26 @@ class Game {
             ],
             direction: { x: 1, y: 0 }
         };
+        
         this.score = 0;
         this.level = 1;
         this.lives = 3;
         this.gameSpeed = this.baseGameSpeed;
         this.generateFood();
-        this.powerUp = null;
+        
+        // איפוס כיוון
         this.inputDirection = { x: 0, y: 0 };
         this.lastInputDirection = { x: 0, y: 0 };
-        this.isGameOver = false;
         
-        // Update UI
+        // עדכון תצוגה
         document.getElementById('score').textContent = '0';
         document.getElementById('level').textContent = '1';
-    }
-
-    resetGame() {
-        this.isStarted = false;
-        this.resetGameState();
-        document.getElementById('startGame').style.display = 'block';
-        document.getElementById('gameOver').style.display = 'none';
+        
+        // איפוס לבבות
+        const hearts = document.querySelectorAll('.lives .heart');
+        hearts.forEach(heart => {
+            heart.style.visibility = 'visible';
+        });
     }
 
     generateFood() {
@@ -126,16 +195,93 @@ class Game {
             };
         } while (this.snake.body.some(segment => 
             segment.x === newFood.x && segment.y === newFood.y));
+        
         this.food = newFood;
     }
 
+    startGame() {
+        if (!this.isStarted) {
+            console.log('Starting game...');
+            this.isStarted = true;
+            this.resetGameState();
+            document.getElementById('startGame').style.display = 'none';
+            audioManager.stopBackgroundMusic();
+            this.lastRenderTime = 0;
+            requestAnimationFrame(this.gameLoop);
+        }
+    }
+
+    eatFood() {
+        playFoodSound();
+        this.score += 10 * this.level;
+        document.getElementById('score').textContent = this.score;
+        this.generateFood();
+        this.updateLevel();
+    }
+
+    handleCollision() {
+        playCollisionSound();
+        this.lives--;
+        
+        // עדכון תצוגת הלבבות
+        const hearts = document.querySelectorAll('.lives .heart');
+        Array.from(hearts).forEach((heart, index) => {
+            heart.style.visibility = index < this.lives ? 'visible' : 'hidden';
+        });
+        
+        if (this.lives <= 0) {
+            this.gameOver();
+        } else {
+            this.resetSnakePosition();
+        }
+    }
+
+    hasEatenFood() {
+        const head = this.snake.body[0];
+        return this.food && head.x === this.food.x && head.y === this.food.y;
+    }
+
+    gameOver() {
+        playGameOverSound();
+        this.isGameOver = true;
+        this.isStarted = false;
+        audioManager.startBackgroundMusic();
+        
+        document.getElementById('gameOver').style.display = 'flex';
+        document.getElementById('finalScore').textContent = this.score;
+        document.getElementById('finalLevel').textContent = this.level;
+        
+        gameUtils.saveHighScore(this.score, this.level);
+    }
+
+    updateLevel() {
+        const newLevel = Math.floor(this.score / 100) + 1;
+        if (newLevel > this.level) {
+            this.level = newLevel;
+            document.getElementById('level').textContent = this.level;
+            playLevelUpSound();
+            this.gameSpeed = Math.max(this.baseGameSpeed * 0.95 ** (this.level - 1), 100);
+        }
+    }
+
+    resizeCanvas() {
+        const minDimension = Math.min(window.innerWidth, window.innerHeight) * 0.8;
+        this.canvas.width = minDimension;
+        this.canvas.height = minDimension;
+        this.cellSize = Math.floor(minDimension / this.gridSize);
+    }
+
     gameLoop(currentTime) {
-        if (!this.isStarted || this.isPaused) return;
+        if (!this.isStarted || this.isPaused || this.isGameOver) {
+            return;
+        }
 
         window.requestAnimationFrame(this.gameLoop);
 
         const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
-        if (secondsSinceLastRender < this.gameSpeed / 1000) return;
+        if (secondsSinceLastRender < this.gameSpeed / 1000) {
+            return;
+        }
 
         this.lastRenderTime = currentTime;
         this.update();
@@ -143,13 +289,35 @@ class Game {
     }
 
     update() {
-        // Update snake direction
+        // Update snake direction from input
         if (this.inputDirection.x !== 0 || this.inputDirection.y !== 0) {
             this.snake.direction = this.inputDirection;
             this.lastInputDirection = this.inputDirection;
         }
 
-        // Move snake
+        this.updateSnake();
+        this.checkCollisions();
+    }
+
+    checkCollisions() {
+        const head = this.snake.body[0];
+        
+        // Wall collision
+        if (head.x < 0 || head.x >= this.gridSize || head.y < 0 || head.y >= this.gridSize) {
+            this.handleCollision();
+            return;
+        }
+
+        // Self collision
+        for (let i = 1; i < this.snake.body.length; i++) {
+            if (head.x === this.snake.body[i].x && head.y === this.snake.body[i].y) {
+                this.handleCollision();
+                return;
+            }
+        }
+    }
+
+    updateSnake() {
         const newHead = {
             x: this.snake.body[0].x + this.snake.direction.x,
             y: this.snake.body[0].y + this.snake.direction.y
@@ -157,107 +325,11 @@ class Game {
 
         this.snake.body.unshift(newHead);
 
-        // Check for food collision
         if (this.hasEatenFood()) {
-            this.handleFoodCollision();
+            this.eatFood();
         } else {
             this.snake.body.pop();
         }
-
-        // Check for collisions
-        this.checkCollisions();
-    }
-
-    hasEatenFood() {
-        const head = this.snake.body[0];
-        return head.x === this.food.x && head.y === this.food.y;
-    }
-
-    handleFoodCollision() {
-    this.score += 10 * this.level;
-    document.getElementById('score').textContent = this.score;
-    // SoundEffects.play('food');  // אפקט אכילה
-    this.generateFood();
-    this.updateLevel();
-}
-
-    checkCollisions() {
-        const head = this.snake.body[0];
-        
-        // Wall collision
-        if (head.x < 0 || head.x >= this.gridSize || 
-            head.y < 0 || head.y >= this.gridSize) {
-            this.handleCollision();
-            return;
-        }
-
-        // Self collision
-        for (let i = 1; i < this.snake.body.length; i++) {
-            if (head.x === this.snake.body[i].x && 
-                head.y === this.snake.body[i].y) {
-                this.handleCollision();
-                return;
-            }
-        }
-    }
-
-    handleCollision() {
-    // SoundEffects.play('collision');
-    this.lives--;
-    
-    // עדכון הלבבות
-    const hearts = document.querySelectorAll('.lives .heart');
-    for (let i = 0; i < hearts.length; i++) {
-        if (i < this.lives) {
-            hearts[i].style.display = 'inline';
-        } else {
-            hearts[i].style.display = 'none';
-        }
-    }
-    
-    if (this.lives <= 0) {
-        this.gameOver();
-    } else {
-        this.resetSnakePosition();
-    }
-}
-
-    resetSnakePosition() {
-        this.snake = {
-            body: [
-                { x: 10, y: 10 },
-                { x: 9, y: 10 },
-                { x: 8, y: 10 }
-            ],
-            direction: { x: 1, y: 0 }
-        };
-        this.inputDirection = { x: 0, y: 0 };
-        this.lastInputDirection = { x: 0, y: 0 };
-    }
-
-    updateLevel() {
-    const newLevel = Math.floor(this.score / 100) + 1;
-    if (newLevel > this.level) {
-        this.level = newLevel;
-        this.gameSpeed = Math.max(this.baseGameSpeed * 0.95 ** (this.level - 1), 100);
-        document.getElementById('level').textContent = this.level;
-        // SoundEffects.play('levelUp');  // אפקט עלייה רמה
-    }
-}
-
-    gameOver() {
-        this.isGameOver = true;
-        this.isStarted = false;
-        // SoundEffects.play('gameOver');
-        // SoundEffects.startBackgroundMusic();
-        
-        // Show game over screen
-        document.getElementById('gameOver').style.display = 'flex';
-        document.getElementById('finalScore').textContent = this.score;
-        document.getElementById('finalLevel').textContent = this.level;
-        
-        // Save high score
-        gameUtils.saveHighScore(this.score, this.level);
     }
 
     render() {
@@ -324,6 +396,17 @@ class Game {
             this.lastRenderTime = 0;
             requestAnimationFrame(this.gameLoop);
         }
+    }
+
+    resetSnakePosition() {
+        this.snake = {
+            body: [
+                { x: 10, y: 10 },
+                { x: 9, y: 10 },
+                { x: 8, y: 10 }
+            ],
+            direction: { x: 1, y: 0 }
+        };
     }
 }
 
