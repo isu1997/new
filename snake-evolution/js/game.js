@@ -20,119 +20,50 @@ function initializeMobileControls() {
     mobileControls = document.createElement('div');
     mobileControls.className = 'mobile-controls';
     
-    const controls = `
-        <button class="control-btn up" data-direction="up"><i class="fas fa-chevron-up"></i></button>
-        <div class="horizontal-controls">
-            <button class="control-btn left" data-direction="left"><i class="fas fa-chevron-left"></i></button>
-            <button class="control-btn center" data-direction="center"><i class="fas fa-pause"></i></button>
-            <button class="control-btn right" data-direction="right"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <button class="control-btn down" data-direction="down"><i class="fas fa-chevron-down"></i></button>
-    `;
-    
-    mobileControls.innerHTML = controls;
+    // יצירת הכפתורים
+    const buttonsConfig = [
+        { direction: 'up', icon: 'fa-chevron-up' },
+        { direction: 'left', icon: 'fa-chevron-left' },
+        { direction: 'center', icon: 'fa-pause' },
+        { direction: 'right', icon: 'fa-chevron-right' },
+        { direction: 'down', icon: 'fa-chevron-down' }
+    ];
 
-    // הוספת מאזיני אירועים לכל הכפתורים
-    const buttons = mobileControls.querySelectorAll('.control-btn');
-    buttons.forEach(button => {
-        const direction = button.dataset.direction;
+    buttonsConfig.forEach(({ direction, icon }) => {
+        const button = document.createElement('button');
+        button.className = `control-btn ${direction}`;
+        button.innerHTML = `<i class="fas ${icon}"></i>`;
         
-        // טיפול בלחיצה רגילה
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (direction === 'center') {
-                if (gameInstance) {
-                    gameInstance.togglePause();
+        // הוספת מאזיני אירועים
+        ['touchstart', 'mousedown'].forEach(eventType => {
+            button.addEventListener(eventType, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (direction === 'center') {
+                    if (gameInstance) {
+                        gameInstance.togglePause();
+                    }
+                } else {
+                    const directionMap = {
+                        'up': { x: 0, y: -1 },
+                        'down': { x: 0, y: 1 },
+                        'left': { x: -1, y: 0 },
+                        'right': { x: 1, y: 0 }
+                    };
+                    
+                    if (gameInstance && directionMap[direction]) {
+                        gameInstance.inputDirection = directionMap[direction];
+                        console.log(`Direction changed to: ${direction}`);
+                    }
                 }
-            } else {
-                handleDirectionChange(direction);
-            }
+            }, { passive: false });
         });
-
-        // טיפול במגע
-        button.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (direction === 'center') {
-                if (gameInstance) {
-                    gameInstance.togglePause();
-                }
-            } else {
-                handleDirectionChange(direction);
-            }
-        }, { passive: false });
-
-        // מניעת התנהגות ברירת מחדל של הדפדפן
-        button.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-        });
+        
+        mobileControls.appendChild(button);
     });
 
     document.body.appendChild(mobileControls);
-
-    // הוספת סגנונות דינמיים
-    const style = document.createElement('style');
-    style.textContent = `
-        .mobile-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: grid;
-            gap: 10px;
-            z-index: 1000;
-            pointer-events: auto;
-        }
-
-        .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(122, 162, 247, 0.2);
-            border: 2px solid var(--primary-color, #7aa2f7);
-            color: white;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .horizontal-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        @media (min-width: 769px) {
-            .mobile-controls {
-                display: none !important;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-function handleDirectionChange(direction) {
-    if (!gameInstance || !direction) return;
-
-    const directionMap = {
-        'up': { x: 0, y: -1 },
-        'down': { x: 0, y: 1 },
-        'left': { x: -1, y: 0 },
-        'right': { x: 1, y: 0 }
-    };
-
-    if (directionMap[direction]) {
-        const newDirection = directionMap[direction];
-        
-        // בדיקה שהכיוון החדש לא הפוך לכיוון הנוכחי
-        const lastInputDirection = gameInstance.lastInputDirection;
-        if (!(newDirection.x === -lastInputDirection.x && newDirection.y === -lastInputDirection.y)) {
-            gameInstance.inputDirection = newDirection;
-        }
-    }
 }
 
 // יצירת המשחק
@@ -530,6 +461,26 @@ stopGame() {
         }
     }
 
+     handleDirectionChange(direction) {
+        const directionMap = {
+            'up': { x: 0, y: -1 },
+            'down': { x: 0, y: 1 },
+            'left': { x: -1, y: 0 },
+            'right': { x: 1, y: 0 }
+        };
+
+        if (directionMap[direction] && !this.isGameOver && this.isStarted) {
+            const newDirection = directionMap[direction];
+            const currentDirection = this.lastInputDirection;
+            
+            // מניעת תנועה בכיוון ההפוך
+            if (!(newDirection.x === -currentDirection.x && newDirection.y === -currentDirection.y)) {
+                this.inputDirection = newDirection;
+                console.log('Direction updated:', direction);
+            }
+        }
+    }
+
     togglePause() {
         this.isPaused = !this.isPaused;
         if (!this.isPaused) {
@@ -554,6 +505,16 @@ stopGame() {
 window.addEventListener('load', () => {
     gameInstance = new Game('gameCanvas');
     initializeMobileControls();
+    
+    // הוספת טיפול במקרה של שינוי אוריינטציה
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            if (gameInstance) {
+                gameInstance.resizeCanvas();
+                initializeMobileControls(); // יצירה מחדש של הכפתורים
+            }
+        }, 100);
+    });
 });
 
 export default Game;
