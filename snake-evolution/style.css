@@ -346,6 +346,65 @@ body {
     }
 }
 
+
+/* === Mobile Controls === */
+.mobile-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    grid-template-areas:
+        ". up ."
+        "left center right"
+        ". down .";
+    gap: 10px;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.mobile-controls button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(122, 162, 247, 0.2);
+    border: 2px solid var(--primary-color);
+    color: var(--text-light);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-controls button:active {
+    transform: scale(0.95);
+    background: rgba(122, 162, 247, 0.4);
+}
+
+.mobile-controls .up {
+    grid-area: up;
+}
+
+.mobile-controls .down {
+    grid-area: down;
+}
+
+.mobile-controls .left {
+    grid-area: left;
+}
+
+.mobile-controls .right {
+    grid-area: right;
+}
+
+.mobile-controls .center {
+    grid-area: center;
+    background: rgba(122, 162, 247, 0.1);
+}
+
 /* === Mobile Specific Styles === */
 @media (max-width: 768px) {
     .game-container {
@@ -374,44 +433,14 @@ body {
         width: 95vmin;
         height: 95vmin;
         }
-    
-    .joystick-container {
-                display: block;
-                    /* תמיד מציג את הג'ויסטיק במובייל כשיש משחק */
-                    opacity: 0.7;
-                    z-index: 1000;
-    }
-}
 
-/* === Mobile Joystick === */
-.joystick-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 1000;
-    display: none;
-}
-
-.joystick-base {
-    width: 120px;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    position: relative;
-    touch-action: none;
-}
-
-.joystick-stick {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
+                .mobile-controls {
+                    display: grid;
+                }
+        
+                .joystick-container {
+                    display: none !important;
+                }
 }
 
 /* === Landscape Mode Warning === */
@@ -444,10 +473,6 @@ body {
 
     .landscape-warning {
         display: flex;
-    }
-
-    .joystick-container {
-        display: none;
     }
 
         /* מאפשר גישה לטפסים תמיד */

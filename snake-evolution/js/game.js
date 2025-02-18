@@ -7,8 +7,91 @@ import {
 } from './audio.js';
 import { gameUtils } from './utils.js';
 
+// Mobile Controls
+function initializeMobileControls() {
+    const controlsContainer = document.createElement('div');
+    controlsContainer.className = 'mobile-controls';
+    
+    // יצירת הכפתורים
+    const directions = ['up', 'down', 'left', 'right'];
+    const arrows = {
+        up: '&#8593;',
+        down: '&#8595;',
+        left: '&#8592;',
+        right: '&#8594;'
+    };
+
+    directions.forEach(direction => {
+        const button = document.createElement('button');
+        button.className = direction;
+        button.innerHTML = arrows[direction];
+        button.setAttribute('aria-label', direction);
+        
+        // הוספת מאזיני לחיצה
+        button.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleDirectionChange(direction);
+        });
+        
+        button.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            handleDirectionChange(direction);
+        });
+        
+        controlsContainer.appendChild(button);
+    });
+
+    // כפתור מרכזי
+    const centerButton = document.createElement('button');
+    centerButton.className = 'center';
+    centerButton.innerHTML = '&#9679;';
+    centerButton.setAttribute('aria-label', 'center');
+    controlsContainer.appendChild(centerButton);
+
+    document.body.appendChild(controlsContainer);
+}
+
+function handleDirectionChange(direction) {
+    switch(direction) {
+        case 'up':
+            if (currentDirection !== 'down') {
+                nextDirection = 'up';
+            }
+            break;
+        case 'down':
+            if (currentDirection !== 'up') {
+                nextDirection = 'down';
+            }
+            break;
+        case 'left':
+            if (currentDirection !== 'right') {
+                nextDirection = 'left';
+            }
+            break;
+        case 'right':
+            if (currentDirection !== 'left') {
+                nextDirection = 'right';
+            }
+            break;
+    }
+}
+
+// יצירת המשחק
 class Game {
     constructor(canvasId) {
+        // Core properties
+        // יצירת ה-canvas אם הוא לא קיים
+        if (!document.getElementById(canvasId)) {
+            const canvas = document.createElement('canvas');
+            canvas.id = canvasId;
+            canvas.className = 'game-canvas';
+            // הוספת ה-canvas למשחק באזור המתאים
+            const gameContainer = document.createElement('div');
+            gameContainer.className = 'game-container';
+            gameContainer.appendChild(canvas);
+            document.body.appendChild(gameContainer);
+        }
+
         // Core properties
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
@@ -56,18 +139,6 @@ class Game {
 
         // Add button handlers initialization
         this.initializeButtons();
-
-         // Joystick state
-        this.joystick = {
-            active: false,
-            baseX: 0,
-            baseY: 0,
-            stickX: 0,
-            stickY: 0,
-            maxDistance: 35
-        };
-        
-        this.setupJoystick();
     }
 
     initializeButtons() {
@@ -92,69 +163,6 @@ class Game {
         });
     }
 
-    setupJoystick() {
-        const container = document.createElement('div');
-        container.className = 'joystick-container';
-        
-        const base = document.createElement('div');
-        base.className = 'joystick-base';
-        
-        const stick = document.createElement('div');
-        stick.className = 'joystick-stick';
-        
-        base.appendChild(stick);
-        container.appendChild(base);
-        document.body.appendChild(container);
-
-        // Touch Events
-        const handleStart = (e) => {
-            const touch = e.touches[0];
-            const rect = base.getBoundingClientRect();
-            this.joystick.active = true;
-            this.joystick.baseX = rect.left + rect.width / 2;
-            this.joystick.baseY = rect.top + rect.height / 2;
-            this.updateJoystickPosition(touch);
-        };
-
-        const handleMove = (e) => {
-            if (!this.joystick.active) return;
-            e.preventDefault();
-            this.updateJoystickPosition(e.touches[0]);
-        };
-
-        const handleEnd = () => {
-            this.joystick.active = false;
-            stick.style.transform = 'translate(-50%, -50%)';
-            this.inputDirection = { x: 0, y: 0 };
-        };
-
-        base.addEventListener('touchstart', handleStart);
-        document.addEventListener('touchmove', handleMove, { passive: false });
-        document.addEventListener('touchend', handleEnd);
-    }
-
-    updateJoystickPosition(touch) {
-        const dx = touch.clientX - this.joystick.baseX;
-        const dy = touch.clientY - this.joystick.baseY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const angle = Math.atan2(dy, dx);
-
-        const stick = document.querySelector('.joystick-stick');
-        if (!stick) return;
-
-        const moveDistance = Math.min(distance, this.joystick.maxDistance);
-        const moveX = moveDistance * Math.cos(angle);
-        const moveY = moveDistance * Math.sin(angle);
-
-        stick.style.transform = `translate(calc(${moveX}px - 50%), calc(${moveY}px - 50%))`;
-
-        // Update game direction based on joystick position
-        if (Math.abs(dx) > Math.abs(dy)) {
-            this.inputDirection = { x: dx > 0 ? 1 : -1, y: 0 };
-        } else if (Math.abs(dy) > Math.abs(dx)) {
-            this.inputDirection = { x: 0, y: dy > 0 ? 1 : -1 };
-        }
-    }
     resetGameState() {
         this.snake = {
             body: [
@@ -409,5 +417,12 @@ class Game {
         };
     }
 }
+
+// יצירה והפעלה של המשחק
+window.addEventListener('load', () => {
+    const game = new Game();
+    initializeMobileControls();
+    game.startGame();
+});
 
 export default Game;
