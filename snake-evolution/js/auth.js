@@ -1,3 +1,5 @@
+import { gameUtils } from './utils.js';
+
 // auth.js
 class AuthManager {
     constructor() {
@@ -109,21 +111,38 @@ class AuthManager {
         }
     }
 
-    async handleLogin(e) {
-        e.preventDefault();
-        try {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
+async handleLogin(e) {
+    e.preventDefault();
+    try {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
 
-            const user = await this.login(email, password, rememberMe);
-            if (user) {
-                this.showGameContainer();
+        const user = await this.login(email, password, rememberMe);
+        if (user) {
+            // הסרת ניסיון נעילת הסיבוב ומעבר לגישה עדינה יותר
+            if (gameUtils.isMobile) {
+                try {
+                    // הסתרת אזהרת הסיבוב
+                    const landscapeWarning = document.querySelector('.landscape-warning');
+                    if (landscapeWarning) {
+                        landscapeWarning.style.display = 'none';
+                    }
+                    
+                    // הצגת הטופס תמיד
+                    document.querySelectorAll('.auth-container').forEach(container => {
+                        container.style.zIndex = '2001';
+                    });
+                } catch (err) {
+                    console.log('Screen orientation handling:', err);
+                }
             }
-        } catch (error) {
-            this.showError('loginError', error.message);
+            this.showGameContainer();
         }
+    } catch (error) {
+        this.showError('loginError', error.message);
     }
+}
 
     async handlePasswordReset(e) {
         e.preventDefault();
@@ -247,6 +266,28 @@ class AuthManager {
         const hashedInput = await this.hashPassword(inputPassword);
         return hashedInput === hashedPassword;
     }
+
+    async initiatePasswordReset(email) {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.email === email);
+    
+    if (!user) {
+        throw new Error('לא נמצא משתמש עם כתובת האימייל הזו');
+    }
+    
+    // יצירת קוד איפוס זמני
+    const resetCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    user.resetCode = resetCode;
+    user.resetCodeExpiry = new Date(Date.now() + 3600000).toISOString(); // תוקף לשעה
+    
+    // שמירת המידע המעודכן
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    // כאן יכול להיות קוד לשליחת אימייל (במקרה אמיתי)
+    console.log(`Reset code for ${email}: ${resetCode}`);
+    
+    return true;
+}
 }
 
 export const authManager = new AuthManager();

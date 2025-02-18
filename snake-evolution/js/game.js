@@ -13,42 +13,48 @@ let mobileControls = null; // משתנה גלובלי לשמירת אלמנט ה
 
 
 function initializeMobileControls() {
-    // בדיקה אם כבר קיימים בקרים
     if (mobileControls) {
         document.body.removeChild(mobileControls);
     }
 
     mobileControls = document.createElement('div');
     mobileControls.className = 'mobile-controls';
-    mobileControls.style.display = 'none'; // מתחיל כמוסתר
+    
+    const controls = `
+        <button class="control-btn up"><i class="fas fa-chevron-up"></i></button>
+        <div class="horizontal-controls">
+            <button class="control-btn left"><i class="fas fa-chevron-left"></i></button>
+            <button class="control-btn right"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <button class="control-btn down"><i class="fas fa-chevron-down"></i></button>
+    `;
+    
+    mobileControls.innerHTML = controls;
 
-    const directions = ['up', 'down', 'left', 'right'];
-
-    directions.forEach(dir => {
-        const button = document.createElement('button');
-        button.className = dir;
-        button.textContent = getDirectionArrow(dir);
-        button.addEventListener('touchstart', (e) => {
+    // הוספת event listeners
+    mobileControls.querySelectorAll('.control-btn').forEach(btn => {
+        const direction = btn.className.split(' ')[1]; // up, down, left, right
+        btn.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            handleDirectionChange(dir);
+            handleDirectionChange(direction);
         });
-        button.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            handleDirectionChange(dir);
-        });
-        mobileControls.appendChild(button);
     });
 
     // כפתור מרכזי
     const centerButton = document.createElement('button');
-    centerButton.className = 'center';
-    centerButton.textContent = '⏸';
+    centerButton.className = 'control-btn center';
+    centerButton.innerHTML = '<i class="fas fa-pause"></i>';
     centerButton.addEventListener('click', () => {
         if (gameInstance) {
             gameInstance.togglePause();
         }
     });
-    mobileControls.appendChild(centerButton);
+    
+    // הוספת הכפתור המרכזי לאחר הכפתורים האחרים
+    mobileControls.querySelector('.horizontal-controls').insertBefore(
+        centerButton,
+        mobileControls.querySelector('.horizontal-controls .right')
+    );
 
     document.body.appendChild(mobileControls);
 }
@@ -198,17 +204,29 @@ class Game {
     }
 
     generateFood() {
-        let newFood;
-        do {
-            newFood = {
-                x: Math.floor(Math.random() * this.gridSize),
-                y: Math.floor(Math.random() * this.gridSize)
-            };
-        } while (this.snake.body.some(segment => 
-            segment.x === newFood.x && segment.y === newFood.y));
-        
+    if (!this.snake || !this.snake.body) return; // בדיקת הגנה
+
+    let newFood;
+    let attempts = 0;
+    const maxAttempts = 50; // הגבלת מספר הניסיונות
+
+    do {
+        newFood = {
+            x: Math.floor(Math.random() * this.gridSize),
+            y: Math.floor(Math.random() * this.gridSize)
+        };
+        attempts++;
+    } while (
+        attempts < maxAttempts && 
+        this.snake.body.some(segment => segment.x === newFood.x && segment.y === newFood.y)
+    );
+
+    if (attempts < maxAttempts) {
         this.food = newFood;
+    } else {
+        console.warn('Could not generate food after max attempts');
     }
+}
 
     startGame() {
         if (!this.isStarted) {
@@ -231,21 +249,38 @@ class Game {
     }
 
     handleCollision() {
-        playCollisionSound();
-        this.lives--;
-        
-        // עדכון תצוגת הלבבות
-        const hearts = document.querySelectorAll('.lives .heart');
-        Array.from(hearts).forEach((heart, index) => {
-            heart.style.visibility = index < this.lives ? 'visible' : 'hidden';
-        });
-        
-        if (this.lives <= 0) {
-            this.gameOver();
-        } else {
-            this.resetSnakePosition();
-        }
+    console.log('Collision detected!');
+    playCollisionSound();
+    this.lives--;
+    
+    // מניעת lives שליליים
+    if (this.lives < 0) this.lives = 0;
+    
+    console.log('Lives remaining:', this.lives);
+    
+    // עדכון תצוגת הלבבות
+    const hearts = document.querySelectorAll('.lives .heart');
+    Array.from(hearts).forEach((heart, index) => {
+        heart.style.visibility = index < this.lives ? 'visible' : 'hidden';
+    });
+    
+    if (this.lives <= 0) {
+        console.log('Game Over triggered');
+        this.stopGame(); // פונקציה חדשה שנוסיף
+        this.gameOver();
+    } else {
+        this.resetSnakePosition();
     }
+}
+
+// להוסיף את הפונקציה החדשה הזו
+stopGame() {
+    this.isGameOver = true;
+    this.isStarted = false;
+    if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+    }
+}
 
     hasEatenFood() {
         const head = this.snake.body[0];
@@ -253,17 +288,30 @@ class Game {
     }
 
     gameOver() {
-        playGameOverSound();
-        this.isGameOver = true;
-        this.isStarted = false;
-        audioManager.startBackgroundMusic();
+    console.log('Starting gameOver function');
+    
+    playGameOverSound();
+    this.isGameOver = true;
+    this.isStarted = false;
+    
+    // עדכון התצוגה
+    const gameOverElement = document.getElementById('gameOver');
+    const gameContainer = document.getElementById('gameContainer');
+    
+    if (gameOverElement && gameContainer) {
+        // וידוא שה-container מוצג
+        gameContainer.style.display = 'flex';
+        // הצגת מסך הסיום
+        gameOverElement.style.display = 'flex';
         
-        document.getElementById('gameOver').style.display = 'flex';
+        // עדכון הסטטיסטיקות
         document.getElementById('finalScore').textContent = this.score;
         document.getElementById('finalLevel').textContent = this.level;
-        
-        gameUtils.saveHighScore(this.score, this.level);
     }
+    
+    gameUtils.saveHighScore(this.score, this.level);
+}
+
 
     updateLevel() {
         const newLevel = Math.floor(this.score / 100) + 1;
@@ -425,7 +473,6 @@ class Game {
 window.addEventListener('load', () => {
     gameInstance = new Game('gameCanvas');
     initializeMobileControls();
-    gameInstance.startGame();
 });
 
 export default Game;

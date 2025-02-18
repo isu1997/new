@@ -38,41 +38,49 @@ class AudioManager {
         });
     }
 
-    async initializeAudioContext() {
-        if (this.audioContext.state === 'suspended') {
-            try {
-                await this.audioContext.resume();
-                console.log('AudioContext resumed successfully');
-                this.isInitialized = true;
-            } catch (error) {
-                console.error('Failed to resume AudioContext:', error);
-            }
+   async initializeAudioContext() {
+    if (!this.isInitialized) {
+        try {
+            await this.audioContext.resume();
+            
+            // יצירת GainNode גלובלי
+            this.masterGainNode = this.audioContext.createGain();
+            this.masterGainNode.connect(this.audioContext.destination);
+            
+            // התאמת עוצמת הקול
+            this.masterGainNode.gain.value = 0.3;
+            
+            this.isInitialized = true;
+            console.log('AudioContext initialized successfully');
+        } catch (error) {
+            console.error('Failed to initialize AudioContext:', error);
         }
     }
+}
 
     createTone(frequency, duration, type = 'sine') {
-        if (this.isSoundMuted || !this.isInitialized) return;
+    if (this.isSoundMuted || !this.isInitialized) return;
+    
+    try {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
         
-        try {
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
-            
-            oscillator.type = type;
-            oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-            
-            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.01);
-            gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
-            
-            oscillator.start(this.audioContext.currentTime);
-            oscillator.stop(this.audioContext.currentTime + duration);
-        } catch (error) {
-            console.warn('Error creating tone:', error);
-        }
+        oscillator.connect(gainNode);
+        gainNode.connect(this.masterGainNode);
+        
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.01);
+        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
+        
+        oscillator.start(this.audioContext.currentTime);
+        oscillator.stop(this.audioContext.currentTime + duration);
+    } catch (error) {
+        console.warn('Error creating tone:', error);
     }
+}
 
     playButtonSound() {
         if (!this.isSoundMuted) {

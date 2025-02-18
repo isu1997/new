@@ -157,6 +157,8 @@ body {
     justify-content: center;
     overflow: hidden;
     background-color: var(--background-dark);
+    z-index: 1;
+        /* ערך נמוך יותר */
 }
 
 .game-header {
@@ -349,35 +351,13 @@ body {
 
 /* === Mobile Controls === */
 .mobile-controls {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
     display: none;
-    grid-template-areas:
-        ". up ."
-        "left center right"
-        ". down .";
-    gap: 10px;
-    z-index: 1000;
-    padding: 20px;
 }
 
 .mobile-controls button {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(122, 162, 247, 0.2);
-    border: 2px solid var(--primary-color);
-    color: var(--text-light);
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-    opacity: 0.8;
+    background: rgba(122, 162, 247, 0.3);
+    /* שקיפות מוגברת */
+    backdrop-filter: blur(4px);
 }
 
 .mobile-controls button:active {
@@ -410,13 +390,50 @@ body {
 /* === Mobile Specific Styles === */
 @media (max-width: 768px) {
 .mobile-controls {
-        display: grid !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        padding: 10px;
     }
+
+         .horizontal-controls {
+             display: flex;
+             gap: 20px;
+             margin: 10px 0;
+         }
+    
+         .control-btn {
+             width: 50px;
+             height: 50px;
+             border-radius: 50%;
+             border: none;
+             background: rgba(122, 162, 247, 0.2);
+             color: white;
+             font-size: 20px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             cursor: pointer;
+             -webkit-tap-highlight-color: transparent;
+             transition: all 0.2s ease;
+         }
+    
+         .control-btn:active {
+             background: rgba(122, 162, 247, 0.4);
+             transform: scale(0.95);
+         }
+         }
 
     .joystick-container {
         display: none !important;
     }
-    
+
     .game-container {
         padding: 0.5rem;
     }
@@ -431,19 +448,26 @@ body {
     }
 
     .auth-form {
-        width: 90%;
-        max-width: none;
-        margin: 1rem;
-        padding: 1.5rem;
         max-height: 80vh;
-        overflow-y: auto;
+            overflow-y: auto;
+            padding: 1rem;
+            margin: 1rem;
+            width: 90%;
     }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    
+        .form-group input {
+            font-size: 16px;
+        }
 
     .game-canvas {
         width: 95vmin;
         height: 95vmin;
         }
-}
+
 
 /* === Landscape Mode Warning === */
 .landscape-warning {
@@ -475,6 +499,7 @@ body {
 
     .landscape-warning {
         display: flex;
+        z-index: 2000;
     }
 
         /* מאפשר גישה לטפסים תמיד */
@@ -482,7 +507,19 @@ body {
             z-index: 2001;
             /* מעל אזהרת הסיבוב */
         }
-}
+
+                /* במצב לאורך, מסתיר את אזהרת הסיבוב כשיש טופס פתוח */
+                .auth-container:not([style*="display: none"])~.landscape-warning {
+                    display: none;
+                }
+
+                .auth-form {
+                    max-height: 85vh;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
 
 /* === Power-up Effects === */
 .power-up-indicator {
@@ -522,23 +559,41 @@ body {
 /* === Game Over Screen === */
 .game-over {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        /* ערך גבוה יותר */
+        visibility: visible !important;
 }
 
 .game-over-content {
+    position: relative;
+    z-index: 10001;
     background: linear-gradient(145deg, #1f2937, #111827);
     padding: 2rem;
     border-radius: 1rem;
     text-align: center;
     max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .final-score {
@@ -590,4 +645,43 @@ body {
 
 .success-message::before {
     content: '✅';
+}
+}
+
+/* מסתיר לחלוטין בדסקטופ */
+@media (min-width: 769px) {
+    .mobile-controls {
+        display: none !important;
+    }
+
+    .game-over {
+    position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        }
+
+        .game-over-content {
+            background: linear-gradient(145deg, #1f2937, #111827);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        /* עדכון המצב כשהמשחק נגמר */
+        .game-container[style*="display: flex"] .game-over[style*="display: flex"] {
+            display: flex !important;
+        }
 }
