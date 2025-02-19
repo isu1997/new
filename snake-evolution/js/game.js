@@ -22,12 +22,12 @@ function initializeMobileControls() {
     
     // יצירת הכפתורים
     const buttonsConfig = [
-        { direction: 'up', icon: 'fa-chevron-up' },
-        { direction: 'left', icon: 'fa-chevron-left' },
-        { direction: 'center', icon: 'fa-pause' },
-        { direction: 'right', icon: 'fa-chevron-right' },
-        { direction: 'down', icon: 'fa-chevron-down' }
-    ];
+    { direction: 'up', icon: 'fa-chevron-up', gridArea: 'up' },
+    { direction: 'right', icon: 'fa-chevron-right', gridArea: 'right' },
+    { direction: 'center', icon: 'fa-pause', gridArea: 'center' },
+    { direction: 'left', icon: 'fa-chevron-left', gridArea: 'left' },
+    { direction: 'down', icon: 'fa-chevron-down', gridArea: 'down' }
+];
 
     let isDirectionLocked = false; // משתנה חדש למניעת תנועה בו-זמנית
 
@@ -126,8 +126,8 @@ class Game {
         this.isGameOver = false;
         this.isStarted = false;
         this.lastRenderTime = 0;
-        this.gameSpeed = 100;
-        this.baseGameSpeed = 100;
+        this.baseGameSpeed = 300; // מהירות התחלתית איטית יותר
+        this.gameSpeed = this.baseGameSpeed;
         this.inputDirection = { x: 0, y: 0 };
         this.lastInputDirection = { x: 0, y: 0 };
 
@@ -256,16 +256,29 @@ class Game {
     }
     }
 
-    eatFood() {
-        playFoodSound();
-        this.score += 10 * this.level;
-        document.getElementById('score').textContent = this.score;
-        this.generateFood();
-        this.updateLevel();
+    checkHeartBonus() {
+    if (this.score > 0 && this.score % 500 === 0 && this.lives < 3) {
+        this.lives++;
+        // עדכון תצוגת הלבבות
+        const hearts = document.querySelectorAll('.lives .heart');
+        Array.from(hearts).forEach((heart, index) => {
+            heart.style.visibility = index < this.lives ? 'visible' : 'hidden';
+        });
     }
+}
 
-    handleCollision() {
-    console.log('Collision detected!');
+    eatFood() {
+    playFoodSound();
+    this.score += 10 * this.level;
+    document.getElementById('score').textContent = this.score;
+    this.generateFood();
+    this.updateLevel();
+    this.checkHeartBonus(); // קריאה לבדיקת בונוס לבבות
+}
+
+handleCollision() {
+    if (this.isGameOver) return; // מניעת קריאות כפולות
+    
     playCollisionSound();
     this.lives--;
     
@@ -276,14 +289,14 @@ class Game {
     });
     
     if (this.lives <= 0) {
-        // מוודאים שהמשחק באמת נגמר לפני הצגת המסך
         this.isGameOver = true;
         this.isStarted = false;
+        cancelAnimationFrame(this.animationFrameId);
         
-        // מעכבים מעט את הצגת מסך הסיום
+        // מעכבים את הצגת מסך הסיום
         setTimeout(() => {
             this.gameOver();
-        }, 500);
+        }, 1000);
     } else {
         this.resetSnakePosition();
     }
@@ -330,14 +343,17 @@ stopGame() {
 
 
     updateLevel() {
-        const newLevel = Math.floor(this.score / 100) + 1;
-        if (newLevel > this.level) {
-            this.level = newLevel;
-            document.getElementById('level').textContent = this.level;
-            playLevelUpSound();
-            this.gameSpeed = Math.max(this.baseGameSpeed * 0.95 ** (this.level - 1), 100);
-        }
+    const newLevel = Math.floor(this.score / 100) + 1;
+    if (newLevel > this.level) {
+        this.level = newLevel;
+        document.getElementById('level').textContent = this.level;
+        playLevelUpSound();
+        
+        // נגביר את המהירות (נקטין את ה-gameSpeed) בכל רמה
+        this.gameSpeed = Math.min(this.baseGameSpeed * 0.95 ** (this.level - 1), 100);
+        console.log('Current level:', this.level, 'New game speed:', this.gameSpeed);
     }
+}
 
     resizeCanvas() {
     const isMobile = window.innerWidth <= 768;
@@ -361,21 +377,21 @@ stopGame() {
 }
 
     gameLoop(currentTime) {
-        if (!this.isStarted || this.isPaused || this.isGameOver) {
-            return;
-        }
-
-        window.requestAnimationFrame(this.gameLoop);
-
-        const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
-        if (secondsSinceLastRender < this.gameSpeed / 1000) {
-            return;
-        }
-
-        this.lastRenderTime = currentTime;
-        this.update();
-        this.render();
+    if (!this.isStarted || this.isPaused || this.isGameOver) {
+        return;
     }
+
+    window.requestAnimationFrame(this.gameLoop);
+
+    const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
+    if (secondsSinceLastRender < this.gameSpeed / 1000) {
+        return;
+    }
+
+    this.lastRenderTime = currentTime;
+    this.update();
+    this.render();
+}
 
     update() {
         // Update snake direction from input

@@ -111,6 +111,14 @@ const projects = {
         downloadPath: "../snake-evolution/snake-evolution.rar",
         technologies: ["html5", "css3-alt", "js"]
     },
+    "memory_challenge": {
+        title: "Memory Challenge",
+        description: "Test your memory and focus with this classic card-matching game. Flip cards, match pairs and set new records!",
+        image: "./images/memory_challenge.png",
+        projectPath: "../memory_challenge/index.html",
+        downloadPath: "../memory_challenge/memory_challenge.rar",
+        technologies: ["html5", "css3-alt", "js"]
+    },
 };
 
 export default projects;

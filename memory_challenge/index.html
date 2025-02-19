@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page title and resources -->
+    <title>Memory Game Challenge</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon"
+        href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD8/Pz//////9u6nv+8hmD/vohi/76IYv++iGL/vohi/76IYv++iGL/vohi/76IYv+9h2H/vohi/9Gphf//////+fn5/+bVwv+9h2H/z6WB/9Kqhv/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/8+lgf+9h2H/3se1//Xv6v/Bn3f/z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/xKJ6//Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yaZ+//Lu5v/KqID/z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yqiA//Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///Tv6P/Jpn//z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/yad///f08P/Dm3P/z6WB/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/SqYX/0qmF/9Kphf/PpYH/wJx0//n5+f/s4NT/wZx0/8mjeP/Jo3j/yaN4/8mjeP/Jo3j/yaN4/8mjeP/Jo3j/yaN4/8mjeP/Honf/7ODU//z8/P//////+Pbz/+/l3P/v5dz/7+Xc/+/l3P/v5dz/7+Xc/+/l3P/v5dz/7+Xc/+/l3P/59vP////////////8/Pz/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==">
+</head>
+
+<body>
+    <!-- Main container -->
+    <div class="container">
+        <!-- Game header -->
+        <div class="game-header">
+            <h1 class="title animate-fade-in">Memory Challenge</h1>
+
+            <!-- Stats display -->
+            <div class="stats-container">
+                <div class="stats-card">
+                    <p class="text-white">Time: <span id="timer">00:00</span></p>
+                </div>
+                <div class="stats-card">
+                    <p class="text-white">Moves: <span id="moves">0</span></p>
+                </div>
+                <div class="stats-card">
+                    <p class="text-white">Score: <span id="score">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game board -->
+        <div id="game" class="game-wrapper">
+            <div class="game-container">
+                <!-- Memory cards -->
+            </div>
+        </div>
+
+        <!-- Game controls -->
+        <div class="controls">
+            <button onclick="location.reload()" class="game-button">New Game</button>
+            <button id="pauseButton" class="game-button">Pause</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
