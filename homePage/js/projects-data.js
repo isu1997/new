@@ -111,7 +111,7 @@ const projects = {
         downloadPath: "../memory_challenge/memory_challenge.rar",
         technologies: ["html5", "css3-alt", "js"]
     },
-    "animeStore": {
+    "AnimeStore": {
         title: "Anime Collect Store",
         description: "Your ultimate anime collection hub. Create your perfect wishlist and track your favorite merchandise!",
         image: "./images/AnimeStore.png",
