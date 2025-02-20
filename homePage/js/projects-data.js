@@ -114,9 +114,9 @@ const projects = {
     "animeStore": {
         title: "Anime Collect Store",
         description: "Your ultimate anime collection hub. Create your perfect wishlist and track your favorite merchandise!",
-        image: "./images/animeStore.png",
-        projectPath: "../animeStore/index.html",
-        downloadPath: "../animeStore/animeStore.rar",
+        image: "./images/AnimeStore.png",
+        projectPath: "../AnimeStore/index.html",
+        downloadPath: "../AnimeStore/AnimeStore.rar",
         technologies: ["html5", "css3-alt", "js"]
     },
     
