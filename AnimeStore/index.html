@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeCollect</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="geometric-shapes">
+        <div class="shape circle"></div>
+        <div class="shape"></div>
+        <div class="shape circle"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <h1>AnimeCollect - החנות שלך לאספנות אנימה</h1>
+
+        <div class="glass-form">
+            <form id="productForm">
+                <div class="form-group">
+                    <label>קטגוריה</label>
+                    <select id="categorySelect" required>
+                        <option value="">בחר קטגוריה</option>
+                        <option value="figures">פיגרים</option>
+                        <option value="accessories">אקססוריז</option>
+                        <option value="clothing">בגדים</option>
+                        <option value="manga">מנגות</option>
+                        <option value="cosplay">ציוד קוספליי</option>
+                        <option value="posters">פוסטרים וקישוטים</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>שם המוצר</label>
+                    <div class="search-container">
+                        <input type="text" id="productNameInput" placeholder="הקלד שם מוצר" required>
+                        <div id="suggestions" class="suggestions-dropdown"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">הוסף מוצר</button>
+            </form>
+        </div>
+
+        <div class="filters glass-form">
+            <select id="filterCategory">
+                <option value="">כל הקטגוריות</option>
+            </select>
+            <button id="toggleFavorites" class="btn-secondary">הצג מועדפים</button>
+            <div id="totalPrice" class="total-price">סה"כ: ₪0</div>
+        </div>
+
+        <div id="productsGrid" class="products-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

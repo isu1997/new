@@ -103,15 +103,7 @@ const projects = {
         downloadPath: "../XO_Arena/XO_Arena.rar",
         technologies: ["html5", "css3-alt", "bootstrap", "js"]
     },
-    "snake-evolution": {
-        title: "Snake Evolution",
-        description: "Evolve your snake, grow your territory, and dominate the leaderboard. Collect food, unlock power-ups, and challenge your friends in this modern twist on a classic game.",
-        image: "./images/snakeEvolution.png",
-        projectPath: "../snake-evolution/index.html",
-        downloadPath: "../snake-evolution/snake-evolution.rar",
-        technologies: ["html5", "css3-alt", "js"]
-    },
-    "memory_challenge": {
+"memory_challenge": {
         title: "Memory Challenge",
         description: "Test your memory and focus with this classic card-matching game. Flip cards, match pairs and set new records!",
         image: "./images/memory_challenge.png",
@@ -119,6 +111,15 @@ const projects = {
         downloadPath: "../memory_challenge/memory_challenge.rar",
         technologies: ["html5", "css3-alt", "js"]
     },
+    "animeStore": {
+        title: "Anime Collect Store",
+        description: "Your ultimate anime collection hub. Create your perfect wishlist and track your favorite merchandise!",
+        image: "./images/animeStore.png",
+        projectPath: "../animeStore/index.html",
+        downloadPath: "../animeStore/animeStore.rar",
+        technologies: ["html5", "css3-alt", "js"]
+    },
+    
 };
 
 export default projects;
