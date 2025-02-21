@@ -2,15 +2,29 @@
 <html lang="he" dir="rtl">
 
 <head>
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnimeCollect</title>
+
+    <!-- Favicon -->
     <link rel="icon" href="data:image/x-icon;," type="image/x-icon">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=DM+Round+Writing:wght@300;400;500;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Suez+One&family=Miriam+Libre:wght@400;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+    <!-- Background Shapes -->
     <div class="geometric-shapes">
         <div class="shape circle"></div>
         <div class="shape"></div>
@@ -19,9 +33,13 @@
         <div class="shape"></div>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
-        <h1>AnimeCollect - החנות שלך לאספנות אנימה</h1>
+        <!-- Header Section -->
+        <h1>AnimeCollect</h1>
+        <h2>החנות שלך לאספנות אנימה</h2>
 
+        <!-- Product Form Section -->
         <div class="glass-form">
             <form id="productForm">
                 <div class="form-group">
@@ -49,6 +67,7 @@
             </form>
         </div>
 
+        <!-- Filters Section -->
         <div class="filters glass-form">
             <select id="filterCategory">
                 <option value="">כל הקטגוריות</option>
@@ -57,9 +76,11 @@
             <div id="totalPrice" class="total-price">סה"כ: ₪0</div>
         </div>
 
+        <!-- Products Grid Section -->
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 
