@@ -1,57 +1,132 @@
-// Product Categories and Data
 const categories = {
   figures: {
     name: "פיגרים",
     items: [
-      { name: "נארוטו אוזומאקי", price: 299 },
-      { name: "לופי", price: 349 },
-      { name: "גוקו", price: 399 },
-      { name: "מיקאסה אקרמן", price: 289 },
+      { name: "נארוטו אוזומאקי", price: 299 }, // Naruto
+      { name: "לופי מגיר 5", price: 349 }, // One Piece 
+      { name: "גוקו אולטרה אינסטינקט", price: 399 }, // Dragon Ball Super
+      { name: "מיקאסה אקרמן", price: 289 }, // Attack on Titan
+      { name: "סונג ג'ין-וו", price: 449 }, // Solo Leveling
+      { name: "טאנג'ירו קמאדו", price: 379 }, // Demon Slayer
+      { name: "זורו רוצח שדים", price: 329 }, // One Piece
+      { name: "איטאדורי יוג'י", price: 359 }, // Jujutsu Kaisen
+      { name: "צ'ה האה-אין", price: 399 }, // Solo Leveling
+      { name: "איטאצ'י אוצ'יהא", price: 419 }, // Naruto
+      { name: "ארן טיטאן", price: 469 }, // Attack on Titan
+      { name: "איינה חרב הפיות", price: 389 }, // Frieren
+      { name: "דג'י צ'יינסו מן", price: 399 }, // Chainsaw Man
+      { name: "מאקי זנין", price: 379 }, // Jujutsu Kaisen
+      { name: "בוג'י", price: 359 }, // Hell's Paradise
+      { name: "תור החושך", price: 429 }, // Blue Lock
+      { name: "קג'י איטדורי", price: 399 }, // Jujutsu Kaisen
+      { name: "פאנצ'י", price: 369 } // Chainsaw Man
     ]
   },
   accessories: {
     name: "אקססוריז",
     items: [
-      { name: "שרשרת האנטר", price: 79 },
-      { name: "טבעת אקאצקי", price: 89 },
-      { name: "תג צבא הסיור", price: 69 },
-      { name: "צמיד דרגון בול", price: 59 },
+      { name: "שרשרת האנטר", price: 79 }, // Hunter x Hunter
+      { name: "טבעת אקאצקי", price: 89 }, // Naruto
+      { name: "תג צבא הסיור", price: 69 }, // Attack on Titan
+      { name: "צמיד דרגון בול", price: 59 }, // Dragon Ball
+      { name: "טבעת S-Rank", price: 99 }, // Solo Leveling
+      { name: "שרשרת קריסטל כחול", price: 129 }, // Solo Leveling
+      { name: "סיכת הקורפס", price: 49 }, // Attack on Titan
+      { name: "צמיד השד השמיימי", price: 89 }, // Black Clover
+      { name: "טבעת הכישוף השחור", price: 79 }, // Jujutsu Kaisen
+      { name: "תליון הניצוץ", price: 69 }, // Fire Force
+      { name: "סט טבעות אקאצקי", price: 199 }, // Naruto
+      { name: "טבעת פריירן", price: 89 }, // Frieren
+      { name: "שרשרת מסור השדים", price: 99 }, // Chainsaw Man
+      { name: "צמיד כדורגל קסום", price: 79 }, // Blue Lock
+      { name: "תליון גאבימארו", price: 69 }, // Hell's Paradise
+      { name: "סיכת JJK", price: 59 } // Jujutsu Kaisen
     ]
   },
   clothing: {
     name: "בגדים",
     items: [
-      { name: "חולצת אטאק און טיטאן", price: 129 },
-      { name: "קפוצ'ון דמון סלייר", price: 249 },
-      { name: "חולצת מאי הירו אקדמיה", price: 119 },
-      { name: "מכנסי נארוטו", price: 159 },
+     { name: "חולצת אטאק און טיטאן", price: 129 }, // Attack on Titan
+     { name: "קפוצ'ון דמון סלייר", price: 249 }, // Demon Slayer
+     { name: "חולצת מאי הירו אקדמיה", price: 119 }, // My Hero Academia
+     { name: "מכנסי נארוטו", price: 159 }, // Naruto
+     { name: "מעיל הצייד", price: 299 }, // Solo Leveling
+     { name: "חולצת הצללים", price: 149 }, // Solo Leveling
+     { name: "גופיית אנטי מאג'י", price: 89 }, // Black Clover
+     { name: "מעיל ארגון הקוסמים", price: 279 }, // Jujutsu Kaisen
+     { name: "חולצת ג'וג'וצו קאיסן", price: 139 }, // Jujutsu Kaisen
+     { name: "סווטשירט צ'יינסו מן", price: 229 }, // Chainsaw Man
+     { name: "חליפת האקדמיה", price: 349 }, // My Hero Academia
+     { name: "חולצת פריירן", price: 139 }, // Frieren
+     { name: "קפוצ'ון צ'יינסו מן", price: 259 }, // Chainsaw Man
+     { name: "חולצת בלו לוק", price: 129 }, // Blue Lock
+     { name: "סווטשירט גאבימארו", price: 239 }, // Hell's Paradise
+     { name: "מעיל גוג'ו", price: 299 } // Jujutsu Kaisen
     ]
   },
   manga: {
     name: "מנגות",
     items: [
-      { name: "ג'וג'ו הרפתקה מוזרה", price: 89 },
-      { name: "וואן פיס", price: 79 },
-      { name: "דת' נוט", price: 99 },
-      { name: "בלאק קלובר", price: 69 },
+     { name: "ג'וג'ו הרפתקה מוזרה", price: 89 }, // JoJo's Bizarre Adventure
+     { name: "וואן פיס", price: 79 }, // One Piece
+     { name: "דת' נוט", price: 99 }, // Death Note
+     { name: "בלאק קלובר", price: 69 }, // Black Clover
+     { name: "סולו לבלינג", price: 89 }, // Solo Leveling
+     { name: "ספר אמנות סולו לבלינג", price: 199 }, // Solo Leveling
+     { name: "דמון סלייר", price: 79 }, // Demon Slayer
+     { name: "ג'וג'וצו קאיסן", price: 85 }, // Jujutsu Kaisen
+     { name: "בלו לוק", price: 75 }, // Blue Lock
+     { name: "צ'יינסו מן", price: 89 }, // Chainsaw Man
+     { name: "ספיי x פמילי", price: 79 }, // Spy x Family
+     { name: "פריירן מעבר לסוף המסע", price: 85 }, // Frieren
+     { name: "גן עדן של השדים", price: 79 }, // Hell's Paradise
+     { name: "בלו לוק", price: 89 }, // Blue Lock
+     { name: "צ'יינסו מן כרך 12", price: 79 }, // Chainsaw Man
+     { name: "ג'וג'וצו קאיסן 0", price: 89 } // Jujutsu Kaisen
     ]
   },
   cosplay: {
     name: "ציוד קוספליי",
     items: [
-      { name: "תחפושת איטאצ'י", price: 499 },
-      { name: "פאה זירו טו", price: 199 },
-      { name: "חרב קימטסו", price: 299 },
-      { name: "תחפושת רם", price: 449 },
+     { name: "תחפושת איטאצ'י", price: 499 }, // Naruto
+     { name: "פאה זירו טו", price: 199 }, // Darling in the Franxx
+     { name: "חרב קימטסו", price: 299 }, // Demon Slayer
+     { name: "תחפושת רם", price: 449 }, // Re:Zero
+     { name: "שריון הצייד", price: 599 }, // Solo Leveling
+     { name: "סט דאגרים שחורים", price: 349 }, // Solo Leveling
+     { name: "תחפושת גוג'ו", price: 469 }, // Jujutsu Kaisen
+     { name: "נשק טאנג'ירו", price: 279 }, // Demon Slayer
+     { name: "תחפושת לוי", price: 529 }, // Attack on Titan
+     { name: "סט שריון טיטאן", price: 649 }, // Attack on Titan
+     { name: "תחפושת צוות 7", price: 479 }, // Naruto
+     { name: "גלימת פריירן", price: 489 }, // Frieren
+     { name: "תחפושת דג'י", price: 519 }, // Chainsaw Man
+     { name: "תלבושת בלו לוק", price: 469 }, // Blue Lock
+     { name: "תחפושת גאבימארו", price: 499 }, // Hell's Paradise
+     { name: "שריון סוקונה", price: 599 }, // Jujutsu Kaisen
+     { name: "ערכת אוניפורמה מלאה לוי אקרמן", price: 899 }, // Attack on Titan (כולל מעיל, מכנסיים, רתמות ולהבים)
+     { name: "סט שריון זרו מלא", price: 799 } // Demon Slayer (כולל חליפה מלאה, קטנות וחרב האשוגורו)
     ]
   },
   posters: {
     name: "פוסטרים וקישוטים",
     items: [
-      { name: "פוסטר אווה", price: 79 },
-      { name: "מדבקות דמון סלייר", price: 39 },
-      { name: "קישוט קיר נארוטו", price: 149 },
-      { name: "פוסטר ג'וג'ו", price: 69 },
+     { name: "פוסטר אווה", price: 79 }, // Neon Genesis Evangelion
+     { name: "מדבקות דמון סלייר", price: 39 }, // Demon Slayer
+     { name: "קישוט קיר נארוטו", price: 149 }, // Naruto
+     { name: "פוסטר ג'וג'ו", price: 69 }, // JoJo's Bizarre Adventure
+     { name: "פוסטר צבא הצללים", price: 89 }, // Solo Leveling
+     { name: "באנר מלך הצללים", price: 129 }, // Solo Leveling
+     { name: "סט מדבקות דרקונים", price: 49 }, // Dragon Ball
+     { name: "שלט מואר טוקיו גול", price: 199 }, // Tokyo Ghoul
+     { name: "פוסטר האנטר x האנטר", price: 79 }, // Hunter x Hunter
+     { name: "קישוט LED אקדמיה", price: 169 }, // My Hero Academia
+     { name: "סט פוסטרים בליץ'", price: 159 }, // Bleach
+     { name: "פוסטר פריירן", price: 79 }, // Frieren
+     { name: "באנר צ'יינסו מן", price: 89 }, // Chainsaw Man
+     { name: "פוסטר בלו לוק", price: 79 }, // Blue Lock
+     { name: "קישוט קיר גן עדן", price: 149 }, // Hell's Paradise
+     { name: "פוסטר קרב הקסמים", price: 89 } // Jujutsu Kaisen
     ]
   }
 };

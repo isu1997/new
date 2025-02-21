@@ -6,6 +6,9 @@
     --glass-bg: rgba(0, 0, 0, 0.4);
     --card-bg: rgba(0, 0, 0, 0.3);
     --border: rgba(255, 255, 255, 0.1);
+    --dropdown-width: 200px;
+    --dropdown-left: 50%;
+    --dropdown-top: 100%;
 }
 
 * {
@@ -152,6 +155,7 @@ h1 {
 }
 
 .glass-form {
+    position: relative;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
@@ -159,6 +163,73 @@ h1 {
     padding: 1.5rem;
     margin-bottom: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    z-index: 1;
+    animation: form-appear-right 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filters.glass-form {
+    z-index: 1;
+    animation: form-appear-left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: 0.6s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes form-appear-right {
+    0% {
+        opacity: 0;
+        transform: translateX(100px) scale(0.97);
+        filter: blur(8px);
+    }
+
+    60% {
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes form-appear-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) scale(0.97);
+        filter: blur(8px);
+    }
+
+    60% {
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes form-appear-top {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px) scale(0.97);
+        filter: blur(8px);
+    }
+
+    60% {
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 .form-group {
@@ -180,12 +251,97 @@ select {
     background: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1em;
 }
 
 input:focus,
 select:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1em;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+select option {
+    background: #1f1f1f;
+    color: white;
+    padding: 0.75rem;
+    position: relative;
+    animation: selectOptionAppear 0.3s ease-out;
+}
+
+@keyframes selectOptionAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes select-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* תיקון לתצוגת האופציות בדפדפנים שונים */
+select::-ms-expand {
+    display: none;
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 var(--text);
+}
+
+/* אנימציה לפתיחת התיבה */
+select:not(:disabled):hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+/* אנימציה לחץ */
+select:focus,
+select:hover {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
 }
 
 .btn-primary {
@@ -197,11 +353,79 @@ select:focus {
     cursor: pointer;
     font-weight: 500;
     width: 100%;
-    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg, #794bc4, #9461e3);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg,
+            #ff00e1, #794bc4, #4b34e9, #794bc4, #ff00e1);
+    background-size: 400%;
+    z-index: -1;
+    animation: glowing 20s linear infinite;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 8px;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(45deg,
+            #0066cc,
+                #794bc4,
+                #5842d6,
+                #4b34e9,
+                #5842d6,
+                #794bc4,
+                #0066cc);
+    background-size: 400%;
+    animation: glowing 20s linear infinite;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(121, 75, 196, 0.3);
+}
+
+.btn-primary:hover::before,
+.btn-primary:hover::after {
+    opacity: 1;
+}
+
+.btn-primary span {
+    position: relative;
+    z-index: 2;
+    display: block;
 }
 
 .filters {
@@ -209,6 +433,7 @@ select:focus {
     gap: 1rem;
     align-items: center;
     flex-wrap: wrap;
+    z-index: 1;
 }
 
 .btn-secondary {
@@ -245,6 +470,10 @@ select:focus {
     border-radius: 12px;
     padding: 1rem;
     transition: transform 0.3s ease;
+    animation: form-appear-top 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: 1.2s;
+    opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 .product-card:hover {
@@ -310,25 +539,62 @@ select:focus {
 }
 
 .suggestions-dropdown {
-    position: absolute;
+    position: relative;
     width: 100%;
     background: #1f1f1f;
     border: 1px solid var(--border);
     border-radius: 6px;
     margin-top: 4px;
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 1000;
     display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    animation: dropdown-appear 0.2s ease-out;
+}
+
+.suggestions-dropdown[style*="display: block"] {
+    display: block !important;
+}
+
+.suggestions-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 4px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 4px;
 }
 
 .suggestion-item {
     padding: 0.75rem 1rem;
     cursor: pointer;
+    background: #1f1f1f;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .suggestion-item:hover {
     background: rgba(139, 92, 246, 0.1);
+}
+
+@keyframes dropdown-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .search-container {
@@ -354,5 +620,31 @@ select:focus {
 
     .products-grid {
         grid-template-columns: 1fr;
+    }
+
+    .suggestions-dropdown {
+        max-height: 120px;
+        font-size: 14px;
+    }
+
+    .suggestion-item {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .suggestions-dropdown {
+        max-height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    select {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .filters select {
+        min-width: 100%;
     }
 }
