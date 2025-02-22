@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- RTL Hebrew document setup with right-to-left text direction -->
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Game title -->
+    <title>מי רוצה להיות מיליונר</title>
+    <!-- Hebrew font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Game controller favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Animated background shapes for visual interest -->
+    <div class="geometric-background">
+        <!-- Individual geometric shapes for background animation -->
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+        <div class="shape rectangle"></div>
+    </div>
+
+    <!-- Main game container wrapping all screens -->
+    <div id="game-container">
+        <!-- Opening Screen: Initial game setup and category selection -->
+        <div id="opening-screen" class="screen active">
+            <!-- Main game title -->
+            <h1 class="game-title">מי רוצה להיות מיליונר</h1>
+            <!-- Category selection section -->
+            <div class="category-select">
+                <!-- Category selection header -->
+                <h2>בחר קטגוריה</h2>
+                <!-- Grid layout for category buttons -->
+                <div class="category-buttons">
+                    <!-- Individual category selection buttons -->
+                    <button class="category-btn" data-category="general">ידע כללי</button>
+                    <button class="category-btn" data-category="science">מדע</button>
+                    <button class="category-btn" data-category="history">היסטוריה</button>
+                    <button class="category-btn" data-category="geography">גיאוגרפיה</button>
+                    <button class="category-btn" data-category="anime">אנימה</button>
+                </div>
+            </div>
+            <!-- Game start button -->
+            <button id="start-game" class="start-btn">התחל משחק</button>
+        </div>
+
+        <!-- Game Screen: Active gameplay area -->
+        <div id="game-screen" class="screen">
+            <!-- Header section containing game aids and timer -->
+            <div class="game-header">
+                <!-- Lifeline assistance buttons container -->
+                <div class="lifelines">
+                    <!-- Individual lifeline options -->
+                    <button id="fifty-fifty" class="lifeline-btn">50:50</button>
+                    <button id="phone-friend" class="lifeline-btn">טלפון לחבר</button>
+                    <button id="ask-audience" class="lifeline-btn">שאל את הקהל</button>
+                </div>
+                <!-- Countdown timer display -->
+                <div class="timer">30</div>
+            </div>
+
+            <!-- Main question and answers area -->
+            <div class="question-container">
+                <!-- Current question text display -->
+                <p id="question-text" class="question">טוען שאלה...</p>
+                <!-- Answer options grid -->
+                <div class="answers-grid">
+                    <!-- Individual answer buttons with indices -->
+                    <button class="answer-btn" data-index="0">א: </button>
+                    <button class="answer-btn" data-index="1">ב: </button>
+                    <button class="answer-btn" data-index="2">ג: </button>
+                    <button class="answer-btn" data-index="3">ד: </button>
+                </div>
+            </div>
+
+            <!-- Prize ladder showing possible winnings -->
+            <div class="money-ladder">
+                <!-- Individual prize amount items -->
+                <div class="money-item" data-value="1000000">₪1,000,000</div>
+                <div class="money-item" data-value="500000">₪500,000</div>
+                <div class="money-item" data-value="250000">₪250,000</div>
+                <div class="money-item" data-value="125000">₪125,000</div>
+                <div class="money-item" data-value="64000">₪64,000</div>
+                <div class="money-item" data-value="32000">₪32,000</div>
+                <div class="money-item" data-value="16000">₪16,000</div>
+                <div class="money-item" data-value="8000">₪8,000</div>
+                <div class="money-item" data-value="4000">₪4,000</div>
+                <div class="money-item" data-value="2000">₪2,000</div>
+                <div class="money-item" data-value="1000">₪1,000</div>
+                <div class="money-item" data-value="500">₪500</div>
+                <div class="money-item" data-value="300">₪300</div>
+                <div class="money-item" data-value="200">₪200</div>
+                <div class="money-item active" data-value="100">₪100</div>
+            </div>
+        </div>
+
+        <!-- Result Screen: End game status and restart option -->
+        <div id="result-screen" class="screen">
+            <!-- Game over message -->
+            <h2 class="result-title">המשחק נגמר!</h2>
+            <!-- Final score display -->
+            <p class="final-score">זכית ב: ₪<span id="final-amount">0</span></p>
+            <!-- Restart game button -->
+            <button id="play-again" class="start-btn">שחק שוב</button>
+        </div>
+    </div>
+
+    <!-- Sound effects for correct and wrong answers -->
+    <audio id="correct-sound">
+        <!-- Correct answer sound file -->
+        <source src="assets/correct.wav" type="audio/mp3">
+    </audio>
+    <audio id="wrong-sound">
+        <!-- Wrong answer sound file -->
+        <source src="assets/wrong.wav" type="audio/mp3">
+    </audio>
+
+    <!-- Core game script imports -->
+    <script src="js/questions.js"></script> <!-- Questions database and logic -->
+    <script src="js/game.js"></script> <!-- Main game mechanics -->
+    <script src="js/lifelines.js"></script> <!-- Lifeline functionality -->
+    <script src="js/audio.js"></script> <!-- Audio control system -->
+</body>
+
+</html>

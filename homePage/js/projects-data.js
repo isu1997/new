@@ -119,7 +119,14 @@ const projects = {
         downloadPath: "../AnimeStore/AnimeStore.rar",
         technologies: ["html5", "css3-alt", "js"]
     },
-    
+    "millionaire-game": {
+        title: "Who Wants to Be a Millionaire?",
+        description: "Welcome to the ultimate trivia challenge! Test your knowledge, answer questions, and win big!",
+        image: "./images/millionaire-game.png",
+        projectPath: "../millionaire-game/index.html",
+        downloadPath: "../millionaire-game/millionaire-game.rar",
+        technologies: ["html5", "css3-alt", "js"]
+    },
 };
 
 export default projects;
