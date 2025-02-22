@@ -19,7 +19,9 @@ const categories = {
       { name: "בוג'י", price: 359 }, // Hell's Paradise
       { name: "תור החושך", price: 429 }, // Blue Lock
       { name: "קג'י איטדורי", price: 399 }, // Jujutsu Kaisen
-      { name: "פאנצ'י", price: 369 } // Chainsaw Man
+      { name: "פאנצ'י", price: 369 }, // Chainsaw Man
+      { name: "Sukuna Special Edition", price: 449 }, // Jujutsu Kaisen
+      { name: "Anya Forger Limited", price: 399 } // Spy x Family
     ]
   },
   accessories: {
@@ -40,7 +42,9 @@ const categories = {
       { name: "שרשרת מסור השדים", price: 99 }, // Chainsaw Man
       { name: "צמיד כדורגל קסום", price: 79 }, // Blue Lock
       { name: "תליון גאבימארו", price: 69 }, // Hell's Paradise
-      { name: "סיכת JJK", price: 59 } // Jujutsu Kaisen
+      { name: "סיכת JJK", price: 59 }, // Jujutsu Kaisen
+      { name: "Power Chainsaw Necklace", price: 129 }, // Chainsaw Man
+      { name: "Toji Fushiguro Ring", price: 99 } // Jujutsu Kaisen
     ]
   },
   clothing: {
@@ -61,7 +65,9 @@ const categories = {
      { name: "קפוצ'ון צ'יינסו מן", price: 259 }, // Chainsaw Man
      { name: "חולצת בלו לוק", price: 129 }, // Blue Lock
      { name: "סווטשירט גאבימארו", price: 239 }, // Hell's Paradise
-     { name: "מעיל גוג'ו", price: 299 } // Jujutsu Kaisen
+     { name: "מעיל גוג'ו", price: 299 }, // Jujutsu Kaisen
+     { name: "Spy x Family Hoodie", price: 249 }, // Spy x Family
+     { name: "Hell's Paradise T-Shirt", price: 139 } // Hell's Paradise
     ]
   },
   manga: {
@@ -82,7 +88,9 @@ const categories = {
      { name: "גן עדן של השדים", price: 79 }, // Hell's Paradise
      { name: "בלו לוק", price: 89 }, // Blue Lock
      { name: "צ'יינסו מן כרך 12", price: 79 }, // Chainsaw Man
-     { name: "ג'וג'וצו קאיסן 0", price: 89 } // Jujutsu Kaisen
+     { name: "ג'וג'וצו קאיסן 0", price: 89 }, // Jujutsu Kaisen
+     { name: "Oshi no Ko Vol.1", price: 89 }, // Oshi no Ko
+     { name: "Dandadan Vol.1", price: 85 } // Dandadan
     ]
   },
   cosplay: {
@@ -105,11 +113,13 @@ const categories = {
      { name: "תחפושת גאבימארו", price: 499 }, // Hell's Paradise
      { name: "שריון סוקונה", price: 599 }, // Jujutsu Kaisen
      { name: "ערכת אוניפורמה מלאה לוי אקרמן", price: 899 }, // Attack on Titan (כולל מעיל, מכנסיים, רתמות ולהבים)
-     { name: "סט שריון זרו מלא", price: 799 } // Demon Slayer (כולל חליפה מלאה, קטנות וחרב האשוגורו)
+     { name: "סט שריון זרו מלא", price: 799 }, // Demon Slayer (כולל חליפה מלאה, קטנות וחרב האשוגורו)
+     { name: "Power Chainsaw Man Costume", price: 549 }, // Chainsaw Man
+     { name: "Yor Forger Assassin Dress", price: 599 } // Spy x Family
     ]
   },
   posters: {
-    name: "פוסטרים וקישוטים",
+    name: "פוסטרים",
     items: [
      { name: "פוסטר אווה", price: 79 }, // Neon Genesis Evangelion
      { name: "מדבקות דמון סלייר", price: 39 }, // Demon Slayer
@@ -126,7 +136,9 @@ const categories = {
      { name: "באנר צ'יינסו מן", price: 89 }, // Chainsaw Man
      { name: "פוסטר בלו לוק", price: 79 }, // Blue Lock
      { name: "קישוט קיר גן עדן", price: 149 }, // Hell's Paradise
-     { name: "פוסטר קרב הקסמים", price: 89 } // Jujutsu Kaisen
+     { name: "פוסטר קרב הקסמים", price: 89 }, // Jujutsu Kaisen
+     { name: "Oshi no Ko LED Poster", price: 189 }, // Oshi no Ko
+     { name: "Hell's Paradise Wall Scroll", price: 129 } // Hell's Paradise
     ]
   }
 };
