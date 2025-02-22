@@ -388,8 +388,9 @@ class TriviaGame {
         this.updateMoneyLadder();
         this.switchScreen(this.resultScreen, this.openingScreen);
         
-        // Reset game features
+        // Reset lifelines completely with a new instance
         this.lifelines = new Lifelines(this);
+        this.lifelines.resetLifelines();
 
         // Remove mobile money display
         const mobileMoneyDisplay = document.querySelector('.money-display-mobile');

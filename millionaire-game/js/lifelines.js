@@ -4,18 +4,53 @@ class Lifelines {
         // Store reference to main game instance
         this.game = game;
         
-        // Track available lifelines
+        // Initialize lifelines state
+        this.resetLifelines();
+        
+        this.modalTimeout = null;
+        this.currentModal = null;
+        // A flag to prevent multiple lifeline activations
+        this.isProcessing = false;
+    }
+
+    // Reset all lifelines to their initial state
+    resetLifelines() {
+        // Reset lifelines availability
         this.lifelines = {
             fiftyFifty: true,
             phoneAFriend: true,
             askTheAudience: true
         };
         
-        // Setup lifelines and initialize state
+        // Reset lifeline buttons visual state
+        const lifelineButtons = document.querySelectorAll('.lifeline-btn');
+        lifelineButtons.forEach(button => {
+            button.disabled = false;
+            button.classList.remove('used');
+        });
+        
+        // Reset answer buttons visibility
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        answerButtons.forEach(button => {
+            button.style.visibility = 'visible';
+        });
+        
+        // Reset processing flag
+        this.isProcessing = false;
+        
+        // Cleanup old event listeners before adding new ones
+        const fiftyFiftyBtn = document.getElementById('fifty-fifty');
+        const phoneFriendBtn = document.getElementById('phone-friend');
+        const askAudienceBtn = document.getElementById('ask-audience');
+        
+        fiftyFiftyBtn.replaceWith(fiftyFiftyBtn.cloneNode(true));
+        phoneFriendBtn.replaceWith(phoneFriendBtn.cloneNode(true));
+        askAudienceBtn.replaceWith(askAudienceBtn.cloneNode(true));
+        
+        // Setup event listeners
         this.initializeLifelines();
-        this.modalTimeout = null;
-        this.currentModal = null;
     }
+
 
     // Setup event listeners for lifeline buttons
     initializeLifelines() {
@@ -26,7 +61,9 @@ class Lifelines {
 
     // 50:50 lifeline - removes two wrong answers
     useFiftyFifty() {
-        if (!this.lifelines.fiftyFifty) return;
+        // Prevent multiple activations
+        if (!this.lifelines.fiftyFifty || this.isProcessing) return;
+        this.isProcessing = true;
         
         // Get current question data
         const currentQuestion = questions[this.game.selectedCategory][this.game.currentQuestion % questions[this.game.selectedCategory].length];
@@ -36,8 +73,13 @@ class Lifelines {
         const answerButtons = document.querySelectorAll('.answer-btn');
         let indices = [0, 1, 2, 3].filter(i => i !== correctIndex);
         
-        // Randomly select two wrong answers to hide
+        // Make sure we only hide exactly 2 wrong answers
         indices = indices.sort(() => Math.random() - 0.5).slice(0, 2);
+        
+        // Reset all answers visibility first
+        answerButtons.forEach(button => button.style.visibility = 'visible');
+        
+        // Hide exactly two wrong answers
         indices.forEach(index => {
             answerButtons[index].style.visibility = 'hidden';
         });
@@ -45,11 +87,16 @@ class Lifelines {
         // Disable lifeline after use
         this.lifelines.fiftyFifty = false;
         document.getElementById('fifty-fifty').disabled = true;
+        document.getElementById('fifty-fifty').classList.add('used');
+        
+        this.isProcessing = false;
     }
 
     // Phone a Friend lifeline - simulates expert advice
     usePhoneFriend() {
-        if (!this.lifelines.phoneAFriend) return;
+        // Prevent multiple activations
+        if (!this.lifelines.phoneAFriend || this.isProcessing) return;
+        this.isProcessing = true;
         
         // Define expert profiles with their specialties and confidence levels
         const experts = [
@@ -73,13 +120,13 @@ class Lifelines {
                 ]
             },
             {
-                name: "ד״ר כהן",
+                name: "רותם",
                 expertise: ["אנימה", "גיאוגרפיה"],
                 confidence: 0.7,
                 phrases: [
-                    "אני כמעט בטוח שהתשובה היא...",
-                    "לפי הידע שלי...",
-                    "אם אני זוכר נכון..."
+                    "אני חושבת שהתשובה היא...",
+                    "לפי מה שאני יודעת...",
+                    "אם אני לא טועה..."
                 ]
             }
         ];
@@ -94,11 +141,18 @@ class Lifelines {
         
         // Convert answer index to Hebrew letter (א,ב,ג,ד)
         const answer = String.fromCharCode(1488 + (isCorrect ? currentQuestion.correct : (currentQuestion.correct + 1) % 4));
-        alert(`${expert.name}: ${phrase} אני חושב שהתשובה היא ${answer}.`);
         
-        // Disable lifeline after use
-        this.lifelines.phoneAFriend = false;
-        document.getElementById('phone-friend').disabled = true;
+        // Show response and disable lifeline
+        setTimeout(() => {
+            alert(`${expert.name}: ${phrase} אני חושב שהתשובה היא ${answer}.`);
+            
+            // Disable lifeline after use
+            this.lifelines.phoneAFriend = false;
+            document.getElementById('phone-friend').disabled = true;
+            document.getElementById('phone-friend').classList.add('used');
+            
+            this.isProcessing = false;
+        }, 100);
     }
 
     // Ask the Audience lifeline - simulates audience voting
