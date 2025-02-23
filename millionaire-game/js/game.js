@@ -100,7 +100,7 @@ class TriviaGame {
         });
     }
 
-     startGame() {
+    startGame() {
         // Switch to game screen and reset game state
         this.switchScreen(this.openingScreen, this.gameScreen);
         this.currentLevel = 0;

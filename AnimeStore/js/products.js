@@ -1,5 +1,5 @@
 const categories = {
-  figures: {
+    figures: {
     name: "פיגרים",
     items: [
       { name: "נארוטו אוזומאקי", price: 299 }, // Naruto
@@ -23,8 +23,8 @@ const categories = {
       { name: "Sukuna Special Edition", price: 449 }, // Jujutsu Kaisen
       { name: "Anya Forger Limited", price: 399 } // Spy x Family
     ]
-  },
-  accessories: {
+    },
+    accessories: {
     name: "אקססוריז",
     items: [
       { name: "שרשרת האנטר", price: 79 }, // Hunter x Hunter
@@ -46,8 +46,8 @@ const categories = {
       { name: "Power Chainsaw Necklace", price: 129 }, // Chainsaw Man
       { name: "Toji Fushiguro Ring", price: 99 } // Jujutsu Kaisen
     ]
-  },
-  clothing: {
+    },
+    clothing: {
     name: "בגדים",
     items: [
      { name: "חולצת אטאק און טיטאן", price: 129 }, // Attack on Titan
@@ -69,8 +69,8 @@ const categories = {
      { name: "Spy x Family Hoodie", price: 249 }, // Spy x Family
      { name: "Hell's Paradise T-Shirt", price: 139 } // Hell's Paradise
     ]
-  },
-  manga: {
+    },
+    manga: {
     name: "מנגות",
     items: [
      { name: "ג'וג'ו הרפתקה מוזרה", price: 89 }, // JoJo's Bizarre Adventure
@@ -92,8 +92,8 @@ const categories = {
      { name: "Oshi no Ko Vol.1", price: 89 }, // Oshi no Ko
      { name: "Dandadan Vol.1", price: 85 } // Dandadan
     ]
-  },
-  cosplay: {
+    },
+    cosplay: {
     name: "ציוד קוספליי",
     items: [
      { name: "תחפושת איטאצ'י", price: 499 }, // Naruto
@@ -117,8 +117,8 @@ const categories = {
      { name: "Power Chainsaw Man Costume", price: 549 }, // Chainsaw Man
      { name: "Yor Forger Assassin Dress", price: 599 } // Spy x Family
     ]
-  },
-  posters: {
+    },
+    posters: {
     name: "פוסטרים",
     items: [
      { name: "פוסטר אווה", price: 79 }, // Neon Genesis Evangelion
@@ -140,184 +140,38 @@ const categories = {
      { name: "Oshi no Ko LED Poster", price: 189 }, // Oshi no Ko
      { name: "Hell's Paradise Wall Scroll", price: 129 } // Hell's Paradise
     ]
-  }
+    },
+    rare_items: {
+    name: "פריטי אספנות נדירים",
+    items: [
+     { name: "פיגר גוקו אולטרה אינסטינקט מהדורה מוגבלת 500 יחידות", price: 1899 }, // Limited Edition Ultra Instinct Goku Figure (500 pieces)
+     { name: "Dragon Ball Ultimate Collection Box Set", price: 2499 }, // Full manga series + artbook + figurine
+     { name: "חרב זנוצו חתומה - מהדורת אספנים", price: 1599 }, // Signed Zenitsu Sword - Collector's Edition
+     { name: "Jujutsu Kaisen Complete Art Collection", price: 1299 }, // Limited artbook with original sketches
+     { name: "סט קלפי נארוטו מהדורה ראשונה חתום", price: 2999 }, // First Edition Signed Naruto Card Set
+     { name: "Attack on Titan Final Season Premium Box", price: 1799 }, // With exclusive items and artwork
+     { name: "פיגר לופי גיר 5 מצויר ידנית", price: 1499 }, // Hand-Painted Gear 5 Luffy Figure
+     { name: "One Piece Treasure Collection", price: 2199 }, // Complete collection with rare items
+     { name: "מנגה דמון סלייר סט אספנים מלא + חרב", price: 1899 }, // Demon Slayer Full Collector's Set + Sword
+     { name: "Premium Hunter x Hunter Collection", price: 1699 }, // With original author sketches
+     { name: "Bleach Final Arc Collector's Box", price: 2299 }, // Complete set with exclusive art and figures
+     { name: "תיק אקאצקי עור אמיתי מהדורה מוגבלת", price: 1699 }, // Limited Akatsuki Leather Bag
+     { name: "Chainsaw Man Exclusive Collector's Edition", price: 1899 }, // With manga, figure and signed art
+     { name: "פיגור איטאצ'י וסאסקה דואט מהדורת פלטינה", price: 2499 }, // Platinum Edition Itachi & Sasuke Duo
+     { name: "Tokyo Ghoul Complete Collection Box", price: 1999 }, // Full manga + anime + exclusive items
+     { name: "סט חרבות דמון סלייר האשירה מוגבל", price: 2799 }, // Limited Hashira Swords Set
+     { name: "JoJo's Bizarre Adventure Golden Collection", price: 2599 }, // 25th Anniversary Special Edition
+     { name: "פיגור אסטה שחור מצופה זהב מוגבל", price: 1899 }, // Black Clover Gold-Plated Limited Figure
+     { name: "Death Note Supreme Collection", price: 2199 }, // With replica Death Note and exclusive items
+     { name: "קופסת אוצר My Hero Academia", price: 1999 }, // Treasure box with rare collectibles
+     { name: "Solo Leveling Deluxe Box", price: 2399 }, // Complete set with exclusive illustrations
+     { name: "פיגור גוג'ו וסוקונה דואל מהדורה חתומה", price: 2899 }, // Signed Gojo & Sukuna Dual Figure
+     { name: "Spy x Family Premium Collection", price: 1799 }, // Limited family set with extras
+     { name: "מארז אספנים אטאק און טיטאן פיינל", price: 2699 }, // Attack on Titan Final Collection
+     { name: "GOJO VS SUKUNA - Exclusive Battle Diorama", price: 4999 }, // Limited to 100 pieces
+     { name: "Okarun & Momo Premium Figure Set", price: 2999 }, // Limited Edition Diorama
+     { name: "Turbo Granny Ultimate Figure", price: 1599 }, // Special Edition with effects
+     { name: "Tower of God - Black March Crystal Edition", price: 2999 } // Limited to 250 pieces
+    ]
+    }
 };
-
-// DOM Elements
-const productForm = document.getElementById('productForm');
-const categorySelect = document.getElementById('categorySelect');
-const productNameInput = document.getElementById('productNameInput');
-const suggestionsDiv = document.getElementById('suggestions');
-const filterCategory = document.getElementById('filterCategory');
-const toggleFavorites = document.getElementById('toggleFavorites');
-const productsGrid = document.getElementById('productsGrid');
-const totalPriceDiv = document.getElementById('totalPrice');
-
-let products = JSON.parse(localStorage.getItem('animeCollectProducts')) || [];
-let showOnlyFavorites = false;
-
-// Initialize filter categories
-function initializeFilterCategories() {
-  Object.values(categories).forEach(category => {
-    const option = document.createElement('option');
-    option.value = category.name;
-    option.textContent = category.name;
-    filterCategory.appendChild(option);
-  });
-}
-
-// Handle category selection
-categorySelect.addEventListener('change', () => {
-  productNameInput.value = '';
-  updateSuggestions();
-});
-
-// Handle product name input
-productNameInput.addEventListener('input', updateSuggestions);
-
-function updateSuggestions() {
-  const category = categorySelect.value;
-  const searchText = productNameInput.value.trim();
-
-  if (!category || !searchText) {
-    suggestionsDiv.style.display = 'none';
-    return;
-  }
-
-  const categoryItems = categories[category].items;
-  const filtered = categoryItems.filter(item =>
-    item.name.includes(searchText)
-  );
-
-  if (filtered.length > 0) {
-    suggestionsDiv.innerHTML = '';
-    suggestionsDiv.style.display = 'block';
-
-    filtered.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'suggestion-item';
-      div.textContent = `${item.name} - ₪${item.price}`;
-      div.addEventListener('click', () => {
-        productNameInput.value = item.name;
-        suggestionsDiv.style.display = 'none';
-      });
-      suggestionsDiv.appendChild(div);
-    });
-  } else {
-    suggestionsDiv.style.display = 'none';
-  }
-}
-
-// Handle form submission
-productForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const category = categorySelect.value;
-  const productName = productNameInput.value.trim();
-
-  if (!category || !productName) {
-    alert('נא למלא את כל השדות');
-    return;
-  }
-
-  const categoryData = categories[category];
-  const productData = categoryData.items.find(item => item.name === productName);
-
-  if (!productData) {
-    alert('מוצר לא נמצא');
-    return;
-  }
-
-  const newProduct = {
-    id: Math.random().toString(36).substr(2, 9),
-    name: productName,
-    category: categoryData.name,
-    price: productData.price,
-    isFavorite: false
-  };
-
-  products.push(newProduct);
-  localStorage.setItem('animeCollectProducts', JSON.stringify(products));
-  
-  productNameInput.value = '';
-  suggestionsDiv.style.display = 'none';
-  renderProducts();
-});
-
-// Toggle favorites
-toggleFavorites.addEventListener('click', () => {
-  showOnlyFavorites = !showOnlyFavorites;
-  toggleFavorites.textContent = showOnlyFavorites ? 'הצג הכל' : 'הצג מועדפים';
-  toggleFavorites.classList.toggle('active');
-  renderProducts();
-});
-
-// Filter by category
-filterCategory.addEventListener('change', renderProducts);
-
-// Render products
-function renderProducts() {
-  const selectedCategory = filterCategory.value;
-  let filteredProducts = products;
-
-  if (selectedCategory) {
-    filteredProducts = filteredProducts.filter(p => p.category === selectedCategory);
-  }
-
-  if (showOnlyFavorites) {
-    filteredProducts = filteredProducts.filter(p => p.isFavorite);
-  }
-
-  productsGrid.innerHTML = '';
-
-  filteredProducts.forEach(product => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.innerHTML = `
-      <div class="product-header">
-        <span class="category-tag">${product.category}</span>
-        <button class="favorite-btn" onclick="toggleFavorite('${product.id}')">
-          ${product.isFavorite ? '❤️' : '🤍'}
-        </button>
-      </div>
-      <div class="product-name">${product.name}</div>
-      <div class="product-footer">
-        <span class="price">₪${product.price}</span>
-        <button class="delete-btn" onclick="deleteProduct('${product.id}')">מחק</button>
-      </div>
-    `;
-    productsGrid.appendChild(card);
-  });
-
-  const total = filteredProducts.reduce((sum, product) => sum + product.price, 0);
-  totalPriceDiv.textContent = `סה"כ: ₪${total}`;
-}
-
-// Toggle favorite status
-function toggleFavorite(id) {
-  products = products.map(product =>
-    product.id === id
-      ? { ...product, isFavorite: !product.isFavorite }
-      : product
-  );
-  localStorage.setItem('animeCollectProducts', JSON.stringify(products));
-  renderProducts();
-}
-
-// Delete product
-function deleteProduct(id) {
-  products = products.filter(product => product.id !== id);
-  localStorage.setItem('animeCollectProducts', JSON.stringify(products));
-  renderProducts();
-}
-
-// Initialize the app
-initializeFilterCategories();
-renderProducts();
-
-// Close suggestions when clicking outside
-document.addEventListener('click', (e) => {
-  if (!productNameInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-    suggestionsDiv.style.display = 'none';
-  }
-});
