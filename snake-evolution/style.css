@@ -470,7 +470,7 @@ body::before {
     margin: 10px 0;
     height: 470px;
     flex-grow: 1;
-    width: 95%;
+    width: 99%;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     position: relative;
@@ -502,7 +502,7 @@ body::before {
     pointer-events: all;
     opacity: 0;
     transition: opacity 0.3s ease;
-    bottom: 40px;
+    bottom: 45px;
     left: 40px;
 }
 
@@ -547,6 +547,7 @@ body::before {
         }
     
         .game-stats {
+        width: 95%;
         padding: 8px;
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(5px);
@@ -558,11 +559,16 @@ body::before {
         font-size: 1rem;
     }
     
-        #gameCanvas {
-        width: 98%;
-        height: calc(100vh - 200px);
-        margin: 5px 0;
+    #gameCanvas {
         background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        margin: 10px auto;
+        height: 470px;
+        width: 98%;
+        max-width: 900px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        position: relative;
     }
 
         .mobile-controls.active {
@@ -570,15 +576,15 @@ body::before {
             opacity: 1;
         }
 
-  .joystick {
+    .joystick {
     display: block;
     opacity: 1;
-  }
+    }
 
-  .joystick.active {
-      display: block;
-      opacity: 1;
-  }
+    .joystick.active {
+    display: block;
+    opacity: 1;
+    }
 
     .control-button {
         font-size: 14px;
