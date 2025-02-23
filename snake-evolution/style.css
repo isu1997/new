@@ -1,8 +1,14 @@
 /* Reset and Base Styles */
-* {
+
+html,
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    touch-action: none;
 }
 
 body {
@@ -37,14 +43,13 @@ body::before {
     }
 }
 
-/* Game Container */
 .game-container {
     position: relative;
     width: 95%;
     max-width: 1000px;
     height: 95vh;
     max-height: 800px;
-    margin: 10px;
+    margin: 10px auto;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -445,55 +450,118 @@ body::before {
 .mobile-controls {
     display: none;
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
 }
 
 .joystick {
+    position: absolute;
     width: 120px;
     height: 120px;
-    position: relative;
+    pointer-events: all;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.joystick.active {
+    opacity: 1;
 }
 
 .joystick-base {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
 }
 
 .joystick-tip {
     width: 50%;
     height: 50%;
     border-radius: 50%;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    background: rgba(255, 255, 255, 0.25);
     position: absolute;
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: transform 0.1s ease-out;
+}
+
+/* Update mobile controls styles for floating joystick */
+.mobile-controls {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.joystick {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    pointer-events: all;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.joystick.active {
+    opacity: 1;
+}
+
+.joystick-base {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.joystick-tip {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    position: absolute;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: transform 0.1s ease-out;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .game-container {
-            margin: 5px;
-            height: 98vh;
-            padding: 10px;
-            max-width: 100%;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            border-radius: 0;
+            padding: 10px 5px;
         }
 
-    .mobile-controls {
-        display: block;
-    }
-
-    .game-stats {
-        padding: 8px;
-    }
+        .game-stats {
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
 
     .control-button {
         font-size: 0.9rem;
@@ -508,11 +576,6 @@ body::before {
         margin-top: 5px;
     }
 
-    #gameCanvas {
-        width: 98%;
-        height: 70vh;
-    }
-
     .game-controls {
         position: fixed;
         top: auto;
@@ -521,11 +584,19 @@ body::before {
         flex-direction: row;
     }
 
-    .mobile-controls {
-        display: block;
-        bottom: 20px;
-        left: 20px;
-    }
+        .stats-row {
+            font-size: 1rem;
+        }
+    
+        #gameCanvas {
+            width: 98%;
+            height: calc(100vh - 200px);
+            margin: 10px 0;
+        }
+    
+        .mobile-controls {
+            display: block;
+        }
 
      /* Prevent horizontal scrolling in landscape mode */
     html, body {
@@ -535,33 +606,27 @@ body::before {
 }
 
 /* Landscape Mode */
-@media (max-width: 768px) and (orientation: landscape) {
+@media (max-width: 812px) and (orientation: landscape) {
     .game-container {
+        flex-direction: row;
         padding: 5px;
-        height: 95vh;
+        height: 100vh;
     }
 
     .game-stats {
-        margin-bottom: 5px;
-    }
-
-    .control-button {
-        font-size: 0.8rem;
-        padding: 6px 12px;
+        width: 200px;
+        margin-right: 10px;
+        height: calc(100vh - 20px);
     }
 
     #gameCanvas {
-        height: 75vh;
+        width: calc(100% - 220px);
+        height: calc(100vh - 20px);
+        margin: 5px;
     }
 
-    .mobile-controls {
-        right: 10px;
-        left: auto;
-        bottom: 10px;
-    }
-
-    .game-controls {
-        bottom: 10px;
-        right: 140px;
+    .controls-row {
+        flex-direction: column;
+        gap: 10px;
     }
 }

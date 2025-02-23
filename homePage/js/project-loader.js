@@ -50,7 +50,7 @@ function getTechColor(tech) {
     'css3-alt': '#1970ae',
     'sass': '#ba4176',
     'js': '#f7df1e',
-    'bootstrap': '#7952B3'
+    'bootstrap': '#7952B3', 
 };
     return colors[tech] || '#000000';
 }

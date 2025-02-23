@@ -702,41 +702,95 @@ function handleKeyPress(event) {
  * Implements virtual joystick functionality
  */
 function initMobileControls() {
-    const joystick = document.querySelector('.joystick-tip');
+    const mobileControls = document.querySelector('.mobile-controls');
+    const joystick = document.querySelector('.joystick');
+    const joystickTip = document.querySelector('.joystick-tip');
     let isDragging = false;
-    let startX, startY;
+    let startX, startY, initialTouchX, initialTouchY;
+    let currentX, currentY;
 
-    joystick.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        e.preventDefault();
-    });
+    function positionJoystick(x, y) {
+        const joystickSize = 120;
+        const halfSize = joystickSize / 2;
+        
+        // Keep joystick within screen bounds
+        x = Math.max(halfSize, Math.min(window.innerWidth - halfSize, x));
+        y = Math.max(halfSize, Math.min(window.innerHeight - halfSize, y));
+        
+        joystick.style.transform = `translate(${x - halfSize}px, ${y - halfSize}px)`;
+    }
 
-    document.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-
-        const deltaX = e.touches[0].clientX - startX;
-        const deltaY = e.touches[0].clientY - startY;
+    function updateJoystickTip(deltaX, deltaY) {
+        const maxDistance = 30;
+        const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
         const angle = Math.atan2(deltaY, deltaX);
-
-        if (Math.abs(deltaX) > 20 || Math.abs(deltaY) > 20) {
-            if (angle > -Math.PI/4 && angle < Math.PI/4) {
+        
+        const moveX = Math.cos(angle) * distance;
+        const moveY = Math.sin(angle) * distance;
+        
+        joystickTip.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        
+        // Update snake direction based on angle
+        // Convert angle from radians to degrees and normalize
+        const degrees = ((angle * 180 / Math.PI) + 360) % 360;
+        
+        // Only change direction if the joystick is moved beyond a minimum threshold
+        if (distance > 10) {
+            // Right
+            if (degrees >= 315 || degrees < 45) {
                 if (gameState.direction !== 'left') gameState.direction = 'right';
-            } else if (angle > Math.PI/4 && angle < 3*Math.PI/4) {
+            }
+            // Down
+            else if (degrees >= 45 && degrees < 135) {
                 if (gameState.direction !== 'up') gameState.direction = 'down';
-            } else if (angle > -3*Math.PI/4 && angle < -Math.PI/4) {
-                if (gameState.direction !== 'down') gameState.direction = 'up';
-            } else {
+            }
+            // Left
+            else if (degrees >= 135 && degrees < 225) {
                 if (gameState.direction !== 'right') gameState.direction = 'left';
             }
+            // Up
+            else if (degrees >= 225 && degrees < 315) {
+                if (gameState.direction !== 'down') gameState.direction = 'up';
+            }
         }
+    }
+
+    mobileControls.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        initialTouchX = e.touches[0].clientX;
+        initialTouchY = e.touches[0].clientY;
+        startX = initialTouchX;
+        startY = initialTouchY;
+        currentX = startX;
+        currentY = startY;
+        
+        joystick.classList.add('active');
+        positionJoystick(startX, startY);
         e.preventDefault();
     });
 
-    document.addEventListener('touchend', () => {
-        isDragging = false;
+    mobileControls.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+        
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+        
+        updateJoystickTip(deltaX, deltaY);
+        e.preventDefault();
     });
+
+    const endTouch = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        joystick.classList.remove('active');
+        joystickTip.style.transform = 'translate(0, 0)';
+    };
+
+    mobileControls.addEventListener('touchend', endTouch);
+    mobileControls.addEventListener('touchcancel', endTouch);
 }
 
 /**
