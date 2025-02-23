@@ -719,83 +719,70 @@ function initMobileControls() {
         
         joystick.style.transform = `translate(${x - halfSize}px, ${y - halfSize}px)`;
     }
-
-    function updateJoystickTip(deltaX, deltaY) {
-        const maxDistance = 30;
-        const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
-        const angle = Math.atan2(deltaY, deltaX);
-        
-        const moveX = Math.cos(angle) * distance;
-        const moveY = Math.sin(angle) * distance;
-        
+}
+    /**
+ * Updates the joystick tip position and game state based on touch input
+ * @param {number} deltaX - The change in X position
+ * @param {number} deltaY - The change in Y position
+ */
+function updateJoystickTip(deltaX, deltaY) {
+    // Calculate distance and limit it
+    const maxDistance = 40;
+    const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
+    const angle = Math.atan2(deltaY, deltaX);
+    
+    // Calculate new position
+    const moveX = Math.cos(angle) * distance;
+    const moveY = Math.sin(angle) * distance;
+    
+    // Update joystick visual position
+    const joystickTip = document.querySelector('.joystick-tip');
+    if (joystickTip) {
         joystickTip.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    }
+    
+    // Convert angle to degrees and normalize to 0-360 range
+    const degrees = ((angle * 180 / Math.PI) + 360) % 360;
+    
+    // Only update direction if joystick is moved beyond threshold
+    if (distance > 8) {
+        const oldDirection = gameState.direction;
         
-        // Update snake direction based on angle
-        // Convert angle from radians to degrees and normalize
-        const degrees = ((angle * 180 / Math.PI) + 360) % 360;
-        
-        // Only change direction if the joystick is moved beyond a minimum threshold
-        if (distance > 10) {
-            // Right
-            if (degrees >= 315 || degrees < 45) {
-                if (gameState.direction !== 'left') gameState.direction = 'right';
+        // Determine new direction based on angle
+        if (degrees >= 315 || degrees < 45) {
+            if (gameState.direction !== 'left') {
+                gameState.direction = 'right';
             }
-            // Down
-            else if (degrees >= 45 && degrees < 135) {
-                if (gameState.direction !== 'up') gameState.direction = 'down';
+        } else if (degrees >= 45 && degrees < 135) {
+            if (gameState.direction !== 'up') {
+                gameState.direction = 'down';
             }
-            // Left
-            else if (degrees >= 135 && degrees < 225) {
-                if (gameState.direction !== 'right') gameState.direction = 'left';
+        } else if (degrees >= 135 && degrees < 225) {
+            if (gameState.direction !== 'right') {
+                gameState.direction = 'left';
             }
-            // Up
-            else if (degrees >= 225 && degrees < 315) {
-                if (gameState.direction !== 'down') gameState.direction = 'up';
+        } else if (degrees >= 225 && degrees < 315) {
+            if (gameState.direction !== 'down') {
+                gameState.direction = 'up';
             }
         }
+        
+        // If direction changed, update UI
+        if (oldDirection !== gameState.direction) {
+            updateUI();
+        }
     }
-
-    mobileControls.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        initialTouchX = e.touches[0].clientX;
-        initialTouchY = e.touches[0].clientY;
-        startX = initialTouchX;
-        startY = initialTouchY;
-        currentX = startX;
-        currentY = startY;
-        
-        joystick.classList.add('active');
-        positionJoystick(startX, startY);
-        e.preventDefault();
-    });
-
-    mobileControls.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        
-        currentX = e.touches[0].clientX;
-        currentY = e.touches[0].clientY;
-        
-        const deltaX = currentX - startX;
-        const deltaY = currentY - startY;
-        
-        updateJoystickTip(deltaX, deltaY);
-        e.preventDefault();
-    });
-
-    const endTouch = () => {
-        if (!isDragging) return;
-        isDragging = false;
-        joystick.classList.remove('active');
-        joystickTip.style.transform = 'translate(0, 0)';
+    
+    // Return the calculated distance and angle for potential use by other functions
+    return {
+        distance,
+        angle,
+        degrees
     };
-
-    mobileControls.addEventListener('touchend', endTouch);
-    mobileControls.addEventListener('touchcancel', endTouch);
 }
 
 /**
  * Updates UI elements with current game state
- * Updates score, high score, level, and hearts display
  */
 function updateUI() {
     document.getElementById('score').textContent = gameState.score;

@@ -3,6 +3,7 @@ html,
 body {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -463,7 +464,7 @@ body::before {
     filter: none;
 }
 
-/* Canvas */
+/* Canvas styling */
 #gameCanvas {
     background: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
@@ -480,24 +481,26 @@ body::before {
 .mobile-controls {
     display: none;
     position: absolute;
-    /* Changed from fixed to absolute */
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 1000;
+    pointer-events: all;
+    /* Changed from none */
+    z-index: 2000;
 }
 
 .joystick {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     pointer-events: all;
-    opacity: 0;
+    opacity: 0.3;
+    /* Changed from 0 to always be slightly visible */
     transition: opacity 0.3s ease;
     bottom: 40px;
     left: 40px;
+    z-index: 2100;
 }
 
 .joystick.active {
@@ -508,25 +511,32 @@ body::before {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
+        /* שינוי מ-0.4 ל-0.2 */
+        border: 3px solid rgba(255, 255, 255, 0.4);
+        /* שינוי מ-0.6 ל-0.4 */
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+    /* Enhanced glow */
+    backdrop-filter: blur(8px);
 }
 
 .joystick-tip {
-    width: 50%;
-    height: 50%;
+    width: 60%;
+    height: 60%;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.4);
+        /* שינוי מ-0.6 ל-0.4 */
+    /* Increased opacity */
     position: absolute;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    transition: transform 0.1s ease-out;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+        /* שינוי מ-0.8 ל-0.6 */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    transition: transform 0.08s ease-out;
 }
 
 /* Responsive Design */
@@ -569,6 +579,23 @@ body::before {
         margin: 0 5px;
     }
     }
+
+        /* Additional media query for touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            .mobile-controls {
+                display: block !important;
+                pointer-events: all;
+            }
+    
+            .joystick {
+                opacity: 0.3;
+                background-color: rgba(255, 0, 0, 0.1);
+            }
+    
+            .joystick.active {
+                opacity: 1;
+            }
+        }
 
 /* Landscape Mode */
 @media (max-width: 812px) and (orientation: landscape) {
