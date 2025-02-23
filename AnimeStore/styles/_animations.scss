@@ -1,0 +1,146 @@
+// Floating animation for shapes
+@keyframes float {
+    0% {
+        transform: translateY(-100%) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+// Background gradient animation
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+// Form appearance animations
+@keyframes form-appear-right {
+    0% {
+        opacity: 0;
+        transform: translateX(100px) scale(0.97);
+        filter: blur(8px);
+    }
+
+    60% {
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes form-appear-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) scale(0.97);
+        filter: blur(8px);
+    }
+
+    60% {
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes form-appear-top {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px) scale(0.97);
+        filter: blur(8px);
+    }
+
+    60% {
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+// Select animations
+@keyframes selectOptionAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes select-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Button glow animation
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+// Dropdown animation
+@keyframes dropdown-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,21 @@
+    // Heading styles with text shadow effects
+    h1,
+    h2 {
+        text-align: center;
+        color: #e0e0e0;
+        text-shadow:
+            2px 2px 2px rgba(0, 0, 0, 0.2),
+            -1px -1px 1px rgba(255, 255, 255, 0.5);
+    }
+
+    h1 {
+        font-family: 'Fredoka', sans-serif;
+        margin-bottom: 0.3rem;
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-family: 'Suez One', serif;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }

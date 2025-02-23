@@ -1,0 +1,85 @@
+// Primary button styling
+.btn-primary {
+    background: $primary;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg, #794bc4, #9461e3);
+    transition: all 0.3s ease;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg,
+                #ff00e1, #794bc4, #4b34e9, #794bc4, #ff00e1);
+        background-size: 400%;
+        z-index: -1;
+        animation: glowing 20s linear infinite;
+        filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 8px;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(45deg,
+                #0066cc,
+                #794bc4,
+                #5842d6,
+                #4b34e9,
+                #5842d6,
+                #794bc4,
+                #0066cc);
+        background-size: 400%;
+        animation: glowing 20s linear infinite;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(121, 75, 196, 0.3);
+
+        &::before,
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    span {
+        position: relative;
+        z-index: 2;
+        display: block;
+    }
+}
+
+// Secondary button styling
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid $primary;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: $primary;
+    }
+}

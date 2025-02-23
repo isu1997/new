@@ -1,0 +1,90 @@
+// Product grid layout
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.total-price {
+    margin-left: auto;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+// Product card styling
+.product-card {
+    background: $card-bg;
+    backdrop-filter: blur(8px);
+    border: 1px solid $border;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+    animation: form-appear-top 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: 1.0s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+}
+
+// Product card components
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+.category-tag {
+    background: rgba(139, 92, 246, 0.2);
+    color: #d8b4fe;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+}
+
+.favorite-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.product-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    color: #4ade80;
+    font-weight: 600;
+}
+
+.delete-btn {
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: #dc2626;
+    }
+}

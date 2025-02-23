@@ -1,0 +1,105 @@
+// Glass morphism form styling
+.glass-form {
+    position: relative;
+    background: $glass-bg;
+    backdrop-filter: blur(12px);
+    border: 1px solid $border;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    z-index: 1;
+    animation: form-appear-right 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Filter form variant
+.filters.glass-form {
+    z-index: 1;
+    animation: form-appear-left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: 0.6s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+// Form group spacing
+.form-group {
+    margin-bottom: 1rem;
+}
+
+// Label styling
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+// Input and select field styling
+input,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid $border;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1em;
+}
+
+// Input and select focus states
+input:focus,
+select:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+// Select field specific styling
+select {
+    @extend input;
+    transition: all 0.3s ease;
+
+    &:focus {
+        transform: translateY(-2px);
+    }
+
+    &:not(:disabled):hover {
+        background-color: rgba(0, 0, 0, 0.6);
+        transform: translateY(-2px);
+    }
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 $text;
+    }
+
+    &:focus,
+    &:hover {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    }
+
+    option {
+        background: #1f1f1f;
+        color: white;
+        padding: 0.75rem;
+        position: relative;
+        animation: selectOptionAppear 0.3s ease-out;
+    }
+}
