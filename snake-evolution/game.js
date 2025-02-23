@@ -702,14 +702,22 @@ function handleKeyPress(event) {
  * Implements virtual joystick functionality
  */
 function initMobileControls() {
-    const mobileControls = document.querySelector('.mobile-controls');
-    const joystick = document.querySelector('.joystick');
+    const mobileControls = document.getElementById('mobileControls');
+    const joystick = document.getElementById('joystick');
     const joystickTip = document.querySelector('.joystick-tip');
     let isDragging = false;
-    let startX, startY, initialTouchX, initialTouchY;
+    let startX, startY;
     let currentX, currentY;
+    let initialDirection = null;
+
+    // Make sure mobile controls are visible on mobile devices
+    if (mobileControls) {
+        mobileControls.style.display = 'block';
+        mobileControls.style.opacity = '1';
+    }
 
     function positionJoystick(x, y) {
+        if (!joystick) return;
         const joystickSize = 120;
         const halfSize = joystickSize / 2;
         
@@ -717,8 +725,70 @@ function initMobileControls() {
         x = Math.max(halfSize, Math.min(window.innerWidth - halfSize, x));
         y = Math.max(halfSize, Math.min(window.innerHeight - halfSize, y));
         
-        joystick.style.transform = `translate(${x - halfSize}px, ${y - halfSize}px)`;
+        joystick.style.left = `${x - halfSize}px`;
+        joystick.style.top = `${y - halfSize}px`;
     }
+
+    if (joystick) {
+        joystick.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            currentX = startX;
+            currentY = startY;
+            initialDirection = gameState ? gameState.direction : null;
+
+            joystick.classList.add('active');
+            positionJoystick(startX, startY);
+            if (joystickTip) {
+                joystickTip.style.transform = 'translate(0px, 0px)';
+            }
+
+            e.preventDefault();
+        });
+    }
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+
+        const touch = e.touches[0];
+        currentX = touch.clientX;
+        currentY = touch.clientY;
+
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+
+        updateJoystickTip(deltaX, deltaY);
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        
+        isDragging = false;
+        if (joystick) {
+            joystick.classList.remove('active');
+        }
+        if (joystickTip) {
+            joystickTip.style.transform = 'translate(0px, 0px)';
+        }
+        
+        // Reset joystick position to default bottom-left corner
+        const defaultX = 110;  // 40px margin + half of joystick size (140/2)
+        const defaultY = window.innerHeight - 110;
+        positionJoystick(defaultX, defaultY);
+    });
+
+    // Set initial position of joystick
+    window.addEventListener('load', () => {
+        const defaultX = 110;
+        const defaultY = window.innerHeight - 110;
+        positionJoystick(defaultX, defaultY);
+        if (joystick) {
+            joystick.style.opacity = '1';
+        }
+    });
 }
     /**
  * Updates the joystick tip position and game state based on touch input
