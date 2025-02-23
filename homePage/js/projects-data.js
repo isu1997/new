@@ -117,7 +117,7 @@ const projects = {
         image: "./images/AnimeStore.png",
         projectPath: "../AnimeStore/index.html",
         downloadPath: "../AnimeStore/AnimeStore.rar",
-        technologies: ["html5", "css3-alt", "js"]
+        technologies: ["html5", "css3-alt", "sass", "js"]
     },
     "millionaire-game": {
         title: "Who Wants to Be a Millionaire?",
