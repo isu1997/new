@@ -1,4 +1,8 @@
 /* Reset and Base Styles */
+*{
+    box-sizing: border-box;
+}
+
 html,
 body {
     margin: 0;
@@ -205,10 +209,18 @@ body::before {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     display: none;
+    /* יהפוך ל-flex כשהמודל פעיל */
     justify-content: center;
     align-items: center;
+    text-align: center;
+    /* למקרה שיש טקסט */
     z-index: 1000;
     backdrop-filter: blur(8px);
+}
+
+/* כשהמודל פעיל */
+.modal.active {
+    display: flex;
 }
 
 .modal-content {
@@ -502,7 +514,7 @@ body::before {
     pointer-events: all;
     opacity: 0;
     transition: opacity 0.3s ease;
-    bottom: 45px;
+    bottom: 48px;
     left: 40px;
 }
 
@@ -559,17 +571,14 @@ body::before {
         font-size: 1rem;
     }
     
-    #gameCanvas {
-        background: rgba(0, 0, 0, 0.8);
-        border-radius: 10px;
-        margin: 10px auto;
-        height: 470px;
-        width: 98%;
-        max-width: 900px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        position: relative;
-    }
+        #gameCanvas {
+            width: 98%;
+            max-width: 1200px;
+            height: calc(100vh - 300px);
+            max-height: 500px;
+            margin: 5px auto 35px auto;
+            background: rgba(0, 0, 0, 0.8);
+        }
 
         .mobile-controls.active {
             display: block;
