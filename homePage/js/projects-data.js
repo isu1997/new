@@ -127,6 +127,14 @@ const projects = {
         downloadPath: "../millionaire-game/millionaire-game.rar",
         technologies: ["html5", "css3-alt", "js"]
     },
+    "snake-evolution": {
+        title: "Snake Evolution Game",
+        description: "Embark on a journey to become the ultimate snake master! Use your arrow keys to control your snake, avoid obstacles, and grow stronger as you progress!",
+        image: "./images/snake-evolution.png",
+        projectPath: "../snake-evolution/index.html",
+        downloadPath: "../snake-evolution/snake-evolution.rar",
+        technologies: ["html5", "css3-alt", "js"]
+        },
 };
 
 export default projects;

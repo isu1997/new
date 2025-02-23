@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Evolution Game</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Game Container -->
+    <div class="game-container">
+        <!-- Opening Animation Container -->
+        <div class="opening-animation">
+            <div class="geometric-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <button id="startGame" class="start-button">Start Game</button>
+        </div>
+
+        <!-- Game Rules Modal -->
+        <div id="rulesModal" class="modal">
+            <div class="modal-content">
+                <h2>Snake Evolution</h2>
+                <div class="rules-content">
+                    <div class="rules-section">
+                        <h3>Basic Rules</h3>
+                        <ul>
+                            <li>Start with 5 hearts</li>
+                            <li>Pass through walls to appear on the other side</li>
+                            <li>Avoid hitting obstacles and yourself</li>
+                            <li>Score points by collecting food</li>
+                            <li>Level up every 100 points</li>
+                        </ul>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>Food Types</h3>
+                        <ul>
+                            <li>Regular Food (Red) - Increases score and length</li>
+                            <li>Heart Power-up (Orange) - Restores one heart</li>
+                            <li>Shrink Power-up (Green) - Reduces snake length to initial size</li>
+                        </ul>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>Obstacles</h3>
+                        <ul>
+                            <li>Gray blocks appear as obstacles</li>
+                            <li>More obstacles appear each level</li>
+                            <li>Hitting obstacles costs one heart</li>
+                            <li>Obstacles are randomly placed</li>
+                        </ul>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>Level 7 - Golden Snake Challenge</h3>
+                        <ul>
+                            <li>A golden rival snake appears!</li>
+                            <li>It hunts both food and you</li>
+                            <li>The golden snake can eat you and your food</li>
+                            <li>Getting caught by it costs one heart</li>
+                            <li>The golden snake grows longer when it catches you</li>
+                            <li>Level 7 and beyond become increasingly challenging</li>
+                        </ul>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>Controls</h3>
+                        <ul>
+                            <li>Use arrow keys on keyboard</li>
+                            <li>Use joystick on mobile devices</li>
+                            <li>Pause button to take a break</li>
+                            <li>Restart button to start over</li>
+                        </ul>
+                    </div>
+                </div>
+                <button id="startPlaying" class="start-button">Let's Play!</button>
+            </div>
+        </div>
+
+        <!-- Game Stats -->
+        <div class="game-stats">
+            <div class="stats-row">
+                <div class="hearts-container">
+                    <div class="hearts"></div>
+                </div>
+                <div class="score-container">
+                    <span>Score: <span id="score">0</span></span>
+                    <span>High Score: <span id="highScore">0</span></span>
+                </div>
+                <div class="level-container">
+                    <span>Level: <span id="level">1</span></span>
+                </div>
+            </div>
+            <div class="controls-row">
+                <button id="pauseButton" class="control-button">Pause</button>
+                <button id="restartButton" class="control-button">Restart</button>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Mobile Controls -->
+        <div id="mobileControls" class="mobile-controls">
+            <div id="joystick" class="joystick">
+                <div class="joystick-base">
+                    <div class="joystick-tip"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+
+</html>
