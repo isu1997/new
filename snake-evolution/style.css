@@ -209,16 +209,13 @@ body::before {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     display: none;
-    /* יהפוך ל-flex כשהמודל פעיל */
     justify-content: center;
     align-items: center;
     text-align: center;
-    /* למקרה שיש טקסט */
     z-index: 1000;
     backdrop-filter: blur(8px);
 }
 
-/* כשהמודל פעיל */
 .modal.active {
     display: flex;
 }
@@ -480,7 +477,7 @@ body::before {
     background: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     margin: 10px 0;
-    height: 470px;
+    height: 420px;
     flex-grow: 1;
     width: 99%;
     border: 1px solid rgba(255, 255, 255, 0.1);
