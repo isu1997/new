@@ -3,8 +3,18 @@ import { config, Colors, Directions } from './constants.js';
 import { gameState, isGoldenSnakeActive } from './gameState.js';
 
 // Move golden snake using AI logic
+let lastMoveTime = 0;
+
 export function moveGoldenSnake() {
     if (!isGoldenSnakeActive() || gameState.goldenSnake.length === 0 || gameState.isGoldenFrozen) return;
+    
+    const currentTime = Date.now();
+    const currentPlayerSpeed = config.initialSpeed - (gameState.level - 1) * config.speedIncrease;
+    const goldenSnakeSpeed = currentPlayerSpeed + config.goldenSnakeSpeedOffset;
+    
+    if (currentTime - lastMoveTime < goldenSnakeSpeed) return;
+    
+    lastMoveTime = currentTime;
     
     const head = { ...gameState.goldenSnake[0] };
     const food = gameState.food;
@@ -30,18 +40,16 @@ export function moveGoldenSnake() {
     
     // Check if golden snake got food
     if (head.x === food.x && head.y === food.y) {
-        handleFoodCollision(head, true);
+        handleFoodCollision(true);
+        gameState.goldenSnake.unshift(head);
     } else {
         gameState.goldenSnake.pop();
         gameState.goldenSnake.unshift(head);
     }
     
-    // Check collision with player's tail only
-    const playerTail = gameState.snake[gameState.snake.length - 1];
-    if (head.x === playerTail.x && head.y === playerTail.y) {
-        handlePlayerCollision();
-    }
+    checkPlayerCollision(head);
 }
+
 
 // AI logic to calculate next move
 function calculateNextMove(head, food, playerHead) {
@@ -81,12 +89,9 @@ function handleFoodCollision(head) {
 function checkPlayerCollision(head) {
     gameState.snake.forEach(segment => {
         if (head.x === segment.x && head.y === segment.y) {
-            // נגיעה עם הראש של הנחש הזהב בשחקן
             
-            // הנחש הזהב מתארך ב-1
             gameState.goldenSnake.push({ ...gameState.goldenSnake[gameState.goldenSnake.length-1] });
             
-            // פגיעה בשחקן - מוריד לב
             handlePlayerCollision();
         }
     });

@@ -77,7 +77,7 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgb(9, 0, 27);
     z-index: 100;
 }
 
@@ -179,9 +179,9 @@ body::before {
 
 .start-button:hover,
 .control-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.25));
+    transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        background: linear-gradient(45deg, #FFA500, #FFD700);
 }
 
 .start-button:active,

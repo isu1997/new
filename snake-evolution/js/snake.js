@@ -3,6 +3,7 @@ import { config, Colors, Directions } from './constants.js';
 import { gameState, takeDamage } from './gameState.js';
 import { handleFoodCollision } from './food.js';
 import { sounds } from './audio.js';
+
 // Move snake based on current direction
 export function moveSnake() {
     if (gameState.isPaused || gameState.isPlayerFrozen) return;

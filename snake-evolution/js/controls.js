@@ -42,11 +42,9 @@ function initMobileControls() {
     
     if (!mobileControls || !joystick || !joystickTip) return;
 
-    // מסתירים את הבקרים בהתחלה
     mobileControls.style.display = 'none';
     mobileControls.style.opacity = '0';
 
-    // מאזינים לאירוע התחלת המשחק
     document.addEventListener('gameStart', () => {
         mobileControls.style.display = 'block';
         setTimeout(() => {

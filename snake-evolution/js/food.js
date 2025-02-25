@@ -36,6 +36,7 @@ export function spawnFood() {
     const type = determineFoodType();
     gameState.food = { ...position, type };
 }
+
 // Check if position is occupied
 function isPositionOccupied(position) {
     // Check player snake
@@ -55,10 +56,11 @@ function isPositionOccupied(position) {
         obs.x === position.x && obs.y === position.y
     );
 }
+
 // Determine food type
 function determineFoodType() {
     // Only spawn time freeze food at level 7 or higher
-    if (gameState.level >= 7 && Math.random() < 0.2) {
+    if (gameState.level >= 7 && Math.random() < 0.4) {
         return PowerUpType.TIME_FREEZE;
     }
     
@@ -70,6 +72,7 @@ function determineFoodType() {
         PowerUpType.HEART : 
         PowerUpType.SHRINK;
 }
+
 // Handle snake eating food
 export function handleFoodCollision(isGoldenSnake = false) {
     // Play appropriate sound effect based on food type
@@ -122,6 +125,7 @@ function handleTimeFreeze(isGoldenSnake) {
         }, config.timeFreezeAmount);
     }
 }
+
 // Get food color based on type
 function getFoodColor(type) {
     switch(type) {
@@ -135,6 +139,7 @@ function getFoodColor(type) {
             return Colors.food;
     }
 }
+
 // Draw food on canvas
 export function drawFood(ctx) {
     const foodX = (gameState.food.x + 0.5) * config.gridSize;
@@ -153,6 +158,7 @@ export function drawFood(ctx) {
     
     ctx.shadowBlur = 0;
 }
+
 // Create gradient for food
 function createFoodGradient(ctx, x, y, radius, color) {
     const gradient = ctx.createRadialGradient(
@@ -170,6 +176,7 @@ function createFoodGradient(ctx, x, y, radius, color) {
     
     return gradient;
 }
+
 // Add shine effect to food
 function drawFoodShine(ctx, x, y, radius) {
     ctx.beginPath();

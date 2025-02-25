@@ -100,10 +100,10 @@ export function handleLevelUp() {
     console.log('Level up! Current level:', gameState.level, 'New level:', gameState.level + 1);
     clearInterval(gameState.gameLoop);
     
-    // עדכון הרמה
+    // Level update
     gameState.level++;
     
-    // הפעלת הנחש הזהב ברמה 7
+    // Activate the Golden Snake at level 7
     if (gameState.level === 7) {
         const gridWidth = Math.floor(canvas.width / config.gridSize);
         gameState.goldenSnake = [
@@ -114,10 +114,10 @@ export function handleLevelUp() {
         console.log('Golden snake activated!', gameState.goldenSnake);
     }
     
-    // עדכון מכשולים
+    // Obstacles update
     generateObstacles();
     
-    // עדכון מהירות
+    // Speed ​​update
     const speed = getCurrentSpeed();
     gameState.gameLoop = setInterval(update, Math.max(speed, 50));
 }

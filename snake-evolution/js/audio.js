@@ -7,7 +7,7 @@ function initAudio() {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
-// Create and play a sound with specific frequency and duration
+// play a sound with specific frequency and duration
 function playSound(frequency, duration, type = 'sine', volume = 0.3) {
     if (!audioContext) initAudio();
     

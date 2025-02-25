@@ -10,14 +10,15 @@ export const config = {
     obstacleCount: 3,          
     obstacleIncrease: 2,       
     powerUpChance: 0.1,        
-    timeFreezeAmount: 5000,    // 5 seconds time freeze duration
+    timeFreezeAmount: 5000,
+    goldenSnakeSpeedOffset: 50
 };
 // Power-up types
 export const PowerUpType = {
     NONE: 'none',              
     HEART: 'heart',            
     SHRINK: 'shrink',
-    TIME_FREEZE: 'timeFreeze'  // New time freeze power-up
+    TIME_FREEZE: 'timeFreeze'
 };
 // Direction mappings
 export const Directions = {
@@ -47,7 +48,7 @@ export const Colors = {
     food: '#ff6b6b',
     heartPowerUp: '#F97316',
     shrinkPowerUp: '#00ff88',
-    timeFreezePowerUp: '#000080', // Deep blue color for time freeze food
+    timeFreezePowerUp: '#000080',
     obstacle: {
         primary: '#4A5568',
         secondary: '#2D3748'
