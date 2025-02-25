@@ -1,11 +1,13 @@
 import { config } from './constants.js';
 import { gameState } from './gameState.js';
+import { sounds } from './audio.js';
 
 // Initialize all UI components
 export function initUI() {
     initOpeningAnimation();
     initRulesModal();
     initGameStats();
+    initButtonSounds();
     updateUI();
 }
 
@@ -15,6 +17,7 @@ function initOpeningAnimation() {
     const openingAnimation = document.querySelector('.opening-animation');
     
     startButton?.addEventListener('click', () => {
+        sounds.startButton();
         openingAnimation.style.display = 'none';
         showRulesModal();
     });
@@ -26,8 +29,23 @@ function initRulesModal() {
     const rulesModal = document.getElementById('rulesModal');
     
     startPlayingButton?.addEventListener('click', () => {
+        sounds.startButton();
         rulesModal.style.display = 'none';
         startGame();
+    });
+}
+
+// Initialize button sounds
+function initButtonSounds() {
+    const pauseButton = document.getElementById('pauseButton');
+    const restartButton = document.getElementById('restartButton');
+    
+    pauseButton?.addEventListener('click', () => {
+        sounds.pauseButton();
+    });
+    
+    restartButton?.addEventListener('click', () => {
+        sounds.startButton();
     });
 }
 
@@ -89,7 +107,10 @@ function updateLevel() {
 
 // Show game over screen
 export function showGameOver() {
-    alert(`Game Over! Score: ${gameState.score}`);
+    sounds.gameOver();  // Play sound before showing alert
+    setTimeout(() => {
+        alert(`Game Over! Score: ${gameState.score}`);
+    }, 100);  // Small delay to ensure sound plays before alert
 }
 
 // Handle level up UI updates

@@ -1,12 +1,11 @@
 import { canvas } from './canvas.js';
-import { config, Colors, Directions } from './constants.js';  // הסרנו את PowerUpType כי לא משתמשים בו
+import { config, Colors, Directions } from './constants.js';
 import { gameState, takeDamage } from './gameState.js';
-import { handleFoodCollision } from './food.js';  // הוספנו את זה
-
-
+import { handleFoodCollision } from './food.js';
+import { sounds } from './audio.js';
 // Move snake based on current direction
 export function moveSnake() {
-    if (gameState.isPaused) return;
+    if (gameState.isPaused || gameState.isPlayerFrozen) return;
     
     const head = { ...gameState.snake[0] };
     
@@ -30,14 +29,22 @@ export function moveSnake() {
     }
 
     // Add new head
-gameState.snake.unshift(head);
+    gameState.snake.unshift(head);
 
-// Check if food was eaten
-if (head.x === gameState.food.x && head.y === gameState.food.y) {
-    handleFoodCollision();
-} else {
-    gameState.snake.pop();
-}
+    // Check if food was eaten
+    if (head.x === gameState.food.x && head.y === gameState.food.y) {
+        handleFoodCollision(false);
+    } else {
+        gameState.snake.pop();
+    }
+    
+    // Check if player snake caught golden snake's tail
+    if (gameState.goldenSnake.length > 0) {
+        const goldenTail = gameState.goldenSnake[gameState.goldenSnake.length - 1];
+        if (head.x === goldenTail.x && head.y === goldenTail.y) {
+            handleSnakeEating(gameState.snake, gameState.goldenSnake);
+        }
+    }
     
     return false; // No game over
 }
@@ -45,32 +52,31 @@ if (head.x === gameState.food.x && head.y === gameState.food.y) {
 export function checkCollision(head) {
     return checkSelfCollision(head) || checkObstacleCollision(head);
 }
-
 // Check if snake hits itself
 function checkSelfCollision(head) {
     return gameState.snake.some((segment, index) => {
         return index !== 0 && segment.x === head.x && segment.y === head.y;
     });
 }
-
 // Check if snake hits obstacles
 function checkObstacleCollision(head) {
     return gameState.obstacles.some(obstacle => 
         obstacle.x === head.x && obstacle.y === head.y
     );
 }
-
 // Handle snake collision
 export function handleCollision() {
     const isGameOver = takeDamage();
     
     if (!isGameOver) {
+        sounds.heartLoss();
         resetSnakePosition();
+    } else {
+        sounds.gameOver();
     }
     
     return isGameOver;
 }
-
 // Reset snake position after collision while maintaining length
 function resetSnakePosition() {
     const snakeLength = gameState.snake.length;
@@ -86,30 +92,25 @@ function resetSnakePosition() {
         gameState.snake.push({ ...gameState.snake[0] });
     }
 }
-
 // Change snake direction if valid
 export function changeDirection(newDirection) {
     if (gameState.isPaused) return;
-
     const opposites = {
         [Directions.UP]: Directions.DOWN,
         [Directions.DOWN]: Directions.UP,
         [Directions.LEFT]: Directions.RIGHT,
         [Directions.RIGHT]: Directions.LEFT
     };
-
     if (opposites[gameState.direction] !== newDirection) {
         gameState.direction = newDirection;
     }
 }
-
 // Shrink snake to initial size
 export function shrinkSnake() {
     while (gameState.snake.length > 3) {
         gameState.snake.pop();
     }
 }
-
 // Draw snake on canvas
 export function drawSnake(ctx) {
     gameState.snake.forEach((segment, index) => {
@@ -130,11 +131,9 @@ export function drawSnake(ctx) {
             gradient.addColorStop(0, Colors.snakeBody.primary);
             gradient.addColorStop(1, Colors.snakeBody.secondary);
         }
-
         drawSnakeSegment(ctx, segment, gradient);
     });
 }
-
 // Draw snake eyes
 function drawSnakeEyes(ctx, head) {
     const eyeSize = config.gridSize / 6;
@@ -162,7 +161,6 @@ function drawSnakeEyes(ctx, head) {
     );
     ctx.fill();
 }
-
 // Draw a single snake segment
 function drawSnakeSegment(ctx, segment, gradient) {
     ctx.shadowColor = 'rgba(0, 255, 100, 0.3)';
@@ -189,4 +187,28 @@ function drawSnakeSegment(ctx, segment, gradient) {
     ctx.fill();
     
     ctx.shadowBlur = 0;
+}
+// Check collision between snakes
+function checkSnakeCollision(head, otherSnake) {
+    // Check if head hits other snake's tail
+    if (otherSnake.length > 0) {
+        const tail = otherSnake[otherSnake.length - 1];
+        return head.x === tail.x && head.y === tail.y;
+    }
+    return false;
+}
+// Handle snake eating other snake's tail
+export function handleSnakeEating(eatingSnake, eatenSnake) {
+    // Extend eating snake
+    eatingSnake.push({ ...eatingSnake[eatingSnake.length - 1] });
+    
+    // If player snake eats golden snake
+    if (eatingSnake === gameState.snake) {
+        // Restore all hearts
+        gameState.hearts = config.maxHearts;
+        // Remove golden snake until next level
+        gameState.goldenSnake = [];
+    }
+    
+    sounds.levelUp(); // Play eating sound
 }

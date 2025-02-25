@@ -4,7 +4,7 @@ import { gameState, isGoldenSnakeActive } from './gameState.js';
 
 // Move golden snake using AI logic
 export function moveGoldenSnake() {
-    if (!isGoldenSnakeActive() || gameState.goldenSnake.length === 0) return;
+    if (!isGoldenSnakeActive() || gameState.goldenSnake.length === 0 || gameState.isGoldenFrozen) return;
     
     const head = { ...gameState.goldenSnake[0] };
     const food = gameState.food;
@@ -30,14 +30,17 @@ export function moveGoldenSnake() {
     
     // Check if golden snake got food
     if (head.x === food.x && head.y === food.y) {
-        handleFoodCollision(head);
+        handleFoodCollision(head, true);
     } else {
         gameState.goldenSnake.pop();
         gameState.goldenSnake.unshift(head);
     }
     
-    // Check collision with player
-    checkPlayerCollision(head);
+    // Check collision with player's tail only
+    const playerTail = gameState.snake[gameState.snake.length - 1];
+    if (head.x === playerTail.x && head.y === playerTail.y) {
+        handlePlayerCollision();
+    }
 }
 
 // AI logic to calculate next move

@@ -14,8 +14,11 @@ export let gameState = {
     level: 1,
     gameLoop: null,          
     isPaused: false,
+    isPlayerFrozen: false,    // New: tracks if player snake is frozen
+    isGoldenFrozen: false,    // New: tracks if golden snake is frozen
     highScore: localStorage.getItem('snakeHighScore') || 0
 };
+
 
 // Reset game state to initial values
 export function resetGameState() {
