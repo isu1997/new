@@ -34,13 +34,15 @@ function handleKeyPress(event) {
     }
 }
 
-// Initialize mobile controls (joystick)
+// Initialize mobile controls (joysticks)
 function initMobileControls() {
     const mobileControls = document.getElementById('mobileControls');
-    const joystick = document.getElementById('joystick');
-    const joystickTip = document.querySelector('.joystick-tip');
+    const leftJoystick = document.getElementById('joystick');
+    const leftJoystickTip = leftJoystick?.querySelector('.joystick-tip');
+    const rightJoystick = document.getElementById('rightJoystick');
+    const rightJoystickTip = rightJoystick?.querySelector('.joystick-tip');
     
-    if (!mobileControls || !joystick || !joystickTip) return;
+    if (!mobileControls || !leftJoystick || !leftJoystickTip) return;
 
     mobileControls.style.display = 'none';
     mobileControls.style.opacity = '0';
@@ -52,21 +54,45 @@ function initMobileControls() {
         }, 100);
     });
 
-    // Set up joystick event listeners
-    setupJoystickEvents(joystick, joystickTip);
+    // Set up left joystick event listeners
+    setupJoystickEvents(leftJoystick, leftJoystickTip, 'left');
     
-    // Set initial joystick position
-    setInitialJoystickPosition();
+    // Set up right joystick event listeners if available
+    if (rightJoystick && rightJoystickTip) {
+        setupJoystickEvents(rightJoystick, rightJoystickTip, 'right');
+    }
+    
+    // Set initial joystick positions
+    setInitialJoystickPositions();
+    
+    // Check orientation and adjust joysticks visibility
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+}
+
+// Check device orientation and adjust joysticks
+function checkOrientation() {
+    const rightJoystick = document.getElementById('rightJoystick');
+    if (!rightJoystick) return;
+    
+    if (window.innerWidth > window.innerHeight) {
+        // Landscape mode - show both joysticks
+        rightJoystick.style.display = 'block';
+    } else {
+        // Portrait mode - hide right joystick
+        rightJoystick.style.display = 'none';
+    }
 }
 
 // Set up joystick event listeners
-function setupJoystickEvents(joystick, joystickTip) {
+function setupJoystickEvents(joystick, joystickTip, side) {
     const state = {
         isDragging: false,
         startX: 0,
         startY: 0,
         currentX: 0,
-        currentY: 0
+        currentY: 0,
+        side: side // 'left' or 'right'
     };
 
     joystick.addEventListener('touchstart', (e) => {
@@ -91,7 +117,7 @@ function handleJoystickStart(e, joystick, joystickTip, state) {
     state.startY = touch.clientY;
 
     joystick.classList.add('active');
-    positionJoystick(state.startX, state.startY);
+    positionJoystick(state.side, state.startX, state.startY);
     joystickTip.style.transform = 'translate(0px, 0px)';
 
     e.preventDefault();
@@ -108,7 +134,7 @@ function handleJoystickMove(e, state, joystickTip) {
     const deltaX = state.currentX - state.startX;
     const deltaY = state.currentY - state.startY;
 
-    updateJoystickPosition(deltaX, deltaY, joystickTip);
+    updateJoystickPosition(state.side, deltaX, deltaY, joystickTip);
     e.preventDefault();
 }
 
@@ -118,13 +144,12 @@ function handleJoystickEnd(joystick, joystickTip, state) {
     joystick.classList.remove('active');
     joystickTip.style.transform = 'translate(0px, 0px)';
     
-    const defaultX = 110;
-    const defaultY = window.innerHeight - 110;
-    positionJoystick(defaultX, defaultY);
+    // Reset to default position
+    setDefaultJoystickPosition(state.side);
 }
 
 // Update joystick visual position and game direction
-function updateJoystickPosition(deltaX, deltaY, joystickTip) {
+function updateJoystickPosition(side, deltaX, deltaY, joystickTip) {
     const maxDistance = 40;
     const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
     const angle = Math.atan2(deltaY, deltaX);
@@ -136,25 +161,36 @@ function updateJoystickPosition(deltaX, deltaY, joystickTip) {
     // Update joystick visual
     joystickTip.style.transform = `translate(${moveX}px, ${moveY}px)`;
     
-    // Update game direction if moved beyond threshold
+    // Update game direction if moved beyond threshold and is left joystick
     if (distance > 8) {
         const degrees = ((angle * 180 / Math.PI) + 360) % 360;
         
-        if (degrees >= 315 || degrees < 45) {
-            changeDirection(Directions.RIGHT);
-        } else if (degrees >= 45 && degrees < 135) {
-            changeDirection(Directions.DOWN);
-        } else if (degrees >= 135 && degrees < 225) {
-            changeDirection(Directions.LEFT);
-        } else if (degrees >= 225 && degrees < 315) {
-            changeDirection(Directions.UP);
+        if (side === 'left') {
+            // Handle movement with left joystick
+            if (degrees >= 315 || degrees < 45) {
+                changeDirection(Directions.RIGHT);
+            } else if (degrees >= 45 && degrees < 135) {
+                changeDirection(Directions.DOWN);
+            } else if (degrees >= 135 && degrees < 225) {
+                changeDirection(Directions.LEFT);
+            } else if (degrees >= 225 && degrees < 315) {
+                changeDirection(Directions.UP);
+            }
+        } else if (side === 'right') {
+            // Handle special actions with right joystick if needed
+            // For example: shooting, special abilities, etc.
+            // This can be customized based on game requirements
+            console.log('Right joystick moved:', { degrees, distance });
         }
     }
 }
 
 // Position joystick element
-function positionJoystick(x, y) {
-    const joystick = document.getElementById('joystick');
+function positionJoystick(side, x, y) {
+    const joystick = side === 'left' 
+        ? document.getElementById('joystick') 
+        : document.getElementById('rightJoystick');
+    
     if (!joystick) return;
 
     const joystickSize = 120;
@@ -168,11 +204,26 @@ function positionJoystick(x, y) {
     joystick.style.top = `${y - halfSize}px`;
 }
 
-// Set initial joystick position
-function setInitialJoystickPosition() {
-    const defaultX = 110;
-    const defaultY = window.innerHeight - 110;
-    positionJoystick(defaultX, defaultY);
+// Set specific joystick to its default position
+function setDefaultJoystickPosition(side) {
+    if (side === 'left') {
+        const defaultX = 110;
+        const defaultY = window.innerHeight - 110;
+        positionJoystick('left', defaultX, defaultY);
+    } else if (side === 'right') {
+        const defaultX = window.innerWidth - 110;
+        const defaultY = window.innerHeight - 110;
+        positionJoystick('right', defaultX, defaultY);
+    }
+}
+
+// Set initial joystick positions
+function setInitialJoystickPositions() {
+    // Set left joystick position
+    setDefaultJoystickPosition('left');
+    
+    // Set right joystick position
+    setDefaultJoystickPosition('right');
 }
 
 // Initialize game control buttons
@@ -201,4 +252,5 @@ function restartGame() {
 // Clean up event listeners
 export function cleanup() {
     document.removeEventListener('keydown', handleKeyPress);
+    window.removeEventListener('resize', checkOrientation);
 }
