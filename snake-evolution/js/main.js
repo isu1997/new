@@ -1,3 +1,4 @@
+// main.js
 import { config } from './constants.js';
 import { gameState, resetGameState, getCurrentSpeed } from './gameState.js';
 import { moveSnake } from './snake.js';
@@ -13,8 +14,36 @@ import {
     cleanup as cleanupUI 
 } from './ui.js';
 
-// Game initialization
+// Adjusts game objects size based on screen orientation
+function adjustGameObjectsSize() {
+    const isLandscape = window.innerWidth > window.innerHeight;
+    
+    // Update object sizes when device is in landscape mode
+    if (isLandscape && window.innerWidth <= 926) { // Only for mobile in landscape
+        // Reduce grid size by 15%
+        config.gridSize = Math.floor(config.originalGridSize * 0.85);
+    } else {
+        // Restore original size
+        config.gridSize = config.originalGridSize;
+    }
+    
+    // Reinitialize canvas and redraw with new sizes
+    if (canvas) {
+        initCanvas();
+        draw();
+    }
+}
+
+// Initializes game components and saves reference sizes
 function initGame() {
+    // Store original grid size for responsive calculations
+    if (!config.originalGridSize) {
+        config.originalGridSize = config.gridSize;
+    }
+    
+    // Check initial screen orientation and adjust sizes
+    adjustGameObjectsSize();
+    
     // Initialize canvas first
     initCanvas();
     console.log("Canvas initialized");
@@ -31,7 +60,7 @@ function initGame() {
     setupEventListeners();
 }
 
-// Handle game start
+// Handles game start by resetting state and initializing game elements
 function handleGameStart() {
     console.log("Starting new game");
     resetGameState();
@@ -40,16 +69,19 @@ function handleGameStart() {
     startGame();
 }
 
-// Set up game event listeners
+// Sets up all event listeners for game interaction
 function setupEventListeners() {
     document.addEventListener('gameStart', handleGameStart);
     document.addEventListener('gameRestart', handleRestart);
     document.addEventListener('goldenSnakeCollision', handleGoldenSnakeCollision);
     
+    // Add listener for screen orientation changes
+    window.addEventListener('resize', adjustGameObjectsSize);
+    
     window.addEventListener('unload', cleanup);
 }
 
-// Main game update loop
+// Main game loop that updates game state and UI each frame
 function update() {
     if (gameState.isPaused) return;
     
@@ -71,7 +103,7 @@ function update() {
     updateUI();
 }
 
-// Start game loop
+// Starts game loop with appropriate speed based on level
 function startGame() {
     if (gameState.gameLoop) {
         clearInterval(gameState.gameLoop);
@@ -82,7 +114,7 @@ function startGame() {
     draw();
 }
 
-// Handle game over
+// Handles game over state, saves high score, and prepares for restart
 function handleGameOver() {
     clearInterval(gameState.gameLoop);
     showGameOver();
@@ -95,7 +127,7 @@ function handleGameOver() {
     handleRestart();
 }
 
-// Handle level up
+// Handles level progression and introduces new game elements at higher levels
 export function handleLevelUp() {
     console.log('Level up! Current level:', gameState.level, 'New level:', gameState.level + 1);
     clearInterval(gameState.gameLoop);
@@ -117,12 +149,12 @@ export function handleLevelUp() {
     // Obstacles update
     generateObstacles();
     
-    // Speed ​​update
+    // Speed update
     const speed = getCurrentSpeed();
     gameState.gameLoop = setInterval(update, Math.max(speed, 50));
 }
 
-// Handle game restart
+// Restarts the game by resetting state and reinitializing game elements
 function handleRestart() {
     clearInterval(gameState.gameLoop);
     resetGameState();
@@ -132,7 +164,7 @@ function handleRestart() {
     startGame();
 }
 
-// Handle golden snake collision
+// Handles collision with golden snake and checks for game over condition
 function handleGoldenSnakeCollision() {
     gameState.hearts--;
     updateUI();
@@ -142,7 +174,7 @@ function handleGoldenSnakeCollision() {
     }
 }
 
-// Clean up game resources
+// Cleans up resources and removes event listeners when game is unloaded
 function cleanup() {
     clearInterval(gameState.gameLoop);
     cleanupControls();
@@ -151,7 +183,8 @@ function cleanup() {
     document.removeEventListener('gameStart', startGame);
     document.removeEventListener('gameRestart', handleRestart);
     document.removeEventListener('goldenSnakeCollision', handleGoldenSnakeCollision);
+    window.removeEventListener('resize', adjustGameObjectsSize);
 }
 
-// Start the game when the page loads
+// Initialize the game when the page loads
 window.addEventListener('load', initGame);

@@ -11,7 +11,8 @@ export const config = {
     obstacleIncrease: 2,       
     powerUpChance: 0.1,        
     timeFreezeAmount: 5000,
-    goldenSnakeSpeedOffset: 50
+    goldenSnakeSpeedOffset: 50,
+    originalGridSize: null,
 };
 // Power-up types
 export const PowerUpType = {

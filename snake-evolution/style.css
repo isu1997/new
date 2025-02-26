@@ -664,6 +664,7 @@ body::before {
 /* Landscape Mode */
 @media (max-width: 926px) and (orientation: landscape) {
 
+    /* התאמת מיכל המשחק */
     .game-container {
         flex-direction: column;
         padding: 5px;
@@ -674,6 +675,7 @@ body::before {
         background: rgba(0, 0, 0, 0.9);
     }
 
+    /* התאמת פאנל הסטטיסטיקות - הקטנה והעברה למעלה */
     .game-stats {
         width: 100%;
         max-width: 100%;
@@ -688,6 +690,7 @@ body::before {
         border-radius: 8px;
     }
 
+    /* התאמת שורת הסטטיסטיקות */
     .stats-row {
         flex-direction: row;
         align-items: center;
@@ -697,6 +700,7 @@ body::before {
         font-size: 0.9rem;
     }
 
+    /* התאמת מיכל הלבבות - סידור בשורה אופקית */
     .hearts-container {
         display: flex;
         flex-direction: row;
@@ -704,11 +708,13 @@ body::before {
         gap: 3px;
     }
 
+    /* צמצום גודל הלבבות */
     .heart {
         width: 16px;
         height: 16px;
     }
 
+    /* התאמת מיכל הניקוד והחלפה להצגה אופקית */
     .score-container {
         display: flex;
         flex-direction: row;
@@ -716,10 +722,12 @@ body::before {
         font-size: 0.85rem;
     }
 
+    /* התאמת מיכל הרמה */
     .level-container {
         font-size: 0.85rem;
     }
 
+    /* התאמת שורת הבקרה */
     .controls-row {
         flex-direction: row;
         gap: 5px;
@@ -727,6 +735,7 @@ body::before {
         margin: 0;
     }
 
+    /* התאמת הכפתורים */
     .control-button {
         padding: 3px 8px;
         font-size: 0.75rem;
@@ -734,20 +743,40 @@ body::before {
         border-radius: 5px;
     }
 
+    /* התאמת הקנבס - גובה מותאם ורקע בהיר יותר */
     #gameCanvas {
         width: 100%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 95px);
+        /* הורדת גובה נוסף כדי למנוע חריגה */
         margin: 0 0 2px 0;
         border-radius: 5px;
         border: 1px solid rgba(50, 50, 50, 0.8);
+        /* גבול כהה ודק */
         box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-        max-height: 80vh;
+        /* צל פנימי להדגשת הגבולות */
+        max-height: 70vh;
+        /* הגבלה חזקה יותר על הגובה */
+        background: rgba(20, 20, 20, 0.7) !important;
+        /* רקע בהיר יותר מהמקורי */
     }
 
+    /* התאמת ג'ויסטיקים - הגדלת האטימות מעט אך שמירה על שקיפות חלקית */
     .joystick {
-        bottom: 20px;
+        bottom: 25px;
         width: 110px;
         height: 110px;
+    }
+
+    .joystick-base {
+        background: rgba(255, 255, 255, 0.1) !important;
+        /* שקיפות חלקית עם נראות טובה יותר */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .joystick-tip {
+        background: rgba(255, 255, 255, 0.15) !important;
+        /* שקיפות חלקית עם נראות טובה יותר */
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
 
     .left-joystick {
@@ -757,8 +786,10 @@ body::before {
     .right-joystick {
         right: 20px;
         display: block !important;
+        /* הצג תמיד במצב לרוחב */
     }
 
+    /* התאמת מודל החוקים */
     .modal-content {
         width: 90%;
         max-width: 90%;
@@ -777,6 +808,7 @@ body::before {
 
     .rules-content {
         max-height: calc(90vh - 120px);
+        /* גובה עם מקום לכפתור */
         padding: 10px;
         margin: 10px 0;
         overflow-y: auto;
@@ -793,6 +825,7 @@ body::before {
         font-size: 0.9rem;
     }
 
+    /* הצגת הכפתור תמיד בתחתית המודל */
     #startPlaying {
         margin-top: auto;
         margin-bottom: 0;
@@ -801,6 +834,7 @@ body::before {
         align-self: center;
     }
 
+    /* התאמת האנימציה הפותחת */
     .opening-animation {
         width: 100%;
         height: 100vh;
