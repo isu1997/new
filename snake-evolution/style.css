@@ -697,29 +697,38 @@ body::before {
         font-size: 0.9rem;
     }
 
-    .hearts-container {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: flex-start !important;
-        gap: 3px !important;
-        margin: 0 !important;
+    .hearts-container .heart,
+    .hearts .heart {
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
     }
-
-    .heart {
-        width: 16px !important;
-        height: 16px !important;
-        margin: 0 2px 0 0 !important;
+    
+    .hearts-container .heart::before,
+    .hearts .heart::before {
+        content: "♥" !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        font-size: 14px !important;
+        color: #ff4d4d !important;
+        z-index: 1 !important;
+        display: none;
     }
-
-    body .game-container .game-stats .stats-row .hearts-container {
-        flex-direction: row !important;
-        display: flex !important;
+    
+    .hearts-container .heart.empty::before,
+    .hearts .heart.empty::before {
+        color: rgba(255, 255, 255, 0.1) !important;
     }
-
+    
+    .hearts-container,
     .hearts {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 3px !important;
+        align-items: center !important;
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
     }
 
     .score-container {
@@ -749,12 +758,12 @@ body::before {
 
     #gameCanvas {
         width: 100%;
-        height: calc(100vh - 100px);
+        height: calc(100vh - 103px);
         margin: 0 0 2px 0;
         border-radius: 5px;
         border: 1px solid rgba(50, 50, 50, 0.8);
         box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-        max-height: 69vh;
+        max-height: 69.5vh;
         background: rgba(20, 20, 20, 0.7) !important;
     }
 
