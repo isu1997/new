@@ -706,8 +706,8 @@ body::before {
     }
 
     .heart {
-        width: 15px !important;
-        height: 15px !important;
+        width: 10px !important;
+        height: 10px !important;
         margin: 0 2px 0 0 !important;
     }
 
@@ -749,12 +749,12 @@ body::before {
 
     #gameCanvas {
         width: 100%;
-        height: calc(100vh - 109px);
+        height: calc(100vh - 103px);
         margin: 0 0 2px 0;
         border-radius: 5px;
         border: 1px solid rgba(50, 50, 50, 0.8);
         box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-        max-height: 67vh;
+        max-height: 69vh;
         background: rgba(20, 20, 20, 0.7) !important;
     }
 
