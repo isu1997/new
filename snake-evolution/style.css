@@ -697,38 +697,29 @@ body::before {
         font-size: 0.9rem;
     }
 
-    .hearts-container .heart,
-    .hearts .heart {
-        clip-path: none !important;
-        -webkit-clip-path: none !important;
-        position: relative !important;
-        top: 0 !important;
-        left: 0 !important;
+    .hearts-container {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        gap: 3px !important;
+        margin: 0 !important;
     }
-    
-    .hearts-container .heart::before,
-    .hearts .heart::before {
-        content: "♥" !important;
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        font-size: 14px !important;
-        color: #ff4d4d !important;
-        z-index: 1 !important;
-        display: none;
+
+    .heart {
+        width: 16px !important;
+        height: 16px !important;
+        margin: 0 2px 0 0 !important;
     }
-    
-    .hearts-container .heart.empty::before,
-    .hearts .heart.empty::before {
-        color: rgba(255, 255, 255, 0.1) !important;
+
+    body .game-container .game-stats .stats-row .hearts-container {
+        flex-direction: row !important;
+        display: flex !important;
     }
-    
-    .hearts-container,
+
     .hearts {
-        align-items: center !important;
-        padding-top: 2px !important;
-        padding-bottom: 2px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 3px !important;
     }
 
     .score-container {
