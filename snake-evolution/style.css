@@ -701,21 +701,27 @@ body::before {
         display: flex !important;
         flex-direction: row !important;
         justify-content: flex-start !important;
-        gap: 3px !important;
+        gap: 0 !important;
         margin: 0 !important;
+        height: 18px !important;
+        overflow: visible !important;
     }
-
+    
     .heart {
-        width: 13px !important;
-        height: 13px !important;
+        width: 18px !important;
+        height: 18px !important;
         margin: 0 2px 0 0 !important;
+        transform: scale(0.8) !important;
+        transform-origin: center !important;
+        display: block !important;
+        position: relative !important;
     }
-
+    
     body .game-container .game-stats .stats-row .hearts-container {
         flex-direction: row !important;
         display: flex !important;
     }
-
+    
     .hearts {
         display: flex !important;
         flex-direction: row !important;
@@ -768,8 +774,8 @@ body::before {
     @media (orientation: landscape) {
         .joystick-base {
             background: rgba(128, 90, 213, 0.07) !important;
-                border: 1px solid rgba(149, 118, 220, 0.2) !important;
-                box-shadow: 0 0 10px rgba(149, 118, 220, 0.15) !important;
+            border: 1px solid rgba(149, 118, 220, 0.2) !important;
+            box-shadow: 0 0 10px rgba(149, 118, 220, 0.15) !important;
         }
 
         .joystick-tip {
