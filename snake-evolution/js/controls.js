@@ -38,11 +38,9 @@ function handleKeyPress(event) {
 function initMobileControls() {
     const mobileControls = document.getElementById('mobileControls');
     const leftJoystick = document.getElementById('joystick');
-    const leftJoystickTip = leftJoystick?.querySelector('.joystick-tip');
     const rightJoystick = document.getElementById('rightJoystick');
-    const rightJoystickTip = rightJoystick?.querySelector('.joystick-tip');
     
-    if (!mobileControls || !leftJoystick || !leftJoystickTip) return;
+    if (!mobileControls || !leftJoystick) return;
 
     mobileControls.style.display = 'none';
     mobileControls.style.opacity = '0';
@@ -55,11 +53,11 @@ function initMobileControls() {
     });
 
     // Set up left joystick event listeners
-    setupJoystickEvents(leftJoystick, leftJoystickTip, 'left');
+    setupLeftJoystick(leftJoystick);
     
     // Set up right joystick event listeners if available
-    if (rightJoystick && rightJoystickTip) {
-        setupJoystickEvents(rightJoystick, rightJoystickTip, 'right');
+    if (rightJoystick) {
+        setupRightJoystick(rightJoystick);
     }
     
     // Set initial joystick positions
@@ -84,72 +82,172 @@ function checkOrientation() {
     }
 }
 
-// Set up joystick event listeners
-function setupJoystickEvents(joystick, joystickTip, side) {
+// Setup left joystick (main movement joystick)
+function setupLeftJoystick(joystick) {
+    const joystickTip = joystick.querySelector('.joystick-tip');
+    if (!joystickTip) return;
+
     const state = {
         isDragging: false,
         startX: 0,
         startY: 0,
         currentX: 0,
-        currentY: 0,
-        side: side // 'left' or 'right'
+        currentY: 0
     };
 
     joystick.addEventListener('touchstart', (e) => {
-        handleJoystickStart(e, joystick, joystickTip, state);
+        handleLeftJoystickStart(e, joystick, joystickTip, state);
     });
 
     document.addEventListener('touchmove', (e) => {
         if (!state.isDragging) return;
-        handleJoystickMove(e, state, joystickTip);
+        handleLeftJoystickMove(e, joystickTip, state);
     }, { passive: false });
 
     document.addEventListener('touchend', () => {
-        handleJoystickEnd(joystick, joystickTip, state);
+        if (state.isDragging) {
+            handleLeftJoystickEnd(joystick, joystickTip, state);
+        }
     });
 }
 
-// Handle joystick touch start
-function handleJoystickStart(e, joystick, joystickTip, state) {
+// Setup right joystick (secondary action joystick)
+function setupRightJoystick(joystick) {
+    const joystickTip = joystick.querySelector('.joystick-tip');
+    if (!joystickTip) return;
+
+    const state = {
+        isDragging: false,
+        startX: 0,
+        startY: 0,
+        currentX: 0,
+        currentY: 0
+    };
+
+    joystick.addEventListener('touchstart', (e) => {
+        handleRightJoystickStart(e, joystick, joystickTip, state);
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!state.isDragging) return;
+        handleRightJoystickMove(e, joystickTip, state);
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => {
+        if (state.isDragging) {
+            handleRightJoystickEnd(joystick, joystickTip, state);
+        }
+    });
+}
+
+// Handle left joystick touch start
+function handleLeftJoystickStart(e, joystick, joystickTip, state) {
     state.isDragging = true;
     const touch = e.touches[0];
     state.startX = touch.clientX;
     state.startY = touch.clientY;
 
     joystick.classList.add('active');
-    positionJoystick(state.side, state.startX, state.startY);
+    positionJoystick('left', state.startX, state.startY);
     joystickTip.style.transform = 'translate(0px, 0px)';
 
     e.preventDefault();
 }
 
-// Handle joystick movement
-function handleJoystickMove(e, state, joystickTip) {
+// Handle right joystick touch start
+function handleRightJoystickStart(e, joystick, joystickTip, state) {
+    state.isDragging = true;
+    const touch = e.touches[0];
+    state.startX = touch.clientX;
+    state.startY = touch.clientY;
+
+    joystick.classList.add('active');
+    positionJoystick('right', state.startX, state.startY);
+    joystickTip.style.transform = 'translate(0px, 0px)';
+
+    e.preventDefault();
+}
+
+// Handle left joystick movement
+function handleLeftJoystickMove(e, joystickTip, state) {
     if (!state.isDragging) return;
 
-    const touch = e.touches[0];
-    state.currentX = touch.clientX;
-    state.currentY = touch.clientY;
+    // Find the touch that corresponds to this joystick
+    let touchFound = false;
+    for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        const dx = Math.abs(touch.clientX - state.startX);
+        const dy = Math.abs(touch.clientY - state.startY);
+        
+        // If this touch is close to where we started, it's ours
+        if (dx + dy < 100) {  // Adjust threshold as needed
+            state.currentX = touch.clientX;
+            state.currentY = touch.clientY;
+            touchFound = true;
+            break;
+        }
+    }
+
+    if (!touchFound) return;
 
     const deltaX = state.currentX - state.startX;
     const deltaY = state.currentY - state.startY;
 
-    updateJoystickPosition(state.side, deltaX, deltaY, joystickTip);
+    updateLeftJoystickPosition(deltaX, deltaY, joystickTip);
     e.preventDefault();
 }
 
-// Handle joystick release
-function handleJoystickEnd(joystick, joystickTip, state) {
+// Handle right joystick movement
+function handleRightJoystickMove(e, joystickTip, state) {
+    if (!state.isDragging) return;
+
+    // Find the touch that corresponds to this joystick
+    let touchFound = false;
+    for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        const dx = Math.abs(touch.clientX - state.startX);
+        const dy = Math.abs(touch.clientY - state.startY);
+        
+        // If this touch is close to where we started, it's ours
+        if (dx + dy < 100) {  // Adjust threshold as needed
+            state.currentX = touch.clientX;
+            state.currentY = touch.clientY;
+            touchFound = true;
+            break;
+        }
+    }
+
+    if (!touchFound) return;
+
+    const deltaX = state.currentX - state.startX;
+    const deltaY = state.currentY - state.startY;
+
+    updateRightJoystickPosition(deltaX, deltaY, joystickTip);
+    e.preventDefault();
+}
+
+// Handle left joystick release
+function handleLeftJoystickEnd(joystick, joystickTip, state) {
     state.isDragging = false;
     joystick.classList.remove('active');
     joystickTip.style.transform = 'translate(0px, 0px)';
     
     // Reset to default position
-    setDefaultJoystickPosition(state.side);
+    setDefaultJoystickPosition('left');
 }
 
-// Update joystick visual position and game direction
-function updateJoystickPosition(side, deltaX, deltaY, joystickTip) {
+// Handle right joystick release
+function handleRightJoystickEnd(joystick, joystickTip, state) {
+    state.isDragging = false;
+    joystick.classList.remove('active');
+    joystickTip.style.transform = 'translate(0px, 0px)';
+    
+    // Reset to default position
+    setDefaultJoystickPosition('right');
+}
+
+// Update left joystick visual position and game direction
+function updateLeftJoystickPosition(deltaX, deltaY, joystickTip) {
     const maxDistance = 40;
     const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
     const angle = Math.atan2(deltaY, deltaX);
@@ -161,27 +259,48 @@ function updateJoystickPosition(side, deltaX, deltaY, joystickTip) {
     // Update joystick visual
     joystickTip.style.transform = `translate(${moveX}px, ${moveY}px)`;
     
-    // Update game direction if moved beyond threshold and is left joystick
+    // Update game direction if moved beyond threshold
     if (distance > 8) {
         const degrees = ((angle * 180 / Math.PI) + 360) % 360;
         
-        if (side === 'left') {
-            // Handle movement with left joystick
-            if (degrees >= 315 || degrees < 45) {
-                changeDirection(Directions.RIGHT);
-            } else if (degrees >= 45 && degrees < 135) {
-                changeDirection(Directions.DOWN);
-            } else if (degrees >= 135 && degrees < 225) {
-                changeDirection(Directions.LEFT);
-            } else if (degrees >= 225 && degrees < 315) {
-                changeDirection(Directions.UP);
-            }
-        } else if (side === 'right') {
-            // Handle special actions with right joystick if needed
-            // For example: shooting, special abilities, etc.
-            // This can be customized based on game requirements
-            console.log('Right joystick moved:', { degrees, distance });
+        if (degrees >= 315 || degrees < 45) {
+            changeDirection(Directions.RIGHT);
+        } else if (degrees >= 45 && degrees < 135) {
+            changeDirection(Directions.DOWN);
+        } else if (degrees >= 135 && degrees < 225) {
+            changeDirection(Directions.LEFT);
+        } else if (degrees >= 225 && degrees < 315) {
+            changeDirection(Directions.UP);
         }
+    }
+}
+
+// Update right joystick visual position
+function updateRightJoystickPosition(deltaX, deltaY, joystickTip) {
+    const maxDistance = 40;
+    const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
+    const angle = Math.atan2(deltaY, deltaX);
+    
+    // Calculate new position
+    const moveX = Math.cos(angle) * distance;
+    const moveY = Math.sin(angle) * distance;
+    
+    // Update joystick visual
+    joystickTip.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    
+    // For now just handle the visual effect
+    // You can add custom actions for the right joystick here
+    if (distance > 8) {
+        const degrees = ((angle * 180 / Math.PI) + 360) % 360;
+        console.log('Right joystick moved:', { degrees, distance });
+        
+        // Add your custom right joystick actions here
+        // For example:
+        // if (degrees >= 315 || degrees < 45) {
+        //     // Right action
+        // } else if (degrees >= 45 && degrees < 135) {
+        //     // Down action
+        // } etc.
     }
 }
 
