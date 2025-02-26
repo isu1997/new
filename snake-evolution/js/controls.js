@@ -275,7 +275,7 @@ function updateLeftJoystickPosition(deltaX, deltaY, joystickTip) {
     }
 }
 
-// Update right joystick visual position
+// Update right joystick visual position and game direction (same as left joystick)
 function updateRightJoystickPosition(deltaX, deltaY, joystickTip) {
     const maxDistance = 40;
     const distance = Math.min(Math.hypot(deltaX, deltaY), maxDistance);
@@ -288,19 +288,19 @@ function updateRightJoystickPosition(deltaX, deltaY, joystickTip) {
     // Update joystick visual
     joystickTip.style.transform = `translate(${moveX}px, ${moveY}px)`;
     
-    // For now just handle the visual effect
-    // You can add custom actions for the right joystick here
+    // Update game direction if moved beyond threshold - SAME AS LEFT JOYSTICK
     if (distance > 8) {
         const degrees = ((angle * 180 / Math.PI) + 360) % 360;
-        console.log('Right joystick moved:', { degrees, distance });
         
-        // Add your custom right joystick actions here
-        // For example:
-        // if (degrees >= 315 || degrees < 45) {
-        //     // Right action
-        // } else if (degrees >= 45 && degrees < 135) {
-        //     // Down action
-        // } etc.
+        if (degrees >= 315 || degrees < 45) {
+            changeDirection(Directions.RIGHT);
+        } else if (degrees >= 45 && degrees < 135) {
+            changeDirection(Directions.DOWN);
+        } else if (degrees >= 135 && degrees < 225) {
+            changeDirection(Directions.LEFT);
+        } else if (degrees >= 225 && degrees < 315) {
+            changeDirection(Directions.UP);
+        }
     }
 }
 
