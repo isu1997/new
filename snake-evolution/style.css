@@ -664,28 +664,25 @@ body::before {
 /* Landscape Mode */
 @media (max-width: 926px) and (orientation: landscape) {
     .game-container {
-        flex-direction: column;
-        padding: 5px;
-        height: auto !important;
-        min-height: 100vh !important;
-        border-radius: 0;
-        margin: 0;
-        background: rgba(0, 0, 0, 0.9);
-    }
+            flex-direction: column;
+            padding: 5px;
+            height: 100vh;
+            max-height: 100vh;
+            border-radius: 0;
+            margin: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex !important;
+        }
 
-    .game-stats {
-        width: 100%;
-        max-width: 100%;
-        margin: 0 0 3px 0;
-        padding: 3px 10px;
-        height: auto;
-        min-height: auto;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 8px;
-    }
+        .game-stats {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 0 3px 0;
+            padding: 3px 10px;
+            height: auto;
+            min-height: auto;
+            flex-shrink: 0;
+        }
 
     .stats-row {
         flex-direction: row;
@@ -727,40 +724,6 @@ body::before {
         gap: 3px !important;
     }
 
-    .hearts-container .heart,
-    .hearts .heart {
-        clip-path: none !important;
-        -webkit-clip-path: none !important;
-        position: relative !important;
-        top: 0 !important;
-        left: 0 !important;
-    }
-    
-    .hearts-container .heart::before,
-    .hearts .heart::before {
-        content: "♥" !important;
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        font-size: 14px !important;
-        color: #ff4d4d !important;
-        z-index: 1 !important;
-        display: none;
-    }
-    
-    .hearts-container .heart.empty::before,
-    .hearts .heart.empty::before {
-        color: rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    .hearts-container,
-    .hearts {
-        align-items: center !important;
-        padding-top: 2px !important;
-        padding-bottom: 2px !important;
-    }
-
     .score-container {
         display: flex;
         flex-direction: row;
@@ -787,24 +750,28 @@ body::before {
     }
 
         #gameCanvas {
-            height: calc(100vh - 100px) !important;
-            max-height: 69.6vh !important;
-            min-height: 60vh !important;
-            flex-grow: 0 !important;
-            flex-shrink: 0 !important;
-        }
+        width: 100%;
+        flex-grow: 1 !important;
+        margin: 0 0 2px 0;
+        border-radius: 5px;
+        border: 1px solid rgba(50, 50, 50, 0.8);
+        box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+        min-height: 0 !important;
+        height: auto !important;
+        background: rgba(20, 20, 20, 0.7) !important;
+    }
 
     .joystick {
         bottom: 20px;
         width: 110px;
         height: 110px;
-        opacity: 0.3 !important;
+        opacity: 0.4 !important;
     }
 
     @media (orientation: landscape) {
         .joystick-base {
             background: rgba(128, 90, 213, 0.07) !important;
-            border: 1px solid rgba(149, 118, 220, 0.2) !important;
+            border: 1px solid rgba(149, 118, 220, 0.3) !important;
             box-shadow: 0 0 10px rgba(149, 118, 220, 0.15) !important;
         }
 
