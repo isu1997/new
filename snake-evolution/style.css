@@ -566,6 +566,23 @@ body::before {
             max-height: none;
         }
     
+        .opening-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .opening-animation>* {
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
     .modal-content {
             width: 100%;
             max-width: 100%;
@@ -627,28 +644,125 @@ body::before {
     }
     }
 
-/* Landscape Mode */
-@media (max-width: 812px) and (orientation: landscape) {
-.game-container {
-        flex-direction: row;
+/* התאמות למצב מובייל ברוחב (Landscape Mode) */
+@media (max-width: 926px) and (orientation: landscape) {
+
+    /* התאמת מיכל המשחק */
+    .game-container {
+        flex-direction: column;
         padding: 5px;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        margin: 0;
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    /* התאמת פאנל הסטטיסטיקות - הזזה לחלק העליון */
+    .game-stats {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 5px;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* התאמת שורת הסטטיסטיקות */
+    .stats-row {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        width: 70%;
+    }
+
+    /* התאמת שורת הבקרה */
+    .controls-row {
+        flex-direction: row;
+        gap: 5px;
+        width: 30%;
+        margin: 0;
+    }
+
+    /* התאמת הכפתורים */
+    .control-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin: 0;
+    }
+
+    /* התאמת הקנבס - הגדלה למקסימום האפשרי */
+    #gameCanvas {
+        width: 100%;
+        height: calc(100vh - 50px);
+        /* פחות הגובה של פאנל הסטטיסטיקות */
+        margin: 0;
+    }
+
+    /* התאמת ג'ויסטיק - שמירה על גודל מקורי */
+    .joystick {
+        bottom: 30px;
+        left: 30px;
+        width: 140px;
+        height: 140px;
+    }
+
+    /* מודל החוקים */
+    .modal-content {
+        width: 90%;
+        max-width: 90%;
+        height: 90vh;
+        max-height: 90vh;
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .rules-content {
+        max-height: 65vh;
+        padding: 15px;
+        margin: 10px 0;
+    }
+
+    .rules-section h3 {
+        font-size: 1.1rem;
+    }
+
+    /* התאמת האנימציה הפותחת */
+    .opening-animation {
+        width: 100%;
         height: 100vh;
     }
 
-    .game-stats {
-        width: 200px;
-        margin-right: 10px;
-        height: calc(100vh - 20px);
+    .start-button {
+        font-size: 1rem;
+        padding: 10px 20px;
     }
 
-    #gameCanvas {
-        width: calc(100% - 220px);
-        height: calc(100vh - 20px);
-        margin: 5px;
+    /* התאמת מיכל הלבבות */
+    .hearts-container {
+        margin: 0;
     }
 
-    .controls-row {
-        flex-direction: column;
+    /* צמצום גודל הלבבות */
+    .heart {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* התאמת מיכל הניקוד */
+    .score-container {
+        display: flex;
+        flex-direction: row;
         gap: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* התאמת מיכל הרמה */
+    .level-container {
+        font-size: 0.9rem;
     }
 }
