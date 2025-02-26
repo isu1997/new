@@ -663,12 +663,11 @@ body::before {
 
 /* Landscape Mode */
 @media (max-width: 926px) and (orientation: landscape) {
-
     .game-container {
         flex-direction: column;
         padding: 5px;
-        height: 100vh;
-        max-height: 100vh;
+        height: auto !important;
+        min-height: 100vh !important;
         border-radius: 0;
         margin: 0;
         background: rgba(0, 0, 0, 0.9);
@@ -787,19 +786,16 @@ body::before {
         border-radius: 5px;
     }
 
-    #gameCanvas {
-        width: 100%;
-        height: calc(100vh - 97px);
-        margin: 0 0 2px 0;
-        border-radius: 5px;
-        border: 1px solid rgba(50, 50, 50, 0.8);
-        box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-        max-height: 71vh;
-        background: rgba(20, 20, 20, 0.7) !important;
-    }
+        #gameCanvas {
+            height: calc(100vh - 100px) !important;
+            max-height: 69.6vh !important;
+            min-height: 60vh !important;
+            flex-grow: 0 !important;
+            flex-shrink: 0 !important;
+        }
 
     .joystick {
-        bottom: 25px;
+        bottom: 20px;
         width: 110px;
         height: 110px;
         opacity: 0.3 !important;
