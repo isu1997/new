@@ -546,13 +546,24 @@ body::before {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .game-container {
+    body {
+            display: block;
+            align-items: initial;
+            justify-content: initial;
+            overflow: hidden;
+        }
+    
+        .game-container {
             width: 100%;
             height: 100vh;
             margin: 0;
             border-radius: 0;
             padding: 5px 5px 10px;
             background: rgba(0, 0, 0, 0.9);
+            position: absolute;
+            top: 0;
+            left: 0;
+            max-height: none;
         }
     
     .modal-content {
