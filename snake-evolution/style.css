@@ -613,6 +613,11 @@ body::before {
             box-sizing: border-box
         }
 
+        .rules-content{
+            width: 90%;
+            margin: 2rem auto;
+        }
+
         #startPlaying{
             margin: 0 auto;
         }
