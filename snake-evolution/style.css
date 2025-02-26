@@ -698,28 +698,15 @@ body::before {
     }
 
     .hearts-container {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: flex-start !important;
-        gap: 3px !important;
-        margin: 0 !important;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        gap: 3px;
     }
 
     .heart {
-        width: 16px !important;
-        height: 16px !important;
-        margin: 0 2px 0 0 !important;
-    }
-
-    body .game-container .game-stats .stats-row .hearts-container {
-        flex-direction: row !important;
-        display: flex !important;
-    }
-
-    .hearts {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 3px !important;
+        width: 16px;
+        height: 16px;
     }
 
     .score-container {
@@ -749,12 +736,12 @@ body::before {
 
     #gameCanvas {
         width: 100%;
-        height: calc(100vh - 115px);
+        height: calc(100vh - 100px);
         margin: 0 0 2px 0;
         border-radius: 5px;
         border: 1px solid rgba(50, 50, 50, 0.8);
         box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-        max-height: 65vh;
+        max-height: 70vh;
         background: rgba(20, 20, 20, 0.7) !important;
     }
 
