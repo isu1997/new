@@ -3,495 +3,260 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <!-- logo -->
-    <link rel="shortcut icon" type="image" href="homePage/images/me.png">
-    <!-- style links -->
-    <link rel="stylesheet" href="homePage/sass/main.css">
-    <!-- bootstrap links -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- fonts links -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- fonts links -->
+    <title>Israel Eliav - Web Developer & Spiritual Explorer</title>
+    <!-- Minimal SVG favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+        type="image/svg+xml">
+    <!-- Google Fonts preconnect for performance optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&display=swap" rel="stylesheet">
-    <!-- fonts links -->
+    <!-- Multiple font families loaded for typography variety -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Heebo:wght@100..900&family=Pacifico&family=Varela+Round&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Nunito:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <!-- Font Awesome for iconography -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="homePage/styles/main.css">
 </head>
 
-<body data-bs-spy="scroll" data-bs-target="#navbar-spy" data-bs-offset="0"
-    style="background-image: linear-gradient(to bottom right, #403f44, #1e1b32)">
-    <!--  ***** Header ***** -->
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom fixed-top">
-        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-            <svg class="bi me-2" width="1" height="32">
-                <use xlink:href="#bootstrap"></use>
-            </svg>
-            <span class="fs-4" id="myName">Israel Eliav</span>
-        </a>
-        <!-- Nav Bar -->
-        <nav id="navbar-spy" class="navbar">
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#scrollspyTop" class="nav-link text-black" aria-current="page">Home</a>
-                </li>
-                <li class="nav-item"><a href="#scrollspyAbout" class="nav-link text-black">About</a></li>
-                <li class="nav-item"><a href="#scrollspyProjects" class="nav-link text-black">Projects</a></li>
-                <li class="nav-item"><a href="#scrollspyContact" class="nav-link text-black">Contact Me</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!--  ***** ScrollspyTop / Home ***** -->
-    <div id="scrollspyTop">
-        <!-- Hero -->
-        <section id="hero">
-            <!-- Container -->
-            <div class="container">
-                <div class="row flex-row-reverse">
-                    <!-- Right Hero / Container Image of Me -->
-                    <div id="right-hero">
-                        <img src="homePage/images/me.PNG" class="d-block mx-lg-auto img-fluid p-1"
-                            alt="Bootstrap Themes" loading="lazy">
-                    </div>
-                    <!-- left Hero / Container of Content -->
-                    <div id="left-hero">
-                        <p class="display-5 fs-9 mb-3 p-10 text-left" id="aboutMe">Hello,<br>
-                            I'm <span>Israel</span>
-                        </p>
-                        <!-- Change Content -->
-                        <h2 class="changecontent text-left"></h2>
-                        <p class="lead mb-20 fw-700 text-left" id="aboutMe2">Welcome! You've arrived just in time to
-                            look
-                            at my latest
-                            projects,
-                            but first
-                            let me tell you
-                            about myself, and then let's talk business!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!--  ***** ScrollspyAbout ***** -->
-    <div id="scrollspyAbout">
-        <!-- About -->
-        <section id="about">
-            <!-- Main -->
-            <div class="main">
-                <div id="left"><img src="homePage/images/development.jpg" alt=""></div>
-                <div id="right">
-                    <p class="lead mb-70 fw-700" id="aboutMe3">Greetings, I'm Israel, a maestro of the digital realm,
-                        where coding is
-                        not just a pastime but a passion intertwined
-                        with my very essence. With a steadfast commitment to excellence and a penchant for swift action,
-                        I traverse the
-                        intricate pathways of programming, embracing challenges as opportunities for growth.
-
-                        In my domain, no request is too daunting, no task too complex. I stand ready to embark on any
-                        journey that involves
-                        crafting a digital sanctuary tailored to elevate your business to new heights of efficiency and
-                        success.
-
-                        So, if you seek a virtuoso to weave the intricate threads of code into a masterpiece that will
-                        amplify your business's
-                        prowess, hesitate no further. Reach out to me through the links below, and let us embark on this
-                        transformative
-                        voyage together.
-                    </p><br>
-                    <div id="buttons" class="text-center">
-                        <a href="CV.pdf" style="--clr:#ff9900" download><span>Download CV</span><i></i></a>
-                    </div>
-                </div>
-        </section>
-    </div>
-
-    <!--  ***** ScrollspyProjects ***** -->
-    <div id="scrollspyProjects">
-        <!-- Gallery -->
-        <section id="gallery">
-            <!-- Album -->
-            <div class="album py-5 bg-body-tertiary">
-                <h1 id="project-title" class="mb-5 text-center">Page Center</h1>
-                <!-- Container Projects -->
-                <div class="containerProjects">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=1">
-                                        <img src="homePage/images/coffeeShop.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Coffee shop</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=2">
-                                        <img src="homePage/images/fashionStore.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Fashion store</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=3">
-                                        <img src="homePage/images/giftStore.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Gift store</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=4">
-                                        <img src="homePage/images/customWebsite.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Custom website</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=5">
-                                        <img src="homePage/images/consultingServices.png"
-                                            class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Consulting services</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=6">
-                                        <img src="homePage/images/digitalMarketing.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Digital marketing</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=7">
-                                        <img src="homePage/images/natureGallery.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Nature gallery</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project=8">
-                                        <img src="homePage/images/facebook.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Facebook</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!--  ***** ScrollspyProjects2 ***** -->
-    <div id="scrollspyProjects">
-        <!-- Gallery -->
-        <section id="gallery">
-            <!-- Album -->
-            <div class="album py-5 bg-body-tertiary">
-                <h1 id="project-title" class="mb-5 text-center">Play Center</h1>
-                <!-- Container Projects -->
-                <div class="containerProjects">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?project_weatherly">
-                                        <img src="homePage/images/weatherly.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Weatherly APP</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?countries_project">
-                                        <img src="homePage/images/countries.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Countries</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?pageBuilder">
-                                        <img src="homePage/images/pageBuilder.PNG" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Page Builder</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?mathNexus">
-                                        <img src="homePage/images/MathNexus.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Math Nexus</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?XO_Arena">
-                                        <img src="homePage/images/ticTacToe.png"
-                                            class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">XO Arena</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?memory_challenge">
-                                        <img src="homePage/images/memory_challenge.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Memory Challenge</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?AnimeStore">
-                                        <img src="homePage/images/AnimeStore.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Anime Collect Store</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?millionaire-game">
-                                        <img src="homePage/images/millionaire-game.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Millionaire Game</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-head">
-                                    <a href="homePage/project-preview.html?snake-evolution">
-                                        <img src="homePage/images/snake-evolution.png" class="thumbnail img-thumbnail">
-                                        <button class="btn btn-dark">View</button></a>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-center">Snake Evolution Game</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!--  ***** ScrollspyServices ***** -->
-    <div id="scrollspyServices">
-        <!-- Services -->
-        <div class="services" data-aos="fade-up" data-aos-duration="1500">
-            <h3>Services</h3>
-            <p>I specialize in website development and design using HTML, CSS, SASS ,Bootstrap and JS, providing customized
-                solutions and
-                modern designs.</p>
-            <div class="row" style="margin-top: 30px;" data-aos="fade-up" data-aos-duration="1500">
-                <div class="col-md-2 py-3 py-md-0 text-center">
-                    <div class="card">
-                        <i class="fa-brands fa-css3-alt" style="color: #1970ae;"></i>
-                        <h2>
-                            <br>CSS
-                        </h2>
-                    </div>
-                </div>
-                <div class="col-md-2 py-3 py-md-0 text-center">
-                    <div class="card">
-                        <i class="fa-brands fa-bootstrap" style="color: #563d7c;"></i>
-                        <h2>
-                            <br>Bootstrap
-                        </h2>
-                    </div>
-                </div>
-                <div class="col-md-2 py-3 py-md-0 text-center">
-                    <div class="card">
-                        <i class="fa-brands fa-html5" style="color: #e06925;"></i>
-                        <h2>
-                            <br>HTML
-                        </h2>
-                    </div>
-                </div>
-                <div class="col-md-2 py-3 py-md-0 text-center">
-                    <div class="card">
-                        <i class="fa-brands fa-sass" style="color: #ba4176;"></i>
-                        <h2>
-                            <br>SCSS
-                        </h2>
-                    </div>
-                </div>
-                <div class="col-md-2 py-3 py-md-0 text-center">
-                    <div class="card">
-                        <i class="fa-brands fa-js" style="color: #f7df1e;"></i>
-                        <h2>
-                            <br>JS
-                        </h2>
-                    </div>
-                </div>
-            </div>
+<body class="light">
+    <!-- Navigation Bar - Responsive with toggle button for mobile -->
+    <nav class="navbar">
+        <div class="nav-brand">Israel Eliav</div>
+        <!-- Hamburger menu toggle for mobile navigation -->
+        <div class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-    </div>
-
-    <!--  ***** ScrollspyContact ***** -->
-    <div id="scrollspyContact">
-        <!-- Contact -->
-        <section id="contact">
-            <div class="main">
-                <div class="left text-center">
-                    <h2>Contact me</h2>
-                    <p>Ill be happy to discuss about your requierments, please make sure to leave all the
-                        required
-                        information on
-                        the right so I could return to you with a proposal!</p>
-                </div>
-
-                <!--  ***** Form ***** -->
-                <div class="right">
-                    <form action="" class="form-outline ">
-                        <div class="form-group">
-                            <label for="typeName" class="form-label">Name</label>
-                            <input type="text" id="typeName" class="form-control" placeholder="john Smith" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="typePhone" class="form-label">Phone Number</label><br>
-                            <div class="input-group">
-                                <select list="phone-number-code-list" class="form-select" id="phone-number-code-list">
-                                    <option selected>050</option>
-                                    <option value="050">050</option>
-                                    <option value="051">051</option>
-                                    <option value="052">052</option>
-                                    <option value="053">053</option>
-                                    <option value="054">054</option>
-                                    <option value="055">055</option>
-                                    <option value="056">056</option>
-                                    <option value="057">057</option>
-                                    <option value="058">058</option>
-                                    <option value="059">059</option>
-                                </select>
-                                <input type="tel" id="typePhone" class="form-control" pattern="[0-9]{7}"
-                                    placeholder="xxx-xxxx" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="typeEmail" class="form-label">Email Address</label>
-                            <input type="email" id="typeEmail" class="form-control" placeholder="john.smith@gmail.com"
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <label for="typeMessage" class="form-label">Your Message</label>
-                            <textarea name="" id="typeMessage" class="form-control" cols="30" rows="10"
-                                placeholder="Let's stay in touch!"></textarea>
-                        </div>
-                        <button id="buttonsForm" style="--clr:#ff9900">Submit</button>
-                    </form>
-                </div>
-            </div>
-            <div id="right-contact">
-                <img src="homePage/images/contactMe.webp" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes"
-                    loading="lazy">
-            </div>
-        </section>
-    </div>
-
-    <!--  ***** Footer ***** -->
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <svg class="bi" width="30" height="24">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-            <span class="mb-2 mb-md-0 text-body-secondary">© 2024 By Israel Eliav</span>
-        </div>
-        <!-- Icons contact -->
-        <ul class="nav col-md-4 justify-content-center list-unstyled d-flex">
-            <li class="ms-2"><a class="text-body-secondary" href="https://instagram.com/numinalis_"><svg class="bi"
-                        width="24" height="24">
-                        <i class="fa-brands fa-instagram" style="color: #d0227c;"></i>
-                    </svg></a></li>
-            <li class="ms-2"><a class="text-body-secondary" href="https://wa.me/message/5WQ6HLHJCJD2L1"><svg class="bi"
-                        width="24" height="24">
-                        <i class="fa-brands fa-whatsapp" style="color: #4fc718;"></i>
-                    </svg></a></li>
-            <li class="ms-2 mx-2"><a class="text-body-secondary" href="https://facebook.com/israel3467"><svg class="bi"
-                        width="24" height="24">
-                        <i class="fa-brands fa-facebook" style="color: #1d80c1;"></i>
-                    </svg></a></li>
+        <!-- Navigation menu with smooth scrolling anchors -->
+        <ul class="nav-menu">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <!-- Theme toggle button for light/dark mode -->
+            <li><button id="theme-toggle" class="theme-toggle">🌙</button></li>
         </ul>
-    </footer>
+    </nav>
+
+    <!-- Home Section - Hero area with personal introduction -->
+    <section id="home" class="section">
+        <div class="container">
+            <!-- Animated typing effect for main title -->
+            <h1 class="title fade-in">
+                <span class="welcome">Welcome</span>
+                <span class="typing-line" data-text="I'm Israel | Fullstack Developer"></span>
+                <span class="typing-line" data-text="& Spiritual Guide"></span>
+            </h1>
+            <!-- Tagline with fade-in animation -->
+            <p class="subtitle fade-in">
+                Building Digital Spaces Where Inner Wisdom Meets Modern Technology
+            </p>
+
+            <div class="home-content-wrapper">
+                <!-- Main introduction text with animation -->
+                <div class="content fade-in">
+                    <p>I combine web development skills with spiritual understanding to create websites that do more
+                        than just look good. My work helps healers, practitioners, and light workers connect with the
+                        people who need them most.</p>
+                    <p>Every website I build is designed with intention—to create meaningful connections in the digital
+                        world. I blend technical expertise with intuitive design to help bridge timeless wisdom with
+                        today's technology.</p>
+                    <p class="quote">Let's create your online home together</p>
+                </div>
+
+                <!-- Profile image with floating animation effect -->
+                <div class="profile-image-wrapper fade-in">
+                    <div class="profile-image float-animation">
+                        <img src="homePage/images/me.JPG" alt="Israel Eliav">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call-to-action buttons with animation -->
+            <div class="buttons fade-in">
+                <a href="#projects" class="btn btn-primary">My Creations</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section - Personal and professional background -->
+    <section id="about" class="section bg-alt">
+        <div class="container">
+            <!-- Section title with animation -->
+            <h2 class="section-title fade-in">Who I Am</h2>
+            <!-- Multi-paragraph biography with animation -->
+            <div class="content fade-in">
+                <p>I'm Israel, a Full-Stack Developer with a deep connection to spiritual wisdom and healing arts. For
+                    years, I've been blessed to explore the intersection of technology and consciousness, creating
+                    digital spaces that serve as vessels for meaningful connection and growth.</p>
+                <p>My development work exists to provide soulful digital environments where practitioners can share
+                    their gifts with the world. Through my websites, you'll discover how to establish a meaningful
+                    online presence that resonates with your unique essence and purpose. My approach integrates modern
+                    web technologies with intuitive design principles, allowing you to connect directly with those
+                    seeking your services through conscious digital craftsmanship.</p>
+                <p>Beyond technical development, I offer something truly unique - a bridge between spiritual wisdom and
+                    digital expression. This journey is for those ready to take their healing practice to the next
+                    level. While my first focus is creating websites that embody your essence, I understand the deeper
+                    challenges of sharing your gifts with the world. I support practitioners, workshop facilitators,
+                    teachers, artists, and lightworkers who wish to know how to build community, communicate effectively
+                    online, and create digital products that sustain their sacred work.</p>
+            </div>
+            <!-- CV download button -->
+            <div class="buttons fade-in">
+                <a href="homePage/CV.pdf" download class="btn btn-outline">DOWNLOAD CV</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section - Portfolio showcase organized by categories -->
+    <section id="projects" class="section">
+        <div class="container">
+            <!-- Page Center Projects Category -->
+            <div class="project-section">
+                <h2 class="section-title fade-in">Page Center</h2>
+                <!-- Technology stack icons with labels -->
+                <div class="tech-icons fade-in">
+                    <div class="tech-icon html">
+                        <i class="fa-brands fa-html5"></i>
+                        HTML
+                    </div>
+                    <div class="tech-icon css">
+                        <i class="fa-brands fa-css3-alt"></i>
+                        CSS
+                    </div>
+                    <div class="tech-icon scss">
+                        <i class="fa-brands fa-sass"></i>
+                        SCSS
+                    </div>
+                </div>
+                <!-- Grid container for project cards -->
+                <div class="project-grid">
+                    <!-- Projects will be dynamically added here via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Play Center Projects Category -->
+            <div class="project-section">
+                <h2 class="section-title fade-in">Play Center</h2>
+                <!-- Extended technology stack icons for more complex projects -->
+                <div class="tech-icons fade-in">
+                    <div class="tech-icon html">
+                        <i class="fa-brands fa-html5"></i>
+                        HTML
+                    </div>
+                    <div class="tech-icon css">
+                        <i class="fa-brands fa-css3-alt"></i>
+                        CSS
+                    </div>
+                    <div class="tech-icon scss">
+                        <i class="fa-brands fa-sass"></i>
+                        SCSS
+                    </div>
+                    <div class="tech-icon bootstrap">
+                        <i class="fa-brands fa-bootstrap"></i>
+                        Bootstrap
+                    </div>
+                    <div class="tech-icon js">
+                        <i class="fa-brands fa-js"></i>
+                        JavaScript
+                    </div>
+                </div>
+                <!-- Grid container for project cards -->
+                <div class="project-grid">
+                    <!-- Projects will be dynamically added here via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section - Form and social links -->
+    <section id="contact" class="section bg-alt">
+        <div class="container">
+            <!-- Section title with animation -->
+            <h2 class="section-title fade-in">Contact</h2>
+            <p class="subtitle fade-in">Your Digital Transformation Begins With a Message</p>
+
+            <!-- Contact form with validation attributes -->
+            <form id="contact-form" class="contact-form fade-in">
+                <!-- Name input field -->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <!-- Email input field with email validation -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <!-- Phone number input with prefix selection for Israeli numbers -->
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <div class="phone-input">
+                        <select id="prefix">
+                            <option value="050">050</option>
+                            <option value="051">051</option>
+                            <option value="052">052</option>
+                            <option value="053">053</option>
+                            <option value="054">054</option>
+                            <option value="055">055</option>
+                            <option value="056">056</option>
+                            <option value="057">057</option>
+                            <option value="058">058</option>
+                            <option value="059">059</option>
+                        </select>
+                        <input type="tel" id="phone" required>
+                    </div>
+                </div>
+
+                <!-- Message textarea with minimum length validation -->
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" required minlength="10"></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+
+            <!-- Social media links with SVG icons -->
+            <div class="social-links fade-in">
+                <!-- Facebook link with custom SVG icon -->
+                <a href="https://facebook.com/israel3467" class="social-link" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                        <path
+                            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                    </svg>
+                </a>
+                <!-- Instagram link with custom SVG icon -->
+                <a href="https://instagram.com/numinalis_" class="social-link" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path
+                            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Copyright notice -->
+            <p class="copyright fade-in">© Israel Eliav | All Rights Reserved 2024</p>
+        </div>
+    </section>
+
+    <!-- Back to top button with smooth scroll functionality -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript files -->
+    <script src="homePage/js/theme.js"></script>
+    <script src="homePage/js/particles.js"></script>
+    <script src="homePage/js/main.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,84 @@
+@import 'variables';
+
+/* Technology Tags */
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tech-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    color: white;
+
+    &.html {
+        background-color: var(--html-color);
+    }
+
+    &.css {
+        background-color: var(--css-color);
+    }
+
+    &.scss {
+        background-color: var(--scss-color);
+    }
+
+    &.bootstrap {
+        background-color: var(--bootstrap-color);
+    }
+
+    &.js {
+        background-color: var(--js-color);
+    }
+}
+
+/* Technology Icons Section */
+.tech-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+}
+
+.tech-icon {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background-color: var(--secondary);
+    color: var(--foreground);
+
+    i {
+        margin-right: 0.5rem;
+        font-size: 1.4rem;
+        color: var(--icon-color);
+    }
+
+    &.html {
+        border-left: 3px solid var(--html-color);
+    }
+
+    &.css {
+        border-left: 3px solid var(--css-color);
+    }
+
+    &.scss {
+        border-left: 3px solid var(--scss-color);
+    }
+
+    &.bootstrap {
+        border-left: 3px solid var(--bootstrap-color);
+    }
+
+    &.js {
+        border-left: 3px solid var(--js-color);
+    }
+}

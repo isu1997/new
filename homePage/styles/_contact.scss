@@ -1,0 +1,131 @@
+@import 'variables';
+
+/* Contact Form */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        background: var(--background);
+        color: var(--foreground);
+        transition: all 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        &.error {
+            border-color: #ff3860;
+            box-shadow: 0 0 0 1px #ff3860;
+        }
+    }
+}
+
+.error-message {
+    color: #ff3860;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+.phone-input {
+    display: flex;
+    gap: 1rem;
+
+    select {
+        width: auto;
+    }
+}
+
+/* מצב לילה - עיצוב טופס */
+.dark {
+    .contact-form {
+        background-color: #2d2d2d;
+        border: 1px solid #3a3a3a;
+    }
+
+    .form-group {
+
+        input,
+        textarea,
+        select {
+            background-color: #222222;
+            border-color: #444444;
+            color: #e0e0e0;
+
+            &:focus {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.3);
+            }
+        }
+    }
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--primary);
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+        transform: translateY(-5px);
+        background: var(--accent);
+    }
+
+    svg {
+        width: 24px;
+        height: 24px;
+        fill: var(--primary);
+        transition: fill 0.3s;
+    }
+
+    &:hover svg {
+        fill: white;
+    }
+}
+
+.dark .social-links .social-link {
+    border: 1px solid #444444;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--primary);
+}

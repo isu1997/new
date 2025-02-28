@@ -1,0 +1,116 @@
+@import 'variables';
+
+/* Enhanced Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--btn-radius);
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--btn-shadow);
+    cursor: pointer;
+    border: none;
+    margin: 0.5rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        z-index: -2;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+        z-index: -1;
+    }
+
+    &:hover {
+        box-shadow: var(--btn-shadow-hover);
+        transform: translateY(-3px);
+
+        &::before {
+            width: 100%;
+        }
+    }
+
+    &-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        color: white;
+
+        &:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    &-outline {
+        background: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+
+        &:hover {
+            background: var(--accent);
+            color: white;
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* Back to Top Button - FontAwesome Alternative */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+
+    i {
+        font-size: 1.2rem;
+    }
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:hover {
+        background: var(--accent-dark);
+        transform: translateY(-3px);
+    }
+}
