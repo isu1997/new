@@ -233,7 +233,7 @@ const playCenterProjects = [
         id: 'page-builder',
         title: "Page Builder",
         description: "Create and customize pages easily with this page builder. Save your work and share it with others.",
-        image: "homePage/images/pageBuilder.png",
+        image: "homePage/images/pageBuilder.PNG",
         link: "homePage/project.html?project=pageBuilder",
         tech: ["html", "css", "js"]
     },
