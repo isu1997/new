@@ -163,6 +163,10 @@ body {
   text-shadow: 0px 0px 4px rgba(203, 179, 88, 0.3);
 }
 
+.brand-link {
+  text-decoration: none;
+}
+
 .nav-menu {
   display: flex;
   gap: 2rem;
