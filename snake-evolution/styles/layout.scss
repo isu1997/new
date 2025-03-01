@@ -1,0 +1,93 @@
+/* Game Container */
+.game-container {
+    position: relative;
+    width: 95%;
+    max-width: 1000px;
+    height: 95vh;
+    max-height: 800px;
+    margin: 10px auto;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    overflow: hidden;
+}
+
+/* Canvas */
+#gameCanvas {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    margin: 10px 0;
+    height: 420px;
+    flex-grow: 1;
+    width: 99%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Game Stats Container */
+.game-stats {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.score-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.level-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hearts-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.heart {
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(45deg, #ff4d4d, #ff0000);
+    clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+
+    &.empty {
+        background: rgba(255, 255, 255, 0.1);
+        filter: none;
+    }
+}

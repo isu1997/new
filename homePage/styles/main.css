@@ -293,7 +293,7 @@ body {
 .quote {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.25rem;
+  font-size: 1.8rem;
   color: var(--accent);
   text-align: center;
   margin: 2rem 0;
@@ -352,7 +352,7 @@ body {
   margin-bottom: 0.5rem;
   font-size: 4rem;
   font-weight: 700;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Cinzel Decorative", serif;
 }
 .title .typing-line {
   display: block;
@@ -383,15 +383,20 @@ body {
   }
 }
 .subtitle {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--primary);
   margin-bottom: 2rem;
   text-align: center;
 }
 
+.content {
+  font-size: 1.3rem;
+  font-family: "Nunito", sans-serif;
+}
+
 .section-title {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: center;
@@ -778,7 +783,7 @@ body {
 .copyright {
   text-align: center;
   margin-top: 2rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--primary);
 }
 
@@ -939,9 +944,13 @@ body {
     padding-right: 15px;
     max-width: 100%;
   }
+  .section-title {
+    font-size: 2.5rem;
+  }
   .welcome {
-    font-size: 4rem !important;
-    line-height: 5rem;
+    font-size: 2.5rem !important;
+    line-height: 3rem;
+    margin-top: 1.3rem;
   }
   .title {
     font-size: 2.2rem;
@@ -950,11 +959,14 @@ body {
     margin-top: 10px;
   }
   .subtitle {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     text-align: center;
   }
   .typing-line {
     min-height: 3rem;
+  }
+  .content {
+    font-size: 1.2rem;
   }
   .title-container {
     margin-bottom: 30px;

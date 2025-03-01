@@ -5,47 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Nexus</title>
-    <link rel="stylesheet" href="scss/main.css">
+    <!-- Empty SVG favicon for browser compatibility -->
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+        type="image/svg+xml">
+    <!-- External stylesheet reference -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- JavaScript with defer attribute to load after HTML parsing -->
     <script src="script.js" defer></script>
 </head>
 
 <body>
+    <!-- Main container for the entire game interface -->
     <div class="game-container">
-        <!-- Game Stats Bar -->
+        <!-- Game Stats Bar - Displays game metrics and information -->
         <div class="stats-bar">
+            <!-- Current difficulty level indicator -->
             <div class="level-display">
                 Level: <span id="current-level">Easy</span>
             </div>
+            <!-- Timer display for tracking gameplay duration -->
             <div class="timer">
                 Time: <span id="time-display">00:00</span>
             </div>
+            <!-- Current game score display -->
             <div class="score-display">
                 Score: <span id="score">0</span>
             </div>
+            <!-- Player's highest score display -->
             <div class="high-score">
                 High Score: <span id="high-score">0</span>
             </div>
         </div>
 
-        <!-- Main Game Area -->
+        <!-- Main Game Area - Contains core gameplay elements -->
         <main class="game-area">
+            <!-- Game title heading -->
             <h1>Math Nexus</h1>
+            <!-- Game tagline/subtitle -->
             <p class="subtitle">Train Your Brain, Level Up Your Game</p>
 
-            <!-- Progress Bar -->
+            <!-- Progress Bar - Visual indicator of level completion -->
             <div class="progress-container">
+                <!-- Dynamic progress bar that fills as player advances -->
                 <div class="progress-bar" id="level-progress"></div>
+                <!-- Numerical progress indicator (questions completed) -->
                 <span class="progress-text">Progress: <span id="questions-count">0</span>/10</span>
             </div>
 
-            <!-- Game Controls -->
+            <!-- Game Controls - Settings for adjusting game difficulty -->
             <div class="difficulty-controls">
+                <!-- Number range selector for problem complexity -->
                 <select id="num-range" class="difficulty-select">
                     <option value="10">Easy (1-10)</option>
                     <option value="100">Medium (1-100)</option>
                     <option value="1000">Hard (1-1000)</option>
                 </select>
 
+                <!-- Mathematical operator selector -->
                 <select id="operators-range" class="operator-select">
                     <option value="+">Addition (+)</option>
                     <option value="-">Subtraction (-)</option>
@@ -54,19 +71,22 @@
                 </select>
             </div>
 
-            <!-- Problem Display -->
+            <!-- Problem Display - Shows current math problem and input field -->
             <div class="problem-container">
+                <!-- Mathematical expression display -->
                 <div class="exercise">
                     <span id="num1">5</span>
                     <span id="operator">+</span>
                     <span id="num2">3</span>
                     <span>=</span>
                 </div>
+                <!-- User input field for answer submission -->
                 <input type="number" id="answer" class="answer-input" placeholder="Enter your answer">
+                <!-- Button to validate and submit answer -->
                 <button id="sub-btn" class="check-button">Check Answer</button>
             </div>
 
-            <!-- Results Table -->
+            <!-- Results Table - Displays history of problems and answers -->
             <div class="results-section">
                 <table id="results">
                     <thead>
@@ -82,31 +102,34 @@
             </div>
         </main>
 
-        <!-- Modal for Level Complete/Game Over -->
+        <!-- Modal for Level Complete/Game Over - Appears at level completion -->
         <div class="modal" id="game-modal">
             <div class="modal-content">
+                <!-- Dynamic title based on game state -->
                 <h2 id="modal-title">Level Complete!</h2>
+                <!-- Custom message based on performance -->
                 <p id="modal-message">Congratulations! You're moving to the next level!</p>
+                <!-- Action button for continuing gameplay -->
                 <button id="modal-button" class="modal-btn">Continue</button>
             </div>
         </div>
-        <!-- מודל הפתיחה החדש -->
+
+        <!-- Welcome Modal - Shown on first load or page refresh -->
         <div class="modal" id="welcome-modal">
             <div class="modal-content">
+                <!-- Welcome message header -->
                 <h2>Welcome to Math Nexus!</h2>
+                <!-- Game description and instructions -->
                 <p class="game-intro">
-                    Challenge yourself with adaptive math exercises. Start from basic calculations and progress to advanced
+                    Challenge yourself with adaptive math exercises. Start from basic calculations and progress to
+                    advanced
                     problems. Track your improvement and compete with your previous scores.
                 </p>
+                <!-- Button to dismiss modal and begin gameplay -->
                 <button id="start-game-btn" class="modal-btn">Start Playing</button>
             </div>
         </div>
     </div>
-
-    <!-- Audio Elements -->
-    <audio id="correct-sound" src="./sounds/correct.mp3"></audio>
-    <audio id="wrong-sound" src="./sounds/wrong.mp3"></audio>
-    <audio id="level-up-sound" src="./sounds/level-up.mp3"></audio>
 </body>
 
 </html>

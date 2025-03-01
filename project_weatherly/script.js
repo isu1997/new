@@ -1,6 +1,15 @@
+/**
+ * Weatherly Application - Core JavaScript
+ * 
+ * This script handles all weather data fetching, processing and UI updates
+ * for the Weatherly application.
+ */
+
+// API Configuration
 const API_KEY = '620970db4507c0a15af21ceef9ee5cb3';
 const URL = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${API_KEY}&q=`;
 
+// DOM Element References
 const q = document.getElementById("inputCity");
 const button = document.querySelector("button");
 const h1 = document.getElementById("city");
@@ -9,6 +18,10 @@ const description = document.getElementById("description");
 const weatherIcon = document.getElementById("weatherIcon");
 const errorMessage = document.getElementById("errorMessage");
 
+/**
+ * Fetches current weather data for a specified city
+ * @param {string} city - Name of the city to fetch weather for
+*/
 async function getWeather(city) {
     try {
         const response = await fetch(URL + city);
@@ -16,7 +29,7 @@ async function getWeather(city) {
         
         if (data.cod === 200) {
             sessionStorage.setItem('lastCity', city);
-            await getForecast(city); // מביא את התחזית רק אם העיר נמצאה
+            await getForecast(city); // Get forecast only if city is found
         } else {
             sessionStorage.removeItem('lastCity');
         }
@@ -29,23 +42,27 @@ async function getWeather(city) {
     }
 }
 
+/**
+ * Displays weather data in the UI
+ * @param {Object} weatherData - Weather data returned from the API
+ */
 function displayWeather(weatherData) {
     if (weatherData.cod === 200) {
-        // ניקוי הודעת שגיאה
+        // Clear any error messages
         errorMessage.innerText = "";
 
-        // הצגת נתוני מזג אוויר בסיסיים
+        // Display basic weather information
         h1.innerText = weatherData.name;
         temp.innerText = Math.round(weatherData.main.temp) + "°C";
         description.innerText = weatherData.weather[0].description;
         weatherIcon.src = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`;
         weatherIcon.alt = weatherData.name;
 
-        // הצגת נתונים נוספים
+        // Display additional weather metrics
         document.getElementById('humidity').innerText = `${weatherData.main.humidity}%`;
         document.getElementById('wind').innerText = `${weatherData.wind.speed} m/s`;
 
-        // המרת זמני זריחה ושקיעה
+        // Convert and display sunrise/sunset times
         const sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
@@ -60,11 +77,11 @@ function displayWeather(weatherData) {
         document.getElementById('sunrise').innerText = sunrise;
         document.getElementById('sunset').innerText = sunset;
 
-        // עדכון הרקע לפי מזג האוויר
+        // Update background based on weather conditions
         const weatherType = weatherData.weather[0].main.toLowerCase();
         changeBackground(weatherType);
     } else {
-        // ניקוי כל השדות במקרה של שגיאה
+        // Clear all fields in case of error
         h1.innerText = "";
         temp.innerText = "";
         description.innerText = "";
@@ -77,7 +94,7 @@ function displayWeather(weatherData) {
         errorMessage.innerText = "City not found";
         document.body.className = 'bg-default';
         
-        // ניקוי התחזית
+        // Clear forecast data
         const forecastContainer = document.getElementById('forecast-container');
         if (forecastContainer) {
             forecastContainer.innerHTML = '';
@@ -85,7 +102,10 @@ function displayWeather(weatherData) {
     }
 }
 
-// פונקציה לשינוי הרקע
+/**
+ * Updates the page background based on current weather conditions
+ * @param {string} weatherType - Type of weather (clear, clouds, rain, etc.)
+ */
 function changeBackground(weatherType) {
     const body = document.body;
     body.className = '';
@@ -117,7 +137,10 @@ function changeBackground(weatherType) {
     }
 }
 
-// פונקציה לקבלת תחזית 5 ימים
+/**
+ * Fetches 5-day weather forecast for a specified city
+ * @param {string} city - Name of the city to fetch forecast for
+ */
 async function getForecast(city) {
     try {
         const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`;
@@ -132,12 +155,15 @@ async function getForecast(city) {
     }
 }
 
-// פונקציה להצגת התחזית
+/**
+ * Displays the 5-day forecast in the UI
+ * @param {Array} forecastData - Array of forecast data points
+ */
 function displayForecast(forecastData) {
     const container = document.getElementById('forecast-container');
     container.innerHTML = '';
     
-    // סינון התחזית ל-12:00 בכל יום (5 ימים)
+    // Filter forecast data to show only noon readings for 5 days
     const dailyData = forecastData
         .filter(item => item.dt_txt.includes('12:00:00'))
         .slice(0, 5);
@@ -160,7 +186,9 @@ function displayForecast(forecastData) {
     });
 }
 
-// פונקציה לטיפול בחיפוש
+/**
+ * Handles city search interactions
+ */
 function handleCitySearch() {
     const cityName = q.value.trim();
     if (cityName) {
@@ -168,7 +196,7 @@ function handleCitySearch() {
     }
 }
 
-// בדיקה בטעינת הדף אם יש עיר שמורה
+// Initialize application and load last searched city
 document.addEventListener('DOMContentLoaded', () => {
     const lastCity = sessionStorage.getItem('lastCity');
     if (lastCity) {
@@ -177,10 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// האזנה לאירועים
+// Event Listeners
 button.addEventListener("click", handleCitySearch);
 
-// האזנה ללחיצה על Enter
+// Listen for Enter key in search input
 q.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         handleCitySearch();

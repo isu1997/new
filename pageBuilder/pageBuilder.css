@@ -244,7 +244,7 @@ textarea:focus {
     box-shadow: var(--neon-shadow);
 }
 
-/* Keeping your existing media queries */
+/* media queries */
 @media screen and (max-width: 1000px) {
     body {
         flex-direction: row;

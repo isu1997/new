@@ -283,7 +283,7 @@ const playCenterProjects = [
         description: "Embark on a journey to become the ultimate snake master! Use your arrow keys to control your snake, avoid obstacles, and grow stronger!",
         image: "homePage/images/snake-evolution.png",
         link: "homePage/project.html?project=snake-evolution",
-        tech: ["html", "css", "js"]
+        tech: ["html", "css", "scss", "js"]
     }
 ];
 

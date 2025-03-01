@@ -1,4 +1,4 @@
-// DOM Elements
+// DOM Elements - Cache all HTML elements needed for the game
 const elements = {
     numbersRange: document.getElementById('num-range'),
     operatorsRange: document.getElementById('operators-range'),
@@ -20,7 +20,8 @@ const elements = {
     modalButton: document.getElementById('modal-button')
 };
 console.log(elements.levelDisplay);
-// Game State
+
+// Game State - Object to track all game variables and settings
 const gameState = {
     score: 0,
     highScore: 0,
@@ -33,15 +34,15 @@ const gameState = {
     questionTimer: null
 };
 
-// Audio Context
+// Audio Context - Variable to store the Web Audio API context
 let audioContext;
 
-// Initialize Audio Context
+// Initialize Audio Context - Set up the audio environment for sound effects
 function initializeAudioContext() {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
-// Play Sound Effects
+// Play Sound Effects - Generate dynamic sounds for game feedback using Web Audio API
 function playSound(type) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const masterGain = audioContext.createGain();
@@ -49,34 +50,36 @@ function playSound(type) {
 
     const sounds = {
         'correct': [
-            // אקורד מז'ורי מרשים עם הרמוניות
-            { freq: 440, time: 0, type: 'sine', gain: 0.2, duration: 0.3 },     // בסיס
-            { freq: 554, time: 0, type: 'sine', gain: 0.15, duration: 0.3 },    // הרמוניה
-            { freq: 659, time: 0, type: 'sine', gain: 0.15, duration: 0.3 },    // הרמוניה
-            // צליל עולה מוטיבציוני
-            { freq: 880, time: 0.1, type: 'sine', gain: 0.2, duration: 0.4 },   // עלייה
-            { freq: 1108, time: 0.2, type: 'sine', gain: 0.15, duration: 0.4 }, // שיא
-            // צליל נוסף לתחושת הישג
-            { freq: 1318, time: 0.3, type: 'sine', gain: 0.1, duration: 0.5 }   // סיום
+            // Major chord with harmonics for positive feedback
+            { freq: 440, time: 0, type: 'sine', gain: 0.2, duration: 0.3 },     // Base note
+            { freq: 554, time: 0, type: 'sine', gain: 0.15, duration: 0.3 },    // Harmony
+            { freq: 659, time: 0, type: 'sine', gain: 0.15, duration: 0.3 },    // Harmony
+            // Rising motivational sound
+            { freq: 880, time: 0.1, type: 'sine', gain: 0.2, duration: 0.4 },   // Rise
+            { freq: 1108, time: 0.2, type: 'sine', gain: 0.15, duration: 0.4 }, // Peak
+            // Additional tone for achievement feeling
+            { freq: 1318, time: 0.3, type: 'sine', gain: 0.1, duration: 0.5 }   // Finisher
         ],
         'wrong': [
+        // Descending tones for incorrect answer feedback
         { freq: 400, time: 0, type: 'sawtooth', gain: 0.15, duration: 0.3 },
         { freq: 300, time: 0.1, type: 'sawtooth', gain: 0.2, duration: 0.3 },
         { freq: 200, time: 0.2, type: 'sawtooth', gain: 0.25, duration: 0.4 }
         ],
         'levelUp': [
-            // מנגינת עלייה מרשימה
+            // Impressive ascending melody for level completion
             { freq: 440, time: 0, type: 'sine', gain: 0.15, duration: 0.15 },
             { freq: 554, time: 0.15, type: 'sine', gain: 0.15, duration: 0.15 },
             { freq: 659, time: 0.3, type: 'sine', gain: 0.15, duration: 0.15 },
             { freq: 880, time: 0.45, type: 'sine', gain: 0.2, duration: 0.3 },
-            // אקורד סיום מרשים
+            // Final impressive chord
             { freq: 1108, time: 0.6, type: 'sine', gain: 0.15, duration: 0.4 },
             { freq: 1318, time: 0.6, type: 'sine', gain: 0.12, duration: 0.4 },
             { freq: 1760, time: 0.6, type: 'sine', gain: 0.1, duration: 0.4 }
         ]
     };
 
+    // Loop through each note in the selected sound type and play them
     sounds[type].forEach(note => {
         const oscillator = audioContext.createOscillator();
         const noteGain = audioContext.createGain();
@@ -87,7 +90,7 @@ function playSound(type) {
         oscillator.type = note.type;
         oscillator.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
 
-        // עקומת ווליום משופרת
+        // Improved volume curve for better sound quality
         const now = audioContext.currentTime + note.time;
         noteGain.gain.setValueAtTime(0, now);
         noteGain.gain.linearRampToValueAtTime(note.gain, now + 0.05);
@@ -99,7 +102,7 @@ function playSound(type) {
     });
 }
 
-// High Score Management
+// High Score Management - Save high score to localStorage
 function saveHighScore() {
     if (gameState.score > gameState.highScore) {
         gameState.highScore = gameState.score;
@@ -108,6 +111,7 @@ function saveHighScore() {
     }
 }
 
+// Load high score from localStorage on game initialization
 function loadHighScore() {
     const savedScore = localStorage.getItem('mathLabHighScore');
     if (savedScore !== null) {
@@ -116,7 +120,7 @@ function loadHighScore() {
     }
 }
 
-// Timer Functions
+// Timer Functions - Start the game timer for tracking session duration
 function startTimer() {
     if (gameState.timer) clearInterval(gameState.timer);
     gameState.timer = setInterval(() => {
@@ -125,6 +129,7 @@ function startTimer() {
     }, 1000);
 }
 
+// Format and display the elapsed time in MM:SS format
 function updateTimeDisplay() {
     const minutes = Math.floor(gameState.seconds / 60);
     const seconds = gameState.seconds % 60;
@@ -132,28 +137,29 @@ function updateTimeDisplay() {
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// Game Progress Functions
+// Game Progress Functions - Update the visual progress bar and counter
 function updateProgress() {
     const progress = (gameState.questionsAnswered / 10) * 100;
     elements.progressBar.style.width = `${progress}%`;
     elements.questionsCount.textContent = `${gameState.questionsAnswered}/10`;
 }
 
+// Generate a new math problem based on current difficulty settings
 function generateNewProblem() {
-    // ניקוי טיימר קודם אם קיים
+    // Clear previous question timer if exists
     if (gameState.questionTimer) clearTimeout(gameState.questionTimer);
     
     const range = parseInt(elements.numbersRange.value);
-    console.log('Range selected:', range); // בדיקה שהערך מתקבל נכון
+    console.log('Range selected:', range); // Debug log to verify correct range value
     let num1, num2;
     
-    // לוגיקה חדשה ליצירת מספרים
+    // Logic for generating appropriate numbers based on operation
     if (elements.operatorsRange.value === '/') {
-        // מוודא חילוק ללא שארית
+        // Ensure clean division without remainder
         num2 = Math.floor(Math.random() * 10) + 1;
         num1 = num2 * (Math.floor(Math.random() * (range/num2)) + 1);
     } else if (elements.operatorsRange.value === '-') {
-        // מוודא תוצאה חיובית
+        // Ensure positive result for subtraction
         num1 = Math.floor(Math.random() * range) + 1;
         num2 = Math.floor(Math.random() * num1) + 1;
     } else {
@@ -161,7 +167,7 @@ function generateNewProblem() {
         num2 = Math.floor(Math.random() * range) + 1;
     }
     
-    // עדכון תצוגת הרמה
+    // Update level display text based on selected range
     if (range === 10) {
         elements.levelDisplay.textContent = 'Easy';
     } else if (range === 100) {
@@ -170,13 +176,14 @@ function generateNewProblem() {
         elements.levelDisplay.textContent = 'Hard';
     }
 
+    // Update the problem display with new numbers and operator
     elements.firstNumber.textContent = num1;
     elements.secondNumber.textContent = num2;
     elements.operator.textContent = elements.operatorsRange.value;
     elements.answer.value = '';
     elements.answer.focus();
 
-    // הגדרת טיימר לשאלה
+    // Set timer for current question (10 seconds per question)
     gameState.questionTimer = setTimeout(() => {
         addResultRow(
             `${elements.firstNumber.textContent} ${elements.operator.textContent} ${elements.secondNumber.textContent}`,
@@ -187,15 +194,16 @@ function generateNewProblem() {
         gameState.questionsAnswered++;
         updateProgress();
         
+        // Check if level is complete after 10 questions
         if (gameState.questionsAnswered === 10) {
             checkLevelCompletion();
         } else {
             generateNewProblem();
         }
-    }, 10000); // 10 שניות לכל שאלה
+    }, 10000); // 10 seconds per question
 }
 
-// Answer Checking
+// Answer Checking - Calculate the correct answer based on the current problem
 function calculateCorrectAnswer() {
     const num1 = parseInt(elements.firstNumber.textContent);
     const num2 = parseInt(elements.secondNumber.textContent);
@@ -210,11 +218,12 @@ function calculateCorrectAnswer() {
     }
 }
 
+// Add a new row to the results table with problem details and outcome
 function addResultRow(exercise, correct, user, result) {
     const tbody = elements.results.querySelector('tbody');
     const row = document.createElement('tr');
     
-    // יוצר תאים עם תוויות למובייל
+    // Create cells with labels for mobile view
     const data = [
         { label: 'Exercise', value: exercise },
         { label: 'Correct', value: correct },
@@ -229,6 +238,7 @@ function addResultRow(exercise, correct, user, result) {
         row.appendChild(cell);
     });
     
+    // Insert new row at the top of the table for better visibility
     if (tbody.firstChild) {
         tbody.insertBefore(row, tbody.firstChild);
     } else {
@@ -236,25 +246,27 @@ function addResultRow(exercise, correct, user, result) {
     }
 }
 
+// Validate user's answer against the correct answer
 function checkAnswer() {
     if (elements.answer.value === '') return;
     
-    // ניקוי טיימר השאלה הנוכחית
+    // Clear the current question timer
     if (gameState.questionTimer) clearTimeout(gameState.questionTimer);
     
     const correctAnswer = calculateCorrectAnswer();
     const userAnswer = parseFloat(elements.answer.value);
     const isCorrect = Math.abs(userAnswer - correctAnswer) < 0.0001;
     
-     // מוסיף את האפקט לכל הקונטיינר
+    // Add visual feedback effect to the problem container
     const container = document.querySelector('.problem-container');
     container.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
     
-    // מסיר את הקלאס אחרי האנימציה
+    // Remove the effect class after animation completes
     setTimeout(() => {
         container.classList.remove('correct-answer', 'wrong-answer');
     }, 600);
 
+    // Update score and play appropriate sound effect
     if (isCorrect) {
         gameState.score += 10;
         gameState.correctAnswers++;
@@ -265,6 +277,7 @@ function checkAnswer() {
         playSound('wrong');
     }
     
+    // Add the result to the history table
     addResultRow(
         `${elements.firstNumber.textContent} ${elements.operator.textContent} ${elements.secondNumber.textContent}`,
         correctAnswer,
@@ -275,6 +288,7 @@ function checkAnswer() {
     gameState.questionsAnswered++;
     updateProgress();
     
+    // Check if level is complete after 10 questions
     if (gameState.questionsAnswered === 10) {
         checkLevelCompletion();
     } else {
@@ -282,19 +296,21 @@ function checkAnswer() {
     }
 }
 
-// Level Management
+// Level Management - Initialize a new level with appropriate settings
 function startNewLevel(level) {
     if (gameState.questionTimer) clearTimeout(gameState.questionTimer);
     gameState.currentLevel = level;
     gameState.questionsAnswered = 0;
     gameState.correctAnswers = 0;
     
+    // Update UI to reflect the new level
     elements.levelDisplay.textContent = gameState.levels[level];
     elements.numbersRange.value = level === 0 ? '10' : level === 1 ? '100' : '1000';
     updateProgress();
     generateNewProblem();
 }
 
+// Evaluate level performance and determine if player advances
 function checkLevelCompletion() {
     if (gameState.correctAnswers >= 7) {
         if (gameState.currentLevel < 2) {
@@ -312,6 +328,7 @@ function checkLevelCompletion() {
     }
 }
 
+// Handle game completion after all levels are finished
 function gameComplete() {
     clearInterval(gameState.timer);
     saveHighScore();
@@ -320,7 +337,7 @@ function gameComplete() {
             resetGame);
 }
 
-// Modal Management
+// Modal Management - Display modal with custom title, message and callback
 function showModal(title, message, callback) {
     elements.modalTitle.textContent = title;
     elements.modalMessage.textContent = message;
@@ -331,7 +348,7 @@ function showModal(title, message, callback) {
     };
 }
 
-// Game Reset
+// Reset game state for a new game session
 function resetGame() {
     if (gameState.questionTimer) clearTimeout(gameState.questionTimer);
     gameState.score = 0;
@@ -342,30 +359,31 @@ function resetGame() {
     startTimer();
 }
 
-// Event Listeners
+// Event Listeners - Set up all event handlers for game controls
 function setupEventListeners() {
-    // Input controls
+    // Input controls for changing difficulty and operators
     elements.numbersRange.addEventListener('change', generateNewProblem);
     elements.operatorsRange.addEventListener('change', generateNewProblem);
     
-    // Game controls
+    // Game controls for submitting answers
     elements.checkButton.addEventListener('click', checkAnswer);
     elements.answer.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') checkAnswer();
     });
 }
 
-// Initialize Game
+// Initialize Game - Set up the welcome screen and game startup
 function initGame() {
-    // הצגת מודל הפתיחה
+    // Display welcome modal on game load
     const welcomeModal = document.getElementById('welcome-modal');
     const startGameBtn = document.getElementById('start-game-btn');
     
     welcomeModal.style.display = 'flex';
     
+    // Set up start game button functionality
     startGameBtn.addEventListener('click', () => {
         welcomeModal.style.display = 'none';
-        // התחלת המשחק
+        // Start the game session
         loadHighScore();
         setupEventListeners();
         initializeAudioContext();
@@ -374,5 +392,5 @@ function initGame() {
     });
 }
 
-// Start the game
+// Start the game when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initGame);

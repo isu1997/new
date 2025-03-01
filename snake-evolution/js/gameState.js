@@ -73,13 +73,16 @@ export function levelUp() {
     
     // Initialize golden snake at level 7
     if (gameState.level === 7) {
-        const gridWidth = canvas.width / config.gridSize;
+        const gridWidth = Math.floor(canvas.width / config.gridSize);
         gameState.goldenSnake = [
             { x: gridWidth - 5, y: gridWidth - 5 },
             { x: gridWidth - 4, y: gridWidth - 5 },
             { x: gridWidth - 3, y: gridWidth - 5 }
         ];
         console.log('Golden snake activated at level 7!', gameState.goldenSnake);
+    } else if (gameState.level > 7) {
+        // Reinitialize golden snake if it's been eaten
+        reinitializeGoldenSnake();
     }
 }
 
@@ -106,4 +109,48 @@ export function togglePause() {
 // Check if golden snake is active
 export function isGoldenSnakeActive() {
     return gameState.level >= 7;
+}
+
+// Reinitialize golden snake if it should exist but doesn't
+export function reinitializeGoldenSnake() {
+    // Only reinitialize if we're at level 7+ and the snake doesn't exist
+    if (isGoldenSnakeActive() && gameState.goldenSnake.length === 0) {
+        console.log('Reinitializing golden snake');
+        
+        const gridWidth = Math.floor(canvas.width / config.gridSize);
+        const gridHeight = Math.floor(canvas.height / config.gridSize);
+        
+        // Find a position away from the player snake
+        let x, y;
+        let validPosition = false;
+        
+        while (!validPosition) {
+            // Generate random position
+            x = Math.floor(Math.random() * (gridWidth - 10)) + 5;
+            y = Math.floor(Math.random() * (gridHeight - 10)) + 5;
+            
+            // Make sure it's not too close to player snake
+            validPosition = !gameState.snake.some(segment => 
+                Math.abs(segment.x - x) < 5 && Math.abs(segment.y - y) < 5
+            );
+            
+            // Make sure it's not on an obstacle
+            if (validPosition) {
+                validPosition = !gameState.obstacles.some(obstacle =>
+                    obstacle.x === x && obstacle.y === y
+                );
+            }
+        }
+        
+        // Create new golden snake
+        gameState.goldenSnake = [
+            { x: x, y: y },
+            { x: x - 1, y: y },
+            { x: x - 2, y: y }
+        ];
+        
+        // Set random direction
+        const directions = [Directions.UP, Directions.DOWN, Directions.LEFT, Directions.RIGHT];
+        gameState.goldenSnakeDirection = directions[Math.floor(Math.random() * directions.length)];
+    }
 }

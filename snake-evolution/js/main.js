@@ -1,6 +1,6 @@
 // main.js
 import { config } from './constants.js';
-import { gameState, resetGameState, getCurrentSpeed } from './gameState.js';
+import { gameState, resetGameState, getCurrentSpeed, reinitializeGoldenSnake } from './gameState.js';
 import { moveSnake } from './snake.js';
 import { moveGoldenSnake } from './goldenSnake.js';
 import { generateObstacles } from './obstacles.js';
@@ -144,6 +144,10 @@ export function handleLevelUp() {
             { x: gridWidth - 3, y: gridWidth - 5 }
         ];
         console.log('Golden snake activated!', gameState.goldenSnake);
+    } else if (gameState.level > 7) {
+        // Make sure the golden snake is reinitialized if it was eaten
+        // Import this function at the top of main.js
+        reinitializeGoldenSnake();
     }
     
     // Obstacles update

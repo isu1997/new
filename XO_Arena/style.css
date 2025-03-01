@@ -258,12 +258,12 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        background: rgba(255, 255, 255, 0.04);  /* רקע שקוף יותר */
-        backdrop-filter: blur(3px);  /* טשטוש חלש יותר */
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(3px);
     }
     #particles-js {
     opacity: 0.9;
-     /* מגביר את הנראות של הפרטיקלים */
+
     }
     .main-title {
         font-size: 2rem;

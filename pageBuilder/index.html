@@ -5,24 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Builder</title>
+    <!-- External stylesheet for page builder styling -->
     <link rel="stylesheet" href="pageBuilder.css">
+    <!-- JavaScript with defer and async attributes for optimal loading -->
     <script src="pageBuilder.js" defer async></script>
 </head>
 
 <body>
-    <!-------wrapper----->
-
+    <!-- Main wrapper container for the control panel -->
     <div class="wrapper">
-
+        <!-- Header section with title and description -->
         <div class="wrapper-content">
             <h1>Page Builder</h1>
             <p>Create custom elements and design your perfect page. </p>
-
         </div>
-        <!----------------Element Type----------------------->
 
+        <!-- Element Type Selection Section -->
         <div class="input-field">
-
+            <!-- HTML element type dropdown selector -->
             <div class="input-box">
                 <label for="element-type"> Element Type </label>
                 <select id="element-type">
@@ -34,66 +34,58 @@
                     <option value="span">span</option>
                 </select>
             </div>
-
+            <!-- Width input for the element -->
             <div class="input-box">
                 <label for="w-size"> Width </label>
                 <input type="number" id="w-size" placeholder="width">
             </div>
-
         </div>
 
-        <!------------------height and width-------------------->
-
+        <!-- Height and Background Color Section -->
         <div class="input-field">
-
+            <!-- Height input for the element -->
             <div class="input-box">
                 <label for="h-size"> Height </label>
                 <input type="number" id="h-size" placeholder="height">
             </div>
-
+            <!-- Background color picker for the element -->
             <div class="input-box">
                 <label for="u-color"> Color </label>
                 <input type="color" id="u-color">
             </div>
-
         </div>
 
-        <!----------content + its color and size---------->
-
+        <!-- Content Section - Element text content -->
         <div class="input-field">
-
+            <!-- Textarea for entering element content -->
             <div class="input-box">
                 <label for="txt-area"> Content </label>
                 <textarea id="txt-area" placeholder=" Write your content here..."></textarea>
             </div>
-
         </div>
 
-        <!------------------------------------------------------------->
-
+        <!-- Text Styling Section -->
         <div class="input-field">
-
+            <!-- Text color picker -->
             <div class="input-box">
                 <label for="txt-color"> Text Color </label>
                 <input type="color" id="txt-color">
             </div>
-
+            <!-- Font size input -->
             <div class="input-box">
                 <label for="txt-size"> Text Size </label>
                 <input type="number" id="txt-size" placeholder="text size">
             </div>
-
         </div>
 
-        <!--------------border style for the elements------------->
-
+        <!-- Border Style Section -->
         <div class="input-field">
-
+            <!-- Border width input -->
             <div class="input-box">
                 <label for="border-size"> Border Size </label>
                 <input type="number" id="border-size" placeholder="border size">
             </div>
-
+            <!-- Border style dropdown selector -->
             <div class="input-box">
                 <label for="border-style"> Border Style </label>
                 <select id="border-style">
@@ -110,70 +102,68 @@
                 </select>
             </div>
         </div>
-        <!------------border color and border radius------------>
 
+        <!-- Border Color and Radius Section -->
         <div class="input-field">
-
+            <!-- Border color picker -->
             <div class="input-box">
                 <label for="border-color"> Border Color </label>
                 <input type="color" id="border-color">
             </div>
-
+            <!-- Border radius input for rounded corners -->
             <div class="input-box">
                 <label for="border-radius"> Border Radius </label>
                 <input type="number" id="border-radius" placeholder="border radius">
             </div>
-
         </div>
 
-        <!---------margin + padding for the elements---------->
-
+        <!-- Spacing Section - Margin and Padding -->
         <div class="input-field">
-
+            <!-- Margin input for external spacing -->
             <div class="input-box">
                 <label for="box-margin"> Margin </label>
                 <input type="text" id="box-margin" placeholder="margin">
             </div>
-
+            <!-- Padding input for internal spacing -->
             <div class="input-box">
                 <label for="box-padding"> Padding </label>
                 <input type="text" id="box-padding" placeholder="padding">
             </div>
-
         </div>
-        <!---------BoxShadow color + x and y axis sizes-------->
 
+        <!-- Box Shadow Section -->
         <div class="input-field">
-
+            <!-- Shadow horizontal offset input -->
             <div class="input-box">
                 <label for="shadow-x"> Shadow X Axis </label>
                 <input type="number" id="shadow-x" placeholder="shadow x">
             </div>
-
+            <!-- Shadow vertical offset input -->
             <div class="input-box">
                 <label for="shadow-y"> Shadow Y Axis </label>
                 <input type="number" id="shadow-y" placeholder="shadow y">
             </div>
-
+            <!-- Shadow color picker -->
             <div class="input-box">
                 <label for="shadow-color"> Box Shadow Color </label>
                 <input type="color" id="shadow-color">
             </div>
-
         </div>
-        <!------------------------button--------------------------->
 
+        <!-- Action Buttons Section -->
         <div class="input-buttons">
+            <!-- Button to add a new element to the page -->
             <button id="add-btn">Add</button>
+            <!-- Button to save the current page configuration -->
             <button id="save-btn">Save</button>
+            <!-- Button to delete the selected element -->
             <button id="delete-btn">Delete</button>
         </div>
 
-        <!--the end of the wrapper container -->
+        <!-- End of the wrapper container -->
     </div>
 
-    <!----Empty container to append to a box container creation from js---->
-
+    <!-- Preview container where created elements will be displayed -->
     <div class="container"></div>
 
 </body>

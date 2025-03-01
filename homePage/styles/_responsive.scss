@@ -65,9 +65,13 @@
         max-width: 100%;
     }
 
+    .section-title{
+        font-size: 2.5rem;
+    }
     .welcome {
-        font-size: 4rem !important;
-        line-height: 5rem;
+        font-size: 2.5rem !important;
+        line-height: 3rem;
+        margin-top: 1.3rem;
     }
 
     .title {
@@ -78,13 +82,17 @@
     }
 
     .subtitle {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         text-align: center;
     }
 
     .typing-line {
         min-height: 3rem;
     }
+
+.content{
+    font-size: 1.2rem;
+}
 
     .title-container {
         margin-bottom: 30px;

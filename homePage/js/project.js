@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             downloadUrl: "../snake-evolution/snake-evolution.rar",
             projectUrl: "../snake-evolution/index.html",
-            technologies: ["html", "css", "js"]
+            technologies: ["html", "css", "scss", "js"]
         },
         'default': {
     title: 'Project Showcase',
