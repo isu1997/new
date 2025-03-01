@@ -156,7 +156,7 @@ class TriviaGame {
         else this.guaranteedMoney = 0;
     }
 
-    // Load and display current question
+     // Load and display current question
     loadQuestion() {
         // Validate question availability
         if (!this.selectedCategory || !this.questions || this.questions.length === 0) {
@@ -178,10 +178,16 @@ class TriviaGame {
         this.answerButtons.forEach((button, index) => {
             const letter = String.fromCharCode(1488 + index); // Convert to Hebrew letters א, ב, ג, ד
             button.textContent = `${letter}: ${question.answers[index]}`;
+            
+            // Reset all button classes and states completely
             button.className = 'answer-btn';
+            button.classList.remove('correct', 'wrong', 'selected', 'active');
             button.style.visibility = 'visible';
             button.disabled = false;
             button.dataset.index = index.toString();
+            
+            // Ensure no active/focus state remains
+            button.blur();
         });
         
         // Reset timer
@@ -360,7 +366,7 @@ class TriviaGame {
         return 0;
     }
 
-    // Reset game state for new game
+   // Reset game state for new game
     resetGame() {
         // Reset game state variables
         this.currentQuestion = 0;
@@ -375,7 +381,11 @@ class TriviaGame {
         this.answerButtons.forEach(button => {
             button.disabled = false;
             button.className = 'answer-btn';
+            button.classList.remove('correct', 'wrong', 'selected', 'active');
             button.style.visibility = 'visible';
+            
+            // Ensure no active/focus state remains
+            button.blur();
         });
         
         // Reset category selection
@@ -398,6 +408,7 @@ class TriviaGame {
             mobileMoneyDisplay.remove();
         }
     }
+
 
     // Handle category selection
     selectCategory(e) {
