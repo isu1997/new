@@ -185,16 +185,16 @@ class Lifelines {
         let correctPercentage;
         switch (difficulty) {
             case 'easy':
-                correctPercentage = 55 + Math.random() * 10; // 55-65%
+                correctPercentage = 65 + Math.random() * 10; // 65-75%
                 break;
             case 'medium':
-                correctPercentage = 45 + Math.random() * 10; // 45-55%
+                correctPercentage = 55 + Math.random() * 10; // 55-65%
                 break;
             case 'hard':
                 correctPercentage = 35 + Math.random() * 10; // 35-45%
                 break;
             default:
-                correctPercentage = 45 + Math.random() * 10;
+                correctPercentage = 50 + Math.random() * 10;
         }
         
         // Initialize results array with correct answer percentage
