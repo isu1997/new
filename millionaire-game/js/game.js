@@ -428,35 +428,3 @@ class TriviaGame {
 document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
 });
-
-// Simple fix for the mobile auto-selection issue in general knowledge category
-(function() {
-    // Add a simple stylesheet to disable tap highlight on mobile
-    const style = document.createElement('style');
-    style.textContent = `
-        .answer-btn {
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Add a small additional reset to the existing loadQuestion method
-    const originalPrototype = TriviaGame.prototype;
-    const originalLoadQuestion = originalPrototype.loadQuestion;
-    
-    originalPrototype.loadQuestion = function() {
-        // Call the original method first
-        originalLoadQuestion.apply(this, arguments);
-        
-        // Then apply our additional cleanup
-        if (this.selectedCategory === 'general') {
-            const buttons = document.querySelectorAll('.answer-btn');
-            buttons.forEach(button => {
-                // Remove any selection state
-                button.blur();
-                button.classList.remove('selected', 'active');
-            });
-        }
-    };
-})();

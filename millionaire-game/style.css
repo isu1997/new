@@ -530,6 +530,17 @@ body {
         padding: 0.75rem;
         font-size: 0.9rem;
     }
+
+    /* Fix for unwanted visual selection state in mobile view 
+    Prevents automatic highlighting of answer buttons in general knowledge category */
+    .answer-btn:focus,
+    .answer-btn:active,
+    .answer-btn.selected {
+    background-color: initial !important; 
+    color: initial !important;
+    outline: none !important;
+    box-shadow: none !important;
+    }
 }
 
 @media (min-width: 768px) {
