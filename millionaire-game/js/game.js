@@ -429,39 +429,122 @@ document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
 });
 
+// Add this to the end of game.js - preserves styling while fixing mobile selection issue
 (function() {
-    // Run when the document is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        // Only apply in mobile viewport
-        if (window.innerWidth > 768) return;
-        
-        // Add touch event listeners to answer buttons
-        document.addEventListener('click', function(e) {
-            // Check if it's an answer button
-            if (e.target.classList.contains('answer-btn')) {
-                // Get all answer buttons
-                const buttons = document.querySelectorAll('.answer-btn');
-                
-                // Add "temp-hover" class to the clicked button
-                e.target.classList.add('temp-hover');
-                
-                // Remove the class after 2 seconds
-                setTimeout(function() {
-                    buttons.forEach(btn => btn.classList.remove('temp-hover'));
-                }, 2000);
+    // Only run on mobile
+    if (window.innerWidth > 768) return;
+    
+    // Create and inject a style element that only targets the problem without changing aesthetics
+    const style = document.createElement('style');
+    style.textContent = `
+        @media (max-width: 768px) {
+            /* Just disable tap highlight */
+            * {
+                -webkit-tap-highlight-color: transparent !important;
             }
-        });
-        
-        // Also reset hover states when loading a new question
-        const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
-        TriviaGame.prototype.loadQuestion = function() {
-            // Remove any existing hover states first
-            document.querySelectorAll('.answer-btn').forEach(btn => {
-                btn.classList.remove('temp-hover');
-            });
             
-            // Call the original method
-            originalLoadQuestion.apply(this, arguments);
-        };
+            /* Only override browser behavior, not aesthetics */
+            .answer-btn:focus,
+            .answer-btn:visited {
+                outline: none !important;
+            }
+            
+            /* Our controlled temporary hover state - using your styles */
+            .answer-btn.temp-hover {
+                background: var(--accent-color) !important;
+                color: var(--primary-color) !important;
+                transform: scale(1.02) !important;
+            }
+            
+            /* Make sure correct/wrong styles match your design */
+            .answer-btn.correct {
+                background: #28a745 !important;
+                color: white !important;
+            }
+            
+            .answer-btn.wrong {
+                background: #dc3545 !important;
+                color: white !important;
+            }
+            
+            /* Transition handling */
+            .answers-grid.resetting * {
+                transition: none !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Function to reset selection state but not styling
+    function resetSelectionState() {
+        const buttons = document.querySelectorAll('.answer-btn');
+        buttons.forEach(btn => {
+            // Only remove browser selection state classes
+            btn.classList.remove('temp-hover');
+            
+            // Reset browser focus state
+            btn.blur();
+            
+            // Reset ARIA states
+            btn.setAttribute('aria-pressed', 'false');
+            btn.setAttribute('aria-selected', 'false');
+        });
+    }
+    
+    // Add custom behavior for temporary hover effect using your styling
+    document.addEventListener('click', function(e) {
+        // Only proceed if an answer button was clicked
+        if (!e.target.classList.contains('answer-btn')) return;
+        
+        // Only if we're not already in a correct/wrong state
+        if (!e.target.classList.contains('correct') && !e.target.classList.contains('wrong')) {
+            // Reset any existing hover states first
+            resetSelectionState();
+            
+            // Apply temporary hover to the clicked button - will use your styling
+            e.target.classList.add('temp-hover');
+            
+            // Remove the temporary hover after 2 seconds
+            setTimeout(function() {
+                e.target.classList.remove('temp-hover');
+            }, 2000);
+        }
     });
+    
+    // Enhance loadQuestion to clear selection state between questions
+    const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
+    TriviaGame.prototype.loadQuestion = function() {
+        // Get the answers grid
+        const grid = document.querySelector('.answers-grid');
+        if (!grid) {
+            // If grid doesn't exist, just call original method
+            originalLoadQuestion.apply(this, arguments);
+            return;
+        }
+        
+        // Disable transitions during reset
+        grid.classList.add('resetting');
+        
+        // Reset selection state before loading new question
+        resetSelectionState();
+        
+        // Briefly hide to prevent visual artifacts
+        const originalVisibility = grid.style.visibility;
+        grid.style.visibility = 'hidden';
+        
+        // Small delay for clean transition
+        setTimeout(() => {
+            // Call original method to load the new question
+            originalLoadQuestion.apply(this, arguments);
+            
+            // Show the grid again with clean state
+            grid.style.visibility = originalVisibility;
+            
+            // Re-enable transitions
+            grid.classList.remove('resetting');
+            
+            // Final reset to be sure
+            resetSelectionState();
+        }, 50);
+    };
 })();
