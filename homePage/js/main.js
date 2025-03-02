@@ -80,23 +80,38 @@ if (navToggle && navMenu) {
     });
 }
 
-// Enhanced ultra-smooth scrolling effect with cosine-based easing curve for superior fluidity
+// Adaptive smooth scrolling that works well on both long and short pages
 function scrollWithNaturalEffect() {
-    const duration = 1200;
     const startPosition = window.pageYOffset;
+    const duration = Math.min(Math.max(startPosition * 2, 600), 1200);
     const startTime = performance.now();
     
-    function smoothEasing(x) {
-        return (1 - Math.cos(x * Math.PI)) / 2;
+    function adaptiveEasing(x) {
+        const isShortPage = startPosition < 500;
+        
+        if (isShortPage) {
+            return x < 0.7 ? 1.4 * x : 1 - Math.pow(1 - x, 3);
+        } else {
+            const cosineEase = (1 - Math.cos(x * Math.PI)) / 2;
+            const powerEase = 1 - Math.pow(1 - x, 4);
+            
+            return x < 0.8 ? cosineEase : powerEase;
+        }
     }
     
     function animation(currentTime) {
+        if (window.pageYOffset === 0) {
+            return;
+        }
+        
         const elapsedTime = currentTime - startTime;
         const progress = Math.min(elapsedTime / duration, 1);
         
-        window.scrollTo(0, startPosition * (1 - smoothEasing(progress)));
+        const currentPos = startPosition * (1 - adaptiveEasing(progress));
         
-        if (progress < 1) {
+        window.scrollTo(0, currentPos);
+        
+        if (progress < 1 && window.pageYOffset > 0) {
             window.requestAnimationFrame(animation);
         }
     }
