@@ -428,19 +428,3 @@ class TriviaGame {
 document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
 });
-
-(function() {
-    // Every time the player touches the screen
-    document.addEventListener('touchstart', function() {
-        // If we're in a game screen
-        if (document.getElementById('game-screen').classList.contains('active')) {
-            // Briefly add a class to the body that disables all button styling
-            document.body.classList.add('disable-button-styles');
-            
-            // Remove it after a very short delay
-            setTimeout(function() {
-                document.body.classList.remove('disable-button-styles');
-            }, 50);
-        }
-    }, true);
-})();

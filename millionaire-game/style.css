@@ -530,14 +530,6 @@ body {
         padding: 0.75rem;
         font-size: 0.9rem;
     }
-
-    body.disable-button-styles .answer-btn,
-    body.disable-button-styles .answer-btn:active,
-    body.disable-button-styles .answer-btn:focus {
-    background-color: initial !important;
-    color: initial !important;
-    outline: none !important;
-}
 }
 
 @media (min-width: 768px) {
