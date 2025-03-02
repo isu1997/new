@@ -80,6 +80,30 @@ if (navToggle && navMenu) {
     });
 }
 
+// Enhanced ultra-smooth scrolling effect with cosine-based easing curve for superior fluidity
+function scrollWithNaturalEffect() {
+    const duration = 1400;
+    const startPosition = window.pageYOffset;
+    const startTime = performance.now();
+    
+    function smoothEasing(x) {
+        return (1 - Math.cos(x * Math.PI)) / 2;
+    }
+    
+    function animation(currentTime) {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        
+        window.scrollTo(0, startPosition * (1 - smoothEasing(progress)));
+        
+        if (progress < 1) {
+            window.requestAnimationFrame(animation);
+        }
+    }
+    
+    window.requestAnimationFrame(animation);
+}
+
 // Smooth scroll functionality for navigation links
 if (navLinks) {
     navLinks.forEach(link => {
@@ -138,7 +162,7 @@ if (backToTop) {
 
     // Smooth scroll to top when button is clicked
     backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollWithNaturalEffect();
     });
 }
 
