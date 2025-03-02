@@ -430,72 +430,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 (function() {
-    // Check if we're in the general knowledge category and on mobile
-    let isGeneralCategory = false;
-    let isMobile = window.innerWidth <= 768;
-    
-    // Set up category detection
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                isGeneralCategory = this.dataset.category === 'general';
-            });
-        });
-    });
-    
-    // Modify the loadQuestion method to use our custom buttons
-    const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
-    TriviaGame.prototype.loadQuestion = function() {
-        // Call original method first
-        originalLoadQuestion.apply(this, arguments);
-        
-        // Only apply to general knowledge category on mobile devices
-        if (!isGeneralCategory || !isMobile) return;
-        
-        // The current question
-        const question = this.questions[this.currentQuestion];
-        if (!question) return;
-        
-        // Get the answers container
-        const answersGrid = document.querySelector('.answers-grid');
-        if (!answersGrid) return;
-        
-        // Save reference to the game instance
-        const gameInstance = this;
-        
-        // Store original buttons
-        const originalButtons = Array.from(document.querySelectorAll('.answer-btn'));
-        
-        // Replace with custom elements
-        originalButtons.forEach((originalBtn, index) => {
-            // Remove the original button from DOM but keep a reference
-            const originalHTML = originalBtn.innerHTML;
-            const originalDataIndex = originalBtn.dataset.index;
-            originalBtn.style.display = 'none';
+    // Every time the player touches the screen
+    document.addEventListener('touchstart', function() {
+        // If we're in a game screen
+        if (document.getElementById('game-screen').classList.contains('active')) {
+            // Briefly add a class to the body that disables all button styling
+            document.body.classList.add('disable-button-styles');
             
-            // Create a div that looks and acts like a button
-            const customBtn = document.createElement('div');
-            customBtn.className = 'custom-answer-btn';
-            customBtn.innerHTML = originalHTML;
-            customBtn.dataset.index = originalDataIndex;
-            
-            // Add click handler that triggers the original button
-            customBtn.addEventListener('click', function() {
-                // Simulate click on original button
-                gameInstance.handleAnswer({
-                    target: originalBtn
-                });
-                
-                // Apply visual feedback
-                if (index === question.correct) {
-                    customBtn.classList.add('correct');
-                } else {
-                    customBtn.classList.add('wrong');
-                }
-            });
-            
-            // Insert the custom button before the original
-            originalBtn.parentNode.insertBefore(customBtn, originalBtn);
-        });
-    };
+            // Remove it after a very short delay
+            setTimeout(function() {
+                document.body.classList.remove('disable-button-styles');
+            }, 50);
+        }
+    }, true);
 })();

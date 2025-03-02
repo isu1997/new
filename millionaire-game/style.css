@@ -531,21 +531,13 @@ body {
         font-size: 0.9rem;
     }
 
-    .custom-answer-btn {
-    -webkit-tap-highlight-color: transparent !important;
-    user-select: none !important;
-    -webkit-touch-callout: none !important;
-  }
-  
-  .custom-answer-btn.correct {
-    background-color: #d4edda !important;
-    color: #155724 !important;
-  }
-  
-  .custom-answer-btn.wrong {
-    background-color: #f8d7da !important;
-    color: #721c24 !important;
-  }
+    body.disable-button-styles .answer-btn,
+    body.disable-button-styles .answer-btn:active,
+    body.disable-button-styles .answer-btn:focus {
+    background-color: initial !important;
+    color: initial !important;
+    outline: none !important;
+}
 }
 
 @media (min-width: 768px) {
