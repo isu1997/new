@@ -1,0 +1,27 @@
+// Global Reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Assistant', sans-serif;
+}
+
+// Smooth Scrolling
+html {
+    scroll-behavior: smooth;
+}
+
+// Body Styles
+body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: $text-color;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}

@@ -1,0 +1,81 @@
+// Extra Data Section
+.extra-data-container {
+    margin-top: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: $primary-color;
+    }
+}
+
+.extra-data-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.extra-data-card {
+    background: $background-color;
+    border-radius: $border-radius;
+    padding: 20px;
+    box-shadow: $card-shadow;
+    transition: transform $transition-speed;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.extra-data-title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: $primary-color;
+    text-align: center;
+}
+
+.extra-data-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $accent-color;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.extra-data-description {
+    font-size: 1rem;
+    color: #7f8c8d;
+    text-align: center;
+}
+
+.uv-low {
+    color: #2ecc71;
+}
+
+.uv-medium {
+    color: #f39c12;
+}
+
+.uv-high {
+    color: #e74c3c;
+}
+
+.air-good {
+    color: #2ecc71;
+}
+
+.air-moderate {
+    color: #f39c12;
+}
+
+.air-poor {
+    color: #e74c3c;
+}

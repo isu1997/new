@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         "project_weatherly": {
             title: "Weatherly App",
-            description: "Get real-time weather updates for any location. Plan your day with confidence!",
+            description: "Ever wonder what to wear today? Get targeted clothing recommendations for cold-sensitive, average, and warm-natured individuals, plus umbrella alerts—all based on real-time weather data. Smart forecasting for your comfort zone.",
             images: [
                 'images/weatherly.png',
                 'images/weatherly2.png',

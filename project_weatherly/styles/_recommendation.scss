@@ -1,0 +1,69 @@
+// Recommendation Card Styles
+.recommendation-card {
+    text-align: center;
+}
+
+.recommendation-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: $primary-color;
+}
+
+.clothing-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.sensitivity-group {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: $border-radius;
+    padding: 15px;
+    transition: all $transition-speed;
+
+    &:hover {
+        transform: scale(1.03);
+        background: rgba(255, 255, 255, 0.7);
+    }
+}
+
+.sensitivity-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: $secondary-color;
+}
+
+.clothing-list {
+    text-align: right;
+    list-style-type: none;
+
+    li {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    i {
+        margin-left: 8px;
+        color: $accent-color;
+    }
+}
+
+.layer-indicator {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.rain-chance {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: $primary-color;
+}
+
+.umbrella-recommendation {
+    margin-top: 10px;
+    font-weight: 600;
+    color: $secondary-color;
+}

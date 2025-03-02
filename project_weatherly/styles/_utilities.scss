@@ -1,0 +1,11 @@
+// Error Message Styles
+.error-message {
+    background: rgba(231, 76, 60, 0.2);
+    color: #c0392b;
+    padding: 15px;
+    border-radius: $border-radius;
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}

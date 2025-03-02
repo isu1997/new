@@ -1,0 +1,106 @@
+// Search Styles
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+    width: 100%;
+}
+
+.search-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 16px 20px 16px 50px;
+    border: none;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all $transition-speed;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+        background: white;
+    }
+}
+
+#search-btn {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: $secondary-color;
+    border: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all $transition-speed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+
+    &:hover {
+        background: $primary-color;
+        transform: translateY(-50%) scale(1.05);
+    }
+}
+
+.reset-btn {
+    margin-top: 15px;
+    background: $primary-color;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all $transition-speed;
+    opacity: 0.85;
+
+    &:hover {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+// Autocomplete Styles
+.autocomplete-container {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: #f8f8f8;
+    }
+}

@@ -1,84 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 
 <head>
-    <!-- favicon -->
-    <link rel="icon" href="data:,">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Fonts preconnect for performance optimization -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Font style link -->
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Main stylesheet -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherly - Your weather, simplified</title>
+    <!-- Empty SVG favicon for browser compatibility -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+        type="image/svg+xml">
     <link rel="stylesheet" href="styles/main.css">
-    <title>Weatherly APP</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Montserrat:wght@400;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <!-- Application Header Section -->
-<h1 class="app-title">Weatherly</h1>
-<p class="app-tagline">Your weather, simplified.</p>
+    <!-- Animated Cloud Background -->
+    <div class="cloud-container">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+        <div class="cloud cloud5"></div>
+    </div>
 
-    <!-- Application Main Section -->
+    <!-- Main Container -->
     <div class="container">
-        <!-- Search Control Section -->
-        <div class="form-control">
-            <label for="">Search:</label>
-            <input type="text" id="inputCity"/>
-            <button>SEND</button>
+        <!-- Header Section -->
+        <header>
+            <h1 class="main-title">Weatherly</h1>
+            <p class="subtitle">Your weather, simplified</p>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <input type="text" id="city-input" placeholder="חפש עיר..." autocomplete="off">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div id="autocomplete-container" class="autocomplete-container"></div>
+            <button id="reset-btn" class="reset-btn">נקה היסטוריה</button>
         </div>
 
-        <!-- Weather Information Section -->
-        <div class="weatherInfo">
-            <!-- Primary Weather Data -->
-            <h1 id="city"></h1>
-            <p id="temp"></p>
-            <img id="weatherIcon" />
-            <p id="description"></p>
-
-            <!-- Error Handling Display -->
-            <p id="errorMessage"></p>
-            
-            <!-- Detailed Weather Metrics Grid -->
-            <div class="weather-details">
-                <!-- Humidity Information -->
-                <div class="detail">
-                    <span class="label">Humidity</span>
-                    <span id="humidity" class="value">--</span>
-                </div>
-
-                <!-- Wind Information -->
-                <div class="detail">
-                    <span class="label">Wind Speed</span>
-                    <span id="wind" class="value">--</span>
-                </div>
-
-                <!-- Solar Data - Sunrise -->
-                <div class="detail">
-                    <span class="label">Sunrise</span>
-                    <span id="sunrise" class="value">--</span>
-                </div>
-
-                <!-- Solar Data - Sunset -->
-                <div class="detail">
-                    <span class="label">Sunset</span>
-                    <span id="sunset" class="value">--</span>
+        <!-- Weather Cards Section -->
+        <div class="weather-container" id="weather-container">
+            <!-- Current Weather Card -->
+            <div class="weather-card main-card" id="current-weather">
+                <!-- Content will be added by JavaScript -->
+                <div class="weather-visual-container">
+                    <!-- Visual weather elements will be added here by JavaScript -->
                 </div>
             </div>
 
-            <!-- Extended Forecast Section -->
-            <div class="forecast">
-                <h3>5-Day Forecast</h3>
-                <!-- Dynamic Forecast Container - Populated via JavaScript -->
-                <div class="forecast-container" id="forecast-container">
-                    <!-- Content dynamically injected by script.js using API data -->
-                </div>
+            <!-- Clothing Recommendation Card -->
+            <div class="weather-card recommendation-card" id="clothing-recommendation">
+                <!-- Content will be added by JavaScript -->
             </div>
+        </div>
+
+        <!-- 5-Day Forecast Section -->
+        <div class="forecast-container" id="forecast-container">
+            <h2>תחזית לחמישה ימים</h2>
+            <div class="forecast-cards" id="forecast-cards">
+                <!-- Forecast cards will be added by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Air Quality and UV Index Section -->
+        <div class="extra-data-container" id="extra-data-container">
+            <h2>נתונים נוספים</h2>
+            <div class="extra-data-cards" id="extra-data-cards">
+                <!-- Extra data cards will be added by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="error-message">
+            <!-- Error message will be added by JavaScript -->
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script type="module" src="js/ui-utils.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/weather-display.js"></script>
+    <script type="module" src="js/weather-animations.js"></script>
+    <script type="module" src="js/event-handlers.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

@@ -1,21 +1,21 @@
-// Variables & configuration files first
+// Import variables first
 @import 'variables';
 
-// Base styles
-@import 'base';
+// Import base styles
+@import 'reset';
 
-// Layout and structure
+// Import components
+@import 'clouds';
 @import 'layout';
-
-// Components
-@import 'forms';
-@import 'weather';
-
-// Theme and visual styles
-@import 'backgrounds';
-
-// Utilities and helpers
+@import 'search';
+@import 'weather_visuals';
+@import 'human_figure';
+@import 'weather_cards';
+@import 'recommendation';
+@import 'forecast';
+@import 'extra_data';
 @import 'animations';
+@import 'utilities';
 
-// Media queries always last
-@import 'media-queries';
+// Import responsive styles last
+@import 'responsive';

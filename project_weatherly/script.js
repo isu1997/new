@@ -1,216 +1,89 @@
-/**
- * Weatherly Application - Core JavaScript
- * 
- * This script handles all weather data fetching, processing and UI updates
- * for the Weatherly application.
- */
+// Import utility functions and modules
+import { displayError, showLoading, hideLoading } from './js/ui-utils.js';
+import { getWeatherData, getForecastData } from './js/api.js';
+import { displayCurrentWeather, displayForecast, displayExtraData, displayClothingRecommendation } from './js/weather-display.js';
+import { setupAutocomplete, setupEventListeners } from './js/event-handlers.js';
+import { renderSeasonalAnimation } from './js/weather-animations.js';
 
-// API Configuration
+// Global constants
 const API_KEY = '620970db4507c0a15af21ceef9ee5cb3';
-const URL = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${API_KEY}&q=`;
+const WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${API_KEY}&q=`;
+const FORECAST_URL = `https://api.openweathermap.org/data/2.5/forecast?units=metric&appid=${API_KEY}&q=`;
+const AIR_QUALITY_URL = `https://api.openweathermap.org/data/2.5/air_pollution?appid=${API_KEY}`;
 
-// DOM Element References
-const q = document.getElementById("inputCity");
-const button = document.querySelector("button");
-const h1 = document.getElementById("city");
-const temp = document.getElementById("temp");
-const description = document.getElementById("description");
-const weatherIcon = document.getElementById("weatherIcon");
-const errorMessage = document.getElementById("errorMessage");
+// DOM Elements
+const cityInput = document.getElementById('city-input');
+const searchBtn = document.getElementById('search-btn');
+const resetBtn = document.getElementById('reset-btn');
+const weatherContainer = document.getElementById('weather-container');
+const currentWeather = document.getElementById('current-weather');
+const clothingRecommendation = document.getElementById('clothing-recommendation');
+const forecastContainer = document.getElementById('forecast-container');
+const forecastCards = document.getElementById('forecast-cards');
+const extraDataContainer = document.getElementById('extra-data-container');
+const extraDataCards = document.getElementById('extra-data-cards');
+const autocompleteContainer = document.getElementById('autocomplete-container');
+const errorMessage = document.getElementById('error-message');
 
-/**
- * Fetches current weather data for a specified city
- * @param {string} city - Name of the city to fetch weather for
-*/
-async function getWeather(city) {
+// Initialize the app
+function initApp() {
+    setupEventListeners(searchBtn, resetBtn, cityInput, autocompleteContainer);
+    setupAutocomplete(cityInput, autocompleteContainer);
+    checkSessionStorage();
+}
+
+// Check if there's a saved city in sessionStorage
+function checkSessionStorage() {
+    const savedCity = sessionStorage.getItem('lastCity');
+    if (savedCity) {
+        cityInput.value = savedCity;
+        fetchWeatherData(savedCity);
+    }
+}
+
+// Main function to fetch weather data
+async function fetchWeatherData(city) {
     try {
-        const response = await fetch(URL + city);
-        const data = await response.json();
+        showLoading();
         
-        if (data.cod === 200) {
-            sessionStorage.setItem('lastCity', city);
-            await getForecast(city); // Get forecast only if city is found
-        } else {
-            sessionStorage.removeItem('lastCity');
-        }
+        // Fetch current weather
+        const weatherData = await getWeatherData(WEATHER_URL + city);
         
-        displayWeather(data);
+        // Fetch 5-day forecast
+        const forecastData = await getForecastData(FORECAST_URL + city);
+        
+        // Fetch air quality data using coordinates from weather data
+        const airQualityData = await getWeatherData(
+            `${AIR_QUALITY_URL}&lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}`
+        );
+        
+        // Display all weather information
+        displayCurrentWeather(weatherData, currentWeather);
+        displayForecast(forecastData, forecastCards);
+        displayExtraData(weatherData, airQualityData, extraDataCards);
+        displayClothingRecommendation(weatherData, clothingRecommendation);
+        
+        // Render seasonal animation based on weather data
+        renderSeasonalAnimation(weatherData);
+        
+        // Show all containers
+        weatherContainer.classList.add('visible');
+        forecastContainer.classList.add('visible');
+        extraDataContainer.classList.add('visible');
+        
+        // Save city to sessionStorage
+        sessionStorage.setItem('lastCity', city);
+        
+        hideLoading();
     } catch (error) {
+        hideLoading();
+        displayError(errorMessage, `לא ניתן למצוא את העיר "${city}". אנא בדוק את השם ונסה שוב.`);
         console.error('Error fetching weather data:', error);
-        errorMessage.innerText = "Error fetching weather data";
-        sessionStorage.removeItem('lastCity');
     }
 }
 
-/**
- * Displays weather data in the UI
- * @param {Object} weatherData - Weather data returned from the API
- */
-function displayWeather(weatherData) {
-    if (weatherData.cod === 200) {
-        // Clear any error messages
-        errorMessage.innerText = "";
+// Export for other modules
+window.fetchWeatherData = fetchWeatherData;
 
-        // Display basic weather information
-        h1.innerText = weatherData.name;
-        temp.innerText = Math.round(weatherData.main.temp) + "°C";
-        description.innerText = weatherData.weather[0].description;
-        weatherIcon.src = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`;
-        weatherIcon.alt = weatherData.name;
-
-        // Display additional weather metrics
-        document.getElementById('humidity').innerText = `${weatherData.main.humidity}%`;
-        document.getElementById('wind').innerText = `${weatherData.wind.speed} m/s`;
-
-        // Convert and display sunrise/sunset times
-        const sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        });
-        const sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        });
-        
-        document.getElementById('sunrise').innerText = sunrise;
-        document.getElementById('sunset').innerText = sunset;
-
-        // Update background based on weather conditions
-        const weatherType = weatherData.weather[0].main.toLowerCase();
-        changeBackground(weatherType);
-    } else {
-        // Clear all fields in case of error
-        h1.innerText = "";
-        temp.innerText = "";
-        description.innerText = "";
-        weatherIcon.src = "";
-        weatherIcon.alt = "";
-        document.getElementById('humidity').innerText = "--";
-        document.getElementById('wind').innerText = "--";
-        document.getElementById('sunrise').innerText = "--";
-        document.getElementById('sunset').innerText = "--";
-        errorMessage.innerText = "City not found";
-        document.body.className = 'bg-default';
-        
-        // Clear forecast data
-        const forecastContainer = document.getElementById('forecast-container');
-        if (forecastContainer) {
-            forecastContainer.innerHTML = '';
-        }
-    }
-}
-
-/**
- * Updates the page background based on current weather conditions
- * @param {string} weatherType - Type of weather (clear, clouds, rain, etc.)
- */
-function changeBackground(weatherType) {
-    const body = document.body;
-    body.className = '';
-    
-    switch(weatherType) {
-        case 'clear':
-            body.classList.add('bg-clear');
-            break;
-        case 'clouds':
-            body.classList.add('bg-cloudy');
-            break;
-        case 'rain':
-        case 'drizzle':
-            body.classList.add('bg-rainy');
-            break;
-        case 'thunderstorm':
-            body.classList.add('bg-storm');
-            break;
-        case 'snow':
-            body.classList.add('bg-snow');
-            break;
-        case 'mist':
-        case 'fog':
-        case 'haze':
-            body.classList.add('bg-misty');
-            break;
-        default:
-            body.classList.add('bg-default');
-    }
-}
-
-/**
- * Fetches 5-day weather forecast for a specified city
- * @param {string} city - Name of the city to fetch forecast for
- */
-async function getForecast(city) {
-    try {
-        const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`;
-        const response = await fetch(forecastURL);
-        const data = await response.json();
-        
-        if (data.cod === "200") {
-            displayForecast(data.list);
-        }
-    } catch (error) {
-        console.error('Error fetching forecast:', error);
-    }
-}
-
-/**
- * Displays the 5-day forecast in the UI
- * @param {Array} forecastData - Array of forecast data points
- */
-function displayForecast(forecastData) {
-    const container = document.getElementById('forecast-container');
-    container.innerHTML = '';
-    
-    // Filter forecast data to show only noon readings for 5 days
-    const dailyData = forecastData
-        .filter(item => item.dt_txt.includes('12:00:00'))
-        .slice(0, 5);
-    
-    dailyData.forEach(day => {
-        const date = new Date(day.dt * 1000);
-        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-        
-        const forecastDay = document.createElement('div');
-        forecastDay.className = 'forecast-day';
-        forecastDay.innerHTML = `
-            <span class="forecast-date">${dayName}</span>
-            <img class="forecast-icon" 
-                src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" 
-                alt="${day.weather[0].description}">
-            <span class="forecast-temp">${Math.round(day.main.temp)}°C</span>
-        `;
-        
-        container.appendChild(forecastDay);
-    });
-}
-
-/**
- * Handles city search interactions
- */
-function handleCitySearch() {
-    const cityName = q.value.trim();
-    if (cityName) {
-        getWeather(cityName);
-    }
-}
-
-// Initialize application and load last searched city
-document.addEventListener('DOMContentLoaded', () => {
-    const lastCity = sessionStorage.getItem('lastCity');
-    if (lastCity) {
-        q.value = lastCity;
-        getWeather(lastCity);
-    }
-});
-
-// Event Listeners
-button.addEventListener("click", handleCitySearch);
-
-// Listen for Enter key in search input
-q.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        handleCitySearch();
-    }
-});
+// Initialize app when DOM is loaded
+document.addEventListener('DOMContentLoaded', initApp);

@@ -1,0 +1,107 @@
+.human-figure {
+    width: 40px;
+    height: 80px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.head {
+    width: 20px;
+    height: 20px;
+    background: #f5f5f5;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.body {
+    width: 8px;
+    height: 30px;
+    background: #f5f5f5;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.arms {
+    width: 30px;
+    height: 8px;
+    background: #f5f5f5;
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legs {
+    width: 8px;
+    height: 30px;
+    background: #f5f5f5;
+    position: absolute;
+    top: 50px;
+    left: calc(50% - 8px);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:after {
+        content: '';
+        width: 8px;
+        height: 30px;
+        background: #f5f5f5;
+        position: absolute;
+        left: 16px;
+        border-radius: 0 0 4px 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// Clothing Items for the figure
+.jacket {
+    position: absolute;
+    width: 36px;
+    height: 25px;
+    background: $accent-color;
+    border-radius: 8px;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+}
+
+.scarf {
+    position: absolute;
+    width: 24px;
+    height: 6px;
+    background: $secondary-color;
+    border-radius: 3px;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hat {
+    position: absolute;
+    width: 22px;
+    height: 8px;
+    background: $primary-color;
+    border-radius: 4px 4px 0 0;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+// Layer Indicators
+.layer {
+    width: 30px;
+    height: 5px;
+    background: $accent-color;
+    border-radius: 2px;
+    margin: 2px auto;
+}

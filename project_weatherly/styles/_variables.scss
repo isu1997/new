@@ -1,9 +1,33 @@
-$primary-gradient: linear-gradient(135deg, #6ac677, #2e2f52);
-$container-gradient: linear-gradient(135deg, #ff94bb, #7679d1);
-$button-gradient: linear-gradient(135deg, #611e72, #2a5298);
-$button-hover-gradient: linear-gradient(135deg, #2a5298, #1e3c72);
+// Base Variables
+$primary-color: #2c3e50;
+$secondary-color: #3498db;
+$accent-color: #e67e22;
+$text-color: #2c3e50;
+$light-text: #ecf0f1;
+$background-color: rgba(255, 255, 255, 0.7);
+$card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+$border-radius: 12px;
+$glass-effect: rgba(255, 255, 255, 0);
+$glass-border: 1px solid rgba(255, 255, 255, 0.18);
+$glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+$cloud-color1: rgba(255, 255, 255, 0.7);
+$cloud-color2: rgba(240, 248, 255, 0.6);
+$cloud-color3: rgba(245, 245, 250, 0.5);
 
-$font-family: "Comfortaa", sans-serif;
-$border-radius-lg: 20px;
-$border-radius-md: 10px;
-$box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+// Seasonal Colors
+$spring-color1: #F2FCE2;
+$spring-color2: #E5DEFF;
+$spring-color3: #FFDEE2;
+$spring-color4: #D6BCFA;
+
+$summer-color1: #F97316;
+$summer-color2: #FEC6A1;
+
+$autumn-color1: #FEC6A1;
+$autumn-color2: #FDE1D3;
+$autumn-color3: #F2FCE2;
+
+$winter-color1: #FFFFFF;
+$winter-color2: #F1F0FB;
+$winter-color3: #D3E4FD;
