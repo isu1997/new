@@ -188,17 +188,6 @@ class TriviaGame {
             
             // Ensure no active/focus state remains
             button.blur();
-            
-            // Reset all possible selectable/active states
-            button.style.outline = 'none';
-            button.style.webkitTapHighlightColor = 'transparent';
-            button.setAttribute('aria-pressed', 'false');
-            button.setAttribute('aria-selected', 'false');
-
-            // Force blur again after a small delay to counteract any browser auto-focus
-            setTimeout(() => {
-                button.blur();
-            }, 5);
         });
         
         // Reset timer
@@ -432,50 +421,42 @@ class TriviaGame {
         // Enable start button
         this.startButton.disabled = false;
         this.startButton.classList.remove('disabled');
-        
-        if (this.selectedCategory === 'general') {
-            // Reset answer buttons specifically for General Knowledge category
-            setTimeout(() => {
-                this.answerButtons.forEach(button => {
-                    // Remove all possible states that might cause auto-selection
-                    button.classList.remove('selected', 'active', 'focus', 'hover');
-                    button.classList.remove('-webkit-tap-highlight');
-                    button.style.webkitTapHighlightColor = 'transparent';
-                    
-                    // Force blur and reset internal state
-                    button.blur();
-                    
-                    // Set aria attributes explicitly
-                    button.setAttribute('aria-pressed', 'false');
-                    button.setAttribute('aria-selected', 'false');
-                });
-            }, 10);
-        }
     }
 }
 
 // Initialize game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
-    
-    // Fix for mobile touch events causing premature selection
-    const answerButtons = document.querySelectorAll('.answer-btn');
-    
-    // Prevent default touch behavior that can cause unwanted selection
-    answerButtons.forEach(button => {
-        // Use touchstart to prevent auto-selection
-        button.addEventListener('touchstart', function(e) {
-            // Don't preventDefault here as it could break normal touch behavior
-            
-            // Remove selected state from all other buttons
-            answerButtons.forEach(btn => {
-                if (btn !== this) {
-                    btn.classList.remove('selected', 'active', 'focus');
-                    btn.setAttribute('aria-pressed', 'false');
-                    btn.setAttribute('aria-selected', 'false');
-                    btn.blur();
-                }
-            });
-        }, { passive: true }); // Use passive listener for better touch performance
-    });
 });
+
+// Simple fix for the mobile auto-selection issue in general knowledge category
+(function() {
+    // Add a simple stylesheet to disable tap highlight on mobile
+    const style = document.createElement('style');
+    style.textContent = `
+        .answer-btn {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Add a small additional reset to the existing loadQuestion method
+    const originalPrototype = TriviaGame.prototype;
+    const originalLoadQuestion = originalPrototype.loadQuestion;
+    
+    originalPrototype.loadQuestion = function() {
+        // Call the original method first
+        originalLoadQuestion.apply(this, arguments);
+        
+        // Then apply our additional cleanup
+        if (this.selectedCategory === 'general') {
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach(button => {
+                // Remove any selection state
+                button.blur();
+                button.classList.remove('selected', 'active');
+            });
+        }
+    };
+})();
