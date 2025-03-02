@@ -428,3 +428,40 @@ class TriviaGame {
 document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
 });
+
+(function() {
+    // Run when the document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Only apply in mobile viewport
+        if (window.innerWidth > 768) return;
+        
+        // Add touch event listeners to answer buttons
+        document.addEventListener('click', function(e) {
+            // Check if it's an answer button
+            if (e.target.classList.contains('answer-btn')) {
+                // Get all answer buttons
+                const buttons = document.querySelectorAll('.answer-btn');
+                
+                // Add "temp-hover" class to the clicked button
+                e.target.classList.add('temp-hover');
+                
+                // Remove the class after 2 seconds
+                setTimeout(function() {
+                    buttons.forEach(btn => btn.classList.remove('temp-hover'));
+                }, 2000);
+            }
+        });
+        
+        // Also reset hover states when loading a new question
+        const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
+        TriviaGame.prototype.loadQuestion = function() {
+            // Remove any existing hover states first
+            document.querySelectorAll('.answer-btn').forEach(btn => {
+                btn.classList.remove('temp-hover');
+            });
+            
+            // Call the original method
+            originalLoadQuestion.apply(this, arguments);
+        };
+    });
+})();
