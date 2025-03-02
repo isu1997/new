@@ -229,6 +229,7 @@
 @media (max-width: 768px) {
     .project-title {
         font-size: 1.8rem;
+        margin-top: 1.5rem;
     }
 
     .project-description {
