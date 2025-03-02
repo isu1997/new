@@ -333,130 +333,130 @@ function getClothingForTemperature(temp, sensitivity, windSpeed) {
         };
     }
     } else if (adjustedTemp < 5) {
-        // 0-5°C (very cold)
-        if (sensitivity === 'cold') {
+       // 0-5°C (very cold)
+    if (sensitivity === 'cold') {
         return {
             layers: 4,
-            items: ['חולצה תרמית', 'סוודר', 'מעיל חורף', 'צעיף', 'כובע', 'כפפות']
-            };
-        } else if (sensitivity === 'regular') {
+            items: ['חולצה תרמית', 'סוודר עבה', 'מעיל חורף', 'צעיף', 'כובע', 'כפפות', 'גרביים תרמיות']
+        };
+    } else if (sensitivity === 'regular') {
         return {
             layers: 3,
-            items: ['חולצה ארוכה', 'סוודר', 'מעיל חורף', 'כובע או צעיף']
-            };
-        } else { // warm
-            return {
+            items: ['חולצה תרמית', 'סוודר', 'מעיל חורף או מעיל קל', 'צעיף', 'כובע']
+        };
+    } else { // warm
+        return {
             layers: 2,
-            items: ['חולצה ארוכה', 'מעיל או ז\'קט']
-            };
-        }
-    } else if (adjustedTemp < 10) {
-        // 5-10°C (cold)
-        if (sensitivity === 'cold') {
-            return {
-                layers: 3,
-                items: ['חולצה ארוכה', 'סוודר', 'מעיל קל', 'צעיף']
-            };
-        } else if (sensitivity === 'regular') {
-            return {
-                layers: 2,
-                items: ['חולצה ארוכה', 'סוודר', 'ז\'קט קל']
-            };
-        } else { // warm
-            return {
-                layers: 2,
-                items: ['חולצה ארוכה', 'ז\'קט קל']
-            };
-        }
-    } else if (adjustedTemp < 15) {
-        // 10-15°C (cool)
-        if (sensitivity === 'cold') {
-            return {
-                layers: 3,
-                items: ['חולצה ארוכה', 'סוודר דק', 'ז\'קט']
-            };
-        } else if (sensitivity === 'regular') {
-            return {
-                layers: 2,
-                items: ['חולצה ארוכה', 'סוודר דק או ז\'קט']
-            };
-        } else { // warm
-            return {
-                layers: 1,
-                items: ['חולצה ארוכה', 'אולי שכבה קלה נוספת']
-            };
-        }
-    } else if (adjustedTemp < 20) {
-        // 15-20°C (mild)
-        if (sensitivity === 'cold') {
-            return {
-                layers: 2,
-                items: ['חולצה ארוכה', 'סוודר דק או ז\'קט קל']
-            };
-        } else if (sensitivity === 'regular') {
-            return {
-                layers: 1,
-                items: ['חולצה ארוכה', 'אולי שכבה דקה נוספת']
-            };
-        } else { // warm
-            return {
-                layers: 1,
-                items: ['חולצה קצרה', 'אולי מכנסיים קצרים']
-            };
-        }
-    } else if (adjustedTemp < 25) {
-        // 20-25°C (warm)
-        if (sensitivity === 'cold') {
-            return {
-                layers: 1,
-                items: ['חולצה קצרה', 'שכבה דקה נוספת למקרה הצורך']
-            };
-        } else if (sensitivity === 'regular') {
-            return {
-                layers: 1,
-                items: ['חולצה קצרה', 'מכנסיים קלים']
-            };
-        } else { // warm
-            return {
-                layers: 1,
-                items: ['חולצה קצרה', 'מכנסיים קצרים', 'בגדים מאווררים']
-            };
-        }
-    } else if (adjustedTemp < 30) {
-        // 25-30°C (very warm)
-        if (sensitivity === 'cold') {
-            return {
-                layers: 1,
-                items: ['חולצה קצרה', 'מכנסיים קלים', 'כובע הגנה מהשמש']
-            };
-        } else if (sensitivity === 'regular') {
-            return {
-                layers: 1,
-                items: ['חולצה קצרה', 'מכנסיים קצרים', 'כובע הגנה מהשמש']
-            };
-        } else { // warm
-            return {
-                layers: 1,
-                items: ['בגדים קלים ונושמים', 'מכנסיים קצרים', 'כובע רחב שוליים']
-            };
-        }
-    } else {
-        // Above 30°C (hot)
-        if (sensitivity === 'cold') {
-            return {
-                layers: 1,
-                items: ['בגדים קלים', 'כובע', 'משקפי שמש']
-            };
-        } else if (sensitivity === 'regular') {
-            return {
-                layers: 1,
-                items: ['בגדים קלים ונושמים', 'כובע רחב', 'משקפי שמש']
-            };
-        } else { // warm
-            return {
-                layers: 1,
-                items: ['בגדים מינימליים ונושמים', 'כובע רחב', 'מטליות קירור', 'שתייה מרובה']
-            };
-        }
+            items: ['חולצה ארוכה', 'סוודר דק', 'מעיל או ז\'קט קל']
+        };
     }
+    } else if (adjustedTemp < 10) {
+    // 5-10°C (cold)
+    if (sensitivity === 'cold') {
+        return {
+            layers: 3,
+            items: ['חולצה תרמית דקה', 'סוודר', 'מעיל קל', 'צעיף דק', 'כפפות דקות']
+        };
+    } else if (sensitivity === 'regular') {
+        return {
+            layers: 2,
+            items: ['חולצה ארוכה', 'סוודר דק או עבה', 'ז\'קט או מעיל קל']
+        };
+    } else { // warm
+        return {
+            layers: 1,
+            items: ['חולצה ארוכה', 'ז\'קט קל (אופציונלי)']
+        };
+    }
+    } else if (adjustedTemp < 15) {
+    // 10-15°C (cool)
+    if (sensitivity === 'cold') {
+        return {
+            layers: 2,
+            items: ['חולצה ארוכה', 'סוודר דק', 'ז\'קט קל']
+        };
+    } else if (sensitivity === 'regular') {
+        return {
+            layers: 2,
+            items: ['חולצה ארוכה', 'ז\'קט או סוודר דק']
+        };
+    } else { // warm
+        return {
+            layers: 1,
+            items: ['חולצה ארוכה או קצרה (לבחירה)']
+        };
+    }
+    } else if (adjustedTemp < 20) {
+    // 15-20°C (mild)
+    if (sensitivity === 'cold') {
+        return {
+            layers: 2,
+            items: ['חולצה ארוכה', 'סוודר דק או קרדיגן']
+        };
+    } else if (sensitivity === 'regular') {
+        return {
+            layers: 1,
+            items: ['חולצה ארוכה', 'שכבה דקה למקרה שיתקרר']
+        };
+    } else { // warm
+        return {
+            layers: 1,
+            items: ['חולצה קצרה', 'מכנסיים קלים']
+        };
+    }
+    } else if (adjustedTemp < 25) {
+    // 20-25°C (warm)
+    if (sensitivity === 'cold') {
+        return {
+            layers: 1,
+            items: ['חולצה ארוכה קלה או חולצה קצרה', 'קרדיגן דק']
+        };
+    } else if (sensitivity === 'regular') {
+        return {
+            layers: 1,
+            items: ['חולצה קצרה', 'מכנסיים קלים']
+        };
+    } else { // warm
+        return {
+            layers: 1,
+            items: ['חולצה קצרה קלה', 'מכנסיים קצרים', 'כובע להגנה מהשמש']
+        };
+    }
+    } else if (adjustedTemp < 30) {
+    // 25-30°C (very warm)
+    if (sensitivity === 'cold') {
+        return {
+            layers: 1,
+            items: ['חולצה קצרה', 'מכנסיים קלים', 'כובע להגנה מהשמש']
+        };
+    } else if (sensitivity === 'regular') {
+        return {
+            layers: 1,
+            items: ['חולצה קצרה קלה', 'מכנסיים קצרים', 'כובע רחב']
+        };
+    } else { // warm
+        return {
+            layers: 1,
+            items: ['חולצה קצרה מחומר נושם במיוחד', 'מכנסיים קצרים קלים', 'כובע רחב', 'מטלית קירור']
+        };
+    }
+    } else {
+    // 30°C and above (hot)
+    if (sensitivity === 'cold') {
+        return {
+            layers: 1,
+            items: ['חולצה קצרה וקלה', 'מכנסיים קצרים', 'כובע', 'משקפי שמש', 'בקבוק מים']
+        };
+    } else if (sensitivity === 'regular') {
+        return {
+            layers: 1,
+            items: ['חולצה קצרה מחומר נושם', 'מכנסיים קצרים', 'כובע רחב', 'משקפי שמש', 'בקבוק מים']
+        };
+    } else { // warm
+        return {
+            layers: 1,
+            items: ['חולצת ספורט מחומר מנדף זיעה', 'מכנסיים קצרים קלים במיוחד', 'כובע רחב', 'משקפי שמש', 'מטליות קירור', 'בקבוק מים מקורר']
+        };
+    }
+}
 }
