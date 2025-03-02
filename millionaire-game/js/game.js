@@ -428,3 +428,64 @@ class TriviaGame {
 document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
 });
+
+// Targeted fix for mobile selection issue in general knowledge category
+// Add this at the end of game.js file
+(function() {
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Variable to track if general knowledge is selected
+        let isGeneralCategory = false;
+        
+        // Watch for category selection
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                isGeneralCategory = this.dataset.category === 'general';
+            });
+        });
+        
+        // Create a function to reset button visual states
+        function resetButtonStates() {
+            if (!isGeneralCategory) return;
+            
+            document.querySelectorAll('.answer-btn').forEach(btn => {
+                // Only reset appearance, not functionality
+                btn.style.backgroundColor = '';
+                btn.style.color = '';
+                btn.blur();
+            });
+        }
+        
+        // Monitor for category changes and reset button states
+        const observer = new MutationObserver(function(mutations) {
+            if (isGeneralCategory) {
+                resetButtonStates();
+            }
+        });
+        
+        // Start observing the game container for any changes
+        observer.observe(document.getElementById('game-container'), {
+            childList: true,
+            subtree: true
+        });
+        
+        // Add a small delay reset after touch events
+        document.addEventListener('touchend', function() {
+            if (isGeneralCategory) {
+                setTimeout(resetButtonStates, 100);
+            }
+        });
+        
+        // Run reset on question changes
+        const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
+        TriviaGame.prototype.loadQuestion = function() {
+            // Call original method
+            originalLoadQuestion.apply(this, arguments);
+            
+            // If it's the general category, reset button states
+            if (this.selectedCategory === 'general') {
+                setTimeout(resetButtonStates, 50);
+            }
+        };
+    });
+})();
