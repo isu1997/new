@@ -531,15 +531,41 @@ body {
         font-size: 0.9rem;
     }
 
-    /* Fix for unwanted visual selection state in mobile view 
-    Prevents automatic highlighting of answer buttons in general knowledge category */
+    /* Comprehensive fix for mobile selection issues
+    Prevents unwanted button selection states from persisting
+    while preserving correct/wrong answer styling functionality */
+    
+    /* Reset ALL possible visual states for answer buttons */
+    .answer-btn,
+    .answer-btn:hover,
     .answer-btn:focus,
     .answer-btn:active,
-    .answer-btn.selected {
-    background-color: initial !important; 
-    color: initial !important;
+    .answer-btn:visited,
+    .answer-btn.selected,
+    .answer-btn.active,
+    .answer-btn[aria-pressed="true"],
+    .answer-btn[aria-selected="true"] {
+    background-color: transparent !important;
+    color: inherit !important;
+    border-color: #333 !important;
     outline: none !important;
     box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    }
+
+    /* Only show selection styles when explicitly adding correct/wrong classes */
+    .answer-btn.correct {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    border-color: #c3e6cb !important;
+    }
+
+    .answer-btn.wrong {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    border-color: #f5c6cb !important;
     }
 }
 
