@@ -429,63 +429,73 @@ document.addEventListener('DOMContentLoaded', () => {
     new TriviaGame();
 });
 
-// Targeted fix for mobile selection issue in general knowledge category
-// Add this at the end of game.js file
 (function() {
-    // Wait for DOM to be fully loaded
+    // Check if we're in the general knowledge category and on mobile
+    let isGeneralCategory = false;
+    let isMobile = window.innerWidth <= 768;
+    
+    // Set up category detection
     document.addEventListener('DOMContentLoaded', function() {
-        // Variable to track if general knowledge is selected
-        let isGeneralCategory = false;
-        
-        // Watch for category selection
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 isGeneralCategory = this.dataset.category === 'general';
             });
         });
-        
-        // Create a function to reset button visual states
-        function resetButtonStates() {
-            if (!isGeneralCategory) return;
-            
-            document.querySelectorAll('.answer-btn').forEach(btn => {
-                // Only reset appearance, not functionality
-                btn.style.backgroundColor = '';
-                btn.style.color = '';
-                btn.blur();
-            });
-        }
-        
-        // Monitor for category changes and reset button states
-        const observer = new MutationObserver(function(mutations) {
-            if (isGeneralCategory) {
-                resetButtonStates();
-            }
-        });
-        
-        // Start observing the game container for any changes
-        observer.observe(document.getElementById('game-container'), {
-            childList: true,
-            subtree: true
-        });
-        
-        // Add a small delay reset after touch events
-        document.addEventListener('touchend', function() {
-            if (isGeneralCategory) {
-                setTimeout(resetButtonStates, 100);
-            }
-        });
-        
-        // Run reset on question changes
-        const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
-        TriviaGame.prototype.loadQuestion = function() {
-            // Call original method
-            originalLoadQuestion.apply(this, arguments);
-            
-            // If it's the general category, reset button states
-            if (this.selectedCategory === 'general') {
-                setTimeout(resetButtonStates, 50);
-            }
-        };
     });
+    
+    // Modify the loadQuestion method to use our custom buttons
+    const originalLoadQuestion = TriviaGame.prototype.loadQuestion;
+    TriviaGame.prototype.loadQuestion = function() {
+        // Call original method first
+        originalLoadQuestion.apply(this, arguments);
+        
+        // Only apply to general knowledge category on mobile devices
+        if (!isGeneralCategory || !isMobile) return;
+        
+        // The current question
+        const question = this.questions[this.currentQuestion];
+        if (!question) return;
+        
+        // Get the answers container
+        const answersGrid = document.querySelector('.answers-grid');
+        if (!answersGrid) return;
+        
+        // Save reference to the game instance
+        const gameInstance = this;
+        
+        // Store original buttons
+        const originalButtons = Array.from(document.querySelectorAll('.answer-btn'));
+        
+        // Replace with custom elements
+        originalButtons.forEach((originalBtn, index) => {
+            // Remove the original button from DOM but keep a reference
+            const originalHTML = originalBtn.innerHTML;
+            const originalDataIndex = originalBtn.dataset.index;
+            originalBtn.style.display = 'none';
+            
+            // Create a div that looks and acts like a button
+            const customBtn = document.createElement('div');
+            customBtn.className = 'custom-answer-btn';
+            customBtn.innerHTML = originalHTML;
+            customBtn.dataset.index = originalDataIndex;
+            
+            // Add click handler that triggers the original button
+            customBtn.addEventListener('click', function() {
+                // Simulate click on original button
+                gameInstance.handleAnswer({
+                    target: originalBtn
+                });
+                
+                // Apply visual feedback
+                if (index === question.correct) {
+                    customBtn.classList.add('correct');
+                } else {
+                    customBtn.classList.add('wrong');
+                }
+            });
+            
+            // Insert the custom button before the original
+            originalBtn.parentNode.insertBefore(customBtn, originalBtn);
+        });
+    };
 })();
