@@ -82,7 +82,7 @@ if (navToggle && navMenu) {
 
 // Enhanced ultra-smooth scrolling effect with cosine-based easing curve for superior fluidity
 function scrollWithNaturalEffect() {
-    const duration = 1400;
+    const duration = 1200;
     const startPosition = window.pageYOffset;
     const startTime = performance.now();
     
