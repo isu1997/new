@@ -223,6 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
             projectUrl: "../snake-evolution/index.html",
             technologies: ["html", "css", "scss", "js"]
         },
+        "registryCity": {
+            title: "Registry City",
+            description: "Welcome to Registry City, your one-stop destination for all your registration needs! Whether you're looking to register a new business, update your personal information, or access important documents, we've got you covered.",
+            images: [
+                'images/registryCity.png',
+                'images/registryCity2.png',
+            ],
+            downloadUrl: "../registryCity/registryCity.rar",
+            projectUrl: "../registryCity/index.html",
+            technologies: ["html", "css", "js"]
+        },
         'default': {
     title: 'Project Showcase',
     description: 'This is a sample project showcasing my web development skills and approach to creating intuitive, beautiful digital experiences that convey meaning and purpose.',

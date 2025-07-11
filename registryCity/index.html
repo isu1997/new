@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registry City - מגן על העיר הדיגיטלית</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            position: relative;
+        }
+        
+        .game-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+        
+        /* כוכבים ברקע */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* תפריט פתיחה */
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            min-height: 100vh;
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
+            padding: 2rem 1rem;
+            box-sizing: border-box;
+        }
+        
+        .game-title {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #00d2ff);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0,210,255,0.5);
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .menu-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: 2px solid #00d2ff;
+            background: rgba(0,210,255,0.1);
+            color: #00d2ff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 250px;
+            font-family: 'Rubik', sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0,210,255,0.3);
+        }
+        
+        .menu-btn:hover {
+            background: rgba(0,210,255,0.2);
+            box-shadow: 0 0 20px rgba(0,210,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        /* הסתרת אלמנטים */
+        .hidden {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        
+        /* תיבת דיאלוג מותאמת */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-box {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #00d2ff;
+            border-radius: 20px;
+            padding: 0;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            box-shadow: 0 20px 60px rgba(0, 210, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: linear-gradient(90deg, rgba(0, 210, 255, 0.2), rgba(58, 123, 213, 0.2));
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00d2ff;
+            margin: 0;
+            text-align: center;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 68, 68, 0.2);
+            border: 2px solid #ff4444;
+            border-radius: 50%;
+            color: #ff4444;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 68, 68, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .modal-content {
+            padding: 2rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 1rem;
+            overflow-y: auto;
+            max-height: 50vh;
+        }
+        
+        .modal-content h3 {
+            color: #00d2ff;
+            margin: 1.5rem 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .modal-content h3:first-child {
+            margin-top: 0;
+        }
+        
+        .modal-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .modal-content ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+        
+        .modal-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* מסך המשחק הראשי */
+        .game-screen {
+            width: 100%;
+            height: 100vh;
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(45deg, #0f3460 0%, #1a1a2e 50%, #0f3460 100%);
+            display: block;
+            visibility: visible;
+        }
+        
+        /* הדר המשחק */
+        .game-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            border-bottom: 2px solid #00d2ff;
+            z-index: 100;
+        }
+        
+        .city-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d2ff;
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            color: #00ff88;
+            font-weight: 700;
+        }
+        
+        .health-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444 0%, #ffaa00 50%, #00ff88 100%);
+            transition: width 0.3s ease;
+            width: 100%;
+        }
+        
+        /* מפת העיר */
+        .city-map {
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0,210,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(58,123,213,0.1) 0%, transparent 50%);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        /* רובעי העיר */
+        .district {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(0,210,255,0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .district:hover {
+            border-color: #00d2ff;
+            background: rgba(0,210,255,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,210,255,0.2);
+        }
+        
+        .district-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .district-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #00d2ff;
+            text-align: center;
+        }
+        
+        .district-subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-family: monospace;
+        }
+        
+        .district-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #ccc;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .district-status {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 10px rgba(0,255,136,0.5);
+        }
+        
+        .district-status.warning {
+            background: #ffaa00;
+            box-shadow: 0 0 10px rgba(255,170,0,0.5);
+        }
+        
+        .district-status.danger {
+            background: #ff4444;
+            box-shadow: 0 0 10px rgba(255,68,68,0.5);
+        }
+        
+        /* רובע התראות */
+        .security-center {
+            background: rgba(255,68,68,0.1) !important;
+            border-color: rgba(255,68,68,0.5) !important;
+        }
+        
+        .security-center:hover {
+            border-color: #ff4444 !important;
+            background: rgba(255,68,68,0.2) !important;
+        }
+        
+        /* התראת איום צפה */
+        .threat-alert {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ff4444;
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 
+                0 10px 30px rgba(255, 68, 68, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            animation: slideInAlert 0.5s ease-out;
+            max-width: 280px;
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes slideInAlert {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .threat-alert-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .threat-alert-icon {
+            font-size: 2rem;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .threat-alert-text {
+            flex-grow: 1;
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+        
+        .threat-alert-text strong {
+            color: #ff4444;
+            font-weight: 700;
+        }
+        
+        .threat-alert-text small {
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+        
+        .threat-alert-timer {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+            padding: 0.3rem 0.6rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            min-width: 45px;
+            text-align: center;
+        }
+        
+        /* התאמות למובייל */
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .game-subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+                padding: 0 1rem;
+            }
+            
+            .menu-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                min-width: 200px;
+            }
+            
+            .game-header {
+                height: 60px;
+                padding: 0 1rem;
+                flex-wrap: wrap;
+                overflow-x: auto;
+            }
+            
+            .city-name {
+                font-size: 1.1rem;
+                order: 1;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            .game-stats {
+                gap: 1rem;
+                font-size: 0.8rem;
+                order: 2;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .health-bar {
+                width: 120px;
+                height: 8px;
+            }
+            
+            .city-map {
+                top: 60px;
+                height: calc(100vh - 60px);
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(6, 1fr);
+                gap: 1rem;
+                padding: 1rem;
+                overflow-y: auto;
+            }
+            
+            .district {
+                padding: 1rem;
+                min-height: 120px;
+            }
+            
+            .district-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .district-title {
+                font-size: 1.1rem;
+            }
+            
+            .district-subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .district-description {
+                font-size: 0.8rem;
+                display: none; /* הסתרת תיאור במובייל לחיסכון במקום */
+            }
+            
+            .modal-box {
+                width: 95%;
+                max-height: 90vh;
+                margin: 1rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+                max-height: 60vh;
+                font-size: 0.9rem;
+            }
+            
+            .threat-alert {
+                right: 10px;
+                max-width: calc(100vw - 20px);
+                font-size: 0.8rem;
+            }
+            
+            .threat-alert-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .threat-alert-timer {
+                align-self: center;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .game-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .menu-btn {
+                padding: 0.8rem 1rem;
+                min-width: 180px;
+                font-size: 0.9rem;
+                touch-action: manipulation; /* מבטיח מגע טוב במובייל */
+                -webkit-tap-highlight-color: rgba(0,210,255,0.3); /* צבע לחיצה באייפון */
+            }
+            
+            .game-header {
+                height: 50px;
+            }
+            
+            .city-name {
+                font-size: 1rem;
+            }
+            
+            .game-stats {
+                font-size: 0.7rem;
+                gap: 0.5rem;
+            }
+            
+            .health-bar {
+                width: 80px;
+                height: 6px;
+            }
+            
+            .city-map {
+                top: 50px;
+                height: calc(100vh - 50px);
+                padding: 0.5rem;
+                gap: 0.5rem;
+            }
+            
+            .district {
+                padding: 0.8rem;
+                min-height: 100px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: rgba(0,210,255,0.3);
+            }
+            
+            .district-icon {
+                font-size: 1.5rem;
+            }
+            
+            .district-title {
+                font-size: 1rem;
+            }
+            
+            .district-subtitle {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- כוכבים ברקע -->
+        <div class="stars"></div>
+        
+        <!-- תפריט ראשי -->
+        <div class="main-menu" id="mainMenu">
+            <h1 class="game-title">Registry City</h1>
+            <p class="game-subtitle">
+                שלום אלינוי! ברוכה הבאה לעיר הדיגיטלית הכי מתקדמת! 🏙️<br>
+                את עומדת להפוך לראש עיר וצריכה להגן על התושבים מפני תוקפים סיברטיים.<br>
+                למדי על רגיסטרי Windows תוך כדי משחק מרתק!
+            </p>
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="startGame()">🚀 התחילי משחק</button>
+                <button class="menu-btn" onclick="showTutorial()">📚 מדריך למתחילות</button>
+                <button class="menu-btn" onclick="showAbout()">ℹ️ אודות המשחק</button>
+            </div>
+        </div>
+        
+        <!-- תיבת דיאלוג מותאמת -->
+        <div class="modal-overlay hidden" id="modalOverlay">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <button class="modal-close" onclick="closeModal()" title="סגור">×</button>
+                    <h2 class="modal-title" id="modalTitle">כותרת</h2>
+                </div>
+                <div class="modal-content" id="modalContent">
+                    תוכן התיבה יופיע כאן...
+                </div>
+            </div>
+        </div>
+        
+        <!-- מסך המשחק הראשי -->
+        <div class="game-screen hidden" id="gameScreen">
+            <!-- הדר המשחק -->
+            <div class="game-header">
+                <div class="city-name">🏙️ Registry City - העיר של אלינוי</div>
+                <div class="game-stats">
+                    <div class="stat-item">
+                        🛡️ בריאות העיר: 
+                        <div class="health-bar">
+                            <div class="health-fill" id="healthFill"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        💎 נקודות: <span class="stat-value" id="scoreValue">0</span>
+                    </div>
+                    <div class="stat-item">
+                        🏆 רמה: <span class="stat-value" id="levelValue">1</span>
+                    </div>
+                    <div class="stat-item">
+                        ⏰ זמן: <span class="stat-value" id="timeValue">0:00</span>
+                    </div>
+                    <div class="stat-item">
+                        🚨 איום: <span class="stat-value" id="threatsValue">עוד 2:00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- מפת העיר -->
+            <div class="city-map">
+                <div class="district" onclick="openDistrict('HKLM')">
+                    <div class="district-status" id="status-HKLM"></div>
+                    <div class="district-icon">🏛️</div>
+                    <div class="district-title">רובע הממשלה</div>
+                    <div class="district-subtitle">HKEY_LOCAL_MACHINE</div>
+                    <div class="district-description">
+                        שליטה על כל השירותים הכלליים של העיר. כאן נמצאים הבנקים, בתי החולים, 
+                        המשטרה והשירותים החיוניים לכל התושבים.
+                    </div>
+                </div>
+                
+                <div class="district" onclick="openDistrict('HKCU')">
+                    <div class="district-status" id="status-HKCU"></div>
+                    <div class="district-icon">🏠</div>
+                    <div class="district-title">רובע המגורים</div>
+                    <div class="district-subtitle">HKEY_CURRENT_USER</div>
+                    <div class="district-description">
+                        הבתים הפרטיים של התושבים. כל משתמש יכול להתאים את הבית שלו לטעמו 
+                        ולשמור את החפצים האישיים שלו.
+                    </div>
+                </div>
+                
+                <div class="district" onclick="openDistrict('HKCR')">
+                    <div class="district-status" id="status-HKCR"></div>
+                    <div class="district-icon">🏪</div>
+                    <div class="district-title">רובע המסחר</div>
+                    <div class="district-subtitle">HKEY_CLASSES_ROOT</div>
+                    <div class="district-description">
+                        המרכז המסחרי של העיר. כאן מחליטים איזה חנות תטפל באיזה סוג לקוח,
+                        ואיך שירותים שונים מתקשרים זה עם זה.
+                    </div>
+                </div>
+                
+                <div class="district" onclick="openDistrict('HKU')">
+                    <div class="district-status" id="status-HKU"></div>
+                    <div class="district-icon">👥</div>
+                    <div class="district-title">כיכר התושבים</div>
+                    <div class="district-subtitle">HKEY_USERS</div>
+                    <div class="district-description">
+                        המקום בו מתאספים כל תושבי העיר. כאן אפשר לראות את כל המשתמשים 
+                        ולנהל את הקשרים ביניהם.
+                    </div>
+                </div>
+                
+                <div class="district" onclick="openDistrict('HKCC')">
+                    <div class="district-status" id="status-HKCC"></div>
+                    <div class="district-icon">⚙️</div>
+                    <div class="district-title">מרכז הבקרה</div>
+                    <div class="district-subtitle">HKEY_CURRENT_CONFIG</div>
+                    <div class="district-description">
+                        מרכז הבקרה המרכזי של העיר. כאן מנוהלות ההגדרות הנוכחיות של כל 
+                        הציוד והתשתיות הפעילות כרגע.
+                    </div>
+                </div>
+                
+                <div class="district security-center" onclick="openSecurityCenter()">
+                    <div class="district-status danger" id="status-security"></div>
+                    <div class="district-icon">🚨</div>
+                    <div class="district-title">מרכז ההתראות</div>
+                    <div class="district-subtitle">Security Operations Center</div>
+                    <div class="district-description">
+                        מרכז ביטחון העיר. כאן תופיע התראות על התקפות, ותוכלי לנהל את 
+                        הגנות העיר ולחקור אירועי אבטחה.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // משתני המשחק - מותאם למתחילות
+        let gameState = {
+            health: 100,
+            score: 0,
+            level: 1,
+            threats: 0,
+            gameTime: 0,
+            isGameRunning: false,
+            timeToFirstThreat: 120, // 2 דקות עד האיום הראשון
+            timeBetweenThreats: 60, // 60 שניות בין איומים ברמה 1
+            isLearningModalOpen: false, // משתנה חדש לבדיקה אם יש חלונית למידה פתוחה
+            timeSinceLastThreat: 0 // זמן שעבר מאז האיום האחרון
+        };
+        
+        let activeThreats = [];
+        let gameTimer = null;
+        
+        // בנק מקרים מפורטים עם הסברים למתחילות
+        const districtCases = {
+            'HKLM': [
+                {
+                    name: 'Registry Persistence Malware',
+                    nameExplained: 'תוכנת זיון שמתמקמת ברגיסטרי',
+                    description: 'תוקף הסתיר תוכנה זדונית שתופעל בכל הפעלה של המחשב',
+                    path: 'HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run',
+                    pathExplained: 'זהו המקום ברגיסטרי שאומר ל-Windows איזה תוכנות להפעיל כשהמחשב נדלק',
+                    malicious: 'WindowsDefender = "C:\\Windows\\System32\\fake_defender.exe"',
+                    maliciousBreakdown: {
+                        name: 'WindowsDefender',
+                        explanation: 'השם נראה חף מפשע - כאילו זה אנטי-וירוס של מיקרוסופט',
+                        path: 'C:\\Windows\\System32\\fake_defender.exe',
+                        pathExplanation: 'הנתיב מוביל לקובץ מזויף שמתחזה לאנטי-וירוס אמיתי'
+                    },
+                    realWorld: 'Malware (תוכנות זדוניות) משתמשות בטכניקה זו כדי "לשרוד" במחשב - גם אם תנסי למחוק אותן, הן יחזרו בהפעלה הבאה',
+                    threats: ['המחשב יפעיל תוכנה זדונית בכל הפעלה', 'גניבת מידע אישי', 'האטת המחשב'],
+                    howToSpot: 'תוכנות שלא זוכרת שהתקנת ברשימת ההפעלה'
+                },
+                {
+                    name: 'Malicious Service Installation',
+                    nameExplained: 'התקנת שירות מחשב זדוני',
+                    description: 'שירות Windows מזויף הותקן במערכת עם הרשאות גבוהות',
+                    path: 'HKLM\\System\\CurrentControlSet\\Services\\FakeAntivirus',
+                    pathExplained: 'כאן נרשמים כל השירותים של Windows - תוכנות שרצות ברקע ומנהלות את המחשב',
+                    malicious: 'ImagePath = "C:\\ProgramData\\backdoor.exe"',
+                    maliciousBreakdown: {
+                        name: 'ImagePath',
+                        explanation: 'זה אומר ל-Windows איזה קובץ להפעיל עבור השירות הזה',
+                        path: 'C:\\ProgramData\\backdoor.exe',
+                        pathExplanation: 'backdoor = "דלת אחורית" - תוכנה שנותנת לתוקף גישה חבויה למחשב'
+                    },
+                    realWorld: 'Services (שירותים) רצים עם הרשאות מאוד גבוהות במחשב - זה כמו לתת למישהו זר מפתח לבית שלך',
+                    threats: ['שליטה מלאה במחשב', 'גישה לכל הקבצים', 'מעקב אחר פעילות'],
+                    howToSpot: 'שירותים עם שמות חשודים או נתיבים לא רגילים'
+                }
+            ],
+            'HKCU': [
+                {
+                    name: 'Browser Homepage Hijack',
+                    nameExplained: 'חטיפת דף הבית של הדפדפן',
+                    description: 'דף הבית של הדפדפן שונה לאתר זדוני שמציג פרסומות או נוסה לגנוב מידע',
+                    path: 'HKCU\\Software\\Microsoft\\Internet Explorer\\Main',
+                    pathExplained: 'כאן נשמרות ההגדרות האישיות של דפדפן Internet Explorer שלך',
+                    malicious: 'Start Page = "http://malicious-ads-site.com"',
+                    maliciousBreakdown: {
+                        name: 'Start Page',
+                        explanation: 'זה קובע איזה אתר נפתח כשאתה פותח את הדפדפן',
+                        path: 'http://malicious-ads-site.com',
+                        pathExplanation: 'אתר מזויף שמציג פרסומות מזיקות או מנסה לגנוב סיסמאות'
+                    },
+                    realWorld: 'Browser Hijacking (חטיפת דפדפן) זו דרך נפוצה לתוקפים להכניס אותך לאתרים מזויפים ולגנוב מידע',
+                    threats: ['פרסומות מטרידות', 'ניסיונות גניבת סיסמאות', 'הדבקה בוירוסים נוספים'],
+                    howToSpot: 'דף הבית שלך השתנה לאתר שלא הכרת'
+                },
+                {
+                    name: 'User Startup Persistence',
+                    nameExplained: 'תוכנה זדונית שמופעלת עם המחשב',
+                    description: 'תוכנה חשודה נוספה לרשימת התוכנות שמופעלות כשאתה נכנסת למחשב',
+                    path: 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run',
+                    pathExplained: 'זו הרשימה האישית שלך של תוכנות שמופעלות כשאתה נכנסת למחשב',
+                    malicious: 'ChromeUpdater = "C:\\Users\\Elonay\\AppData\\Roaming\\chrome_fake.exe"',
+                    maliciousBreakdown: {
+                        name: 'ChromeUpdater',
+                        explanation: 'השם מתחזה למעדכן של דפדפן Chrome, אבל זה בעצם וירוס',
+                        path: 'C:\\Users\\Elonay\\AppData\\Roaming\\chrome_fake.exe',
+                        pathExplanation: 'התיקייה AppData\\Roaming היא מקום שתוקפים אוהבים להסתיר בו קבצים זדוניים'
+                    },
+                    realWorld: 'תוקפים מסתירים Malware (תוכנות זדוניות) בתיקיות שנראות חפות מפשע ונותנים להן שמות מוכרים',
+                    threats: ['גניבת סיסמאות', 'מעקב אחר הקלדה', 'גישה לתמונות וקבצים אישיים'],
+                    howToSpot: 'תוכנות ברשימת ההפעלה עם שמות מוכרים אבל במיקומים מוזרים'
+                }
+            ],
+            'HKCR': [
+                {
+                    name: 'EXE File Hijacking',
+                    nameExplained: 'חטיפת קבצי הפעלה',
+                    description: 'כל קבצי ההפעלה (.exe) במחשב נחטפו - עכשיו כל תוכנה שתנסי להפעיל תפעיל קודם וירוס',
+                    path: 'HKCR\\exefile\\shell\\open\\command',
+                    pathExplained: 'כאן נקבע מה קורה כשלוחצים על קובץ .exe (קובץ הפעלה של תוכנה)',
+                    malicious: 'Default = "C:\\malware\\launcher.exe %1"',
+                    maliciousBreakdown: {
+                        name: 'Default',
+                        explanation: 'זו ההוראה מה לעשות כשפותחים קובץ .exe',
+                        path: 'C:\\malware\\launcher.exe %1',
+                        pathExplanation: 'launcher.exe = תוכנה שמפעילה וירוס, %1 = התוכנה המקורית שרצית להפעיל'
+                    },
+                    realWorld: 'File Association (קישור קבצים) קובע איזה תוכנה תפתח איזה סוג קובץ. כשזה משתבש, כל הקבצים מפעילים וירוסים',
+                    threats: ['כל תוכנה שתפעילי תדביק אותך בוירוס', 'המחשב יהפוך לא שמיש', 'התפשטות לכל הקבצים'],
+                    howToSpot: 'תוכנות לא נפתחות או נפתחות עם תוכנות מוזרות'
+                },
+                {
+                    name: 'PDF Reader Hijack', 
+                    nameExplained: 'חטיפת תוכנת קריאת PDF',
+                    description: 'כל קובץ PDF שתנסי לפתוח יפתח עם תוכנה זדונית במקום תוכנת ה-PDF הרגילה',
+                    path: 'HKCR\\.pdf\\shell\\open\\command',
+                    pathExplained: 'כאן נקבע איזה תוכנה תפתח קבצי PDF (מסמכים דיגיטליים)',
+                    malicious: 'Default = "C:\\fake_pdf_reader.exe %1"',
+                    maliciousBreakdown: {
+                        name: 'Default',
+                        explanation: 'ההוראה איזה תוכנה תפתח קבצי PDF',
+                        path: 'C:\\fake_pdf_reader.exe %1',
+                        pathExplanation: 'fake_pdf_reader = תוכנה מזויפת שמתחזה לקורא PDF אמיתי'
+                    },
+                    realWorld: 'תוקפים משנים את File Associations (קישורי קבצים) כדי שכל פעם שתפתחי קובץ רגיל, תפעילי וירוס',
+                    threats: ['גניבת מידע מקבצים', 'הדבקה בוירוסים', 'חשיפת מסמכים פרטיים'],
+                    howToSpot: 'קבצי PDF לא נפתחים או נפתחים עם תוכנות לא מוכרות'
+                }
+            ],
+            'HKU': [
+                {
+                    name: 'Cross-User Persistence',
+                    nameExplained: 'התפשטות בין משתמשים במחשב',
+                    description: 'תוקף ניסה להפעיל תוכנה זדונית דרך חשבון משתמש אחר במחשב',
+                    path: 'HKU\\S-1-5-21-1234567890-1001\\Software\\Microsoft\\Windows\\CurrentVersion\\Run',
+                    pathExplained: 'S-1-5-21-1234567890-1001 זה מזהה ייחודי של משתמש אחר במחשב (כמו תעודת זהות דיגיטלית)',
+                    malicious: 'SystemCheck = "C:\\Windows\\Temp\\system_check.exe"',
+                    maliciousBreakdown: {
+                        name: 'SystemCheck',
+                        explanation: 'השם נשמע כמו בדיקת מערכת רגילה, אבל זה וירוס',
+                        path: 'C:\\Windows\\Temp\\system_check.exe',
+                        pathExplanation: 'תיקיית Temp נועדה לקבצים זמניים, לא לתוכנות קבועות'
+                    },
+                    realWorld: 'Cross-User attacks (התקפות בין-משתמשים) מנסות להתפשט מחשבון אחד לכל המשתמשים במחשב',
+                    threats: ['זיהום כל החשבונות במחשב', 'גישה למידע של כל המשפחה', 'התפשטות ברשת'],
+                    howToSpot: 'פעילות במשתמשים שלא נמצאים כרגע במחשב'
+                }
+            ],
+            'HKCC': [
+                {
+                    name: 'Network Configuration Attack',
+                    nameExplained: 'שינוי הגדרות הרשת',
+                    description: 'תוקף שינה את הגדרות האינטרנט של המחשב כדי לנתב את כל הגלישה שלך דרך השרתים שלו',
+                    path: 'HKCC\\System\\CurrentControlSet\\Services\\Tcpip\\Parameters',
+                    pathExplained: 'כאן נשמרות הגדרות האינטרנט והרשת של המחשב שלך',
+                    malicious: 'NameServer = "8.8.4.4,malicious-dns.com"',
+                    maliciousBreakdown: {
+                        name: 'NameServer (שרת שמות)',
+                        explanation: 'זה השרת שמתרגם שמות אתרים (כמו google.com) לכתובות IP',
+                        path: '8.8.4.4,malicious-dns.com',
+                        pathExplanation: '8.8.4.4 זה שרת גוגל הלגיטימי, אבל malicious-dns.com זה שרת של תוקף'
+                    },
+                    realWorld: 'DNS Hijacking (חטיפת שרת שמות) גורמת לכל האתרים שתנסי לגשת אליהם להיפתח בגרסאות מזויפות של התוקף',
+                    threats: ['כל האתרים יפנו לעמודים מזויפים', 'גניבת סיסמאות', 'ראיית כל הגלישה שלך'],
+                    howToSpot: 'אתרים מוכרים נראים שונה או מבקשים סיסמאות שוב'
+                }
+            ]
+        };
+        
+        // יצירת כוכבים ברקע
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // פונקציה להצגת תיבת דיאלוג
+        function showModal(title, content) {
+            document.getElementById('modalTitle').innerHTML = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('modalOverlay').classList.remove('hidden');
+        }
+        
+        // פונקציה לסגירת המודל - עם איפוס דגל הלמידה
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+            gameState.isLearningModalOpen = false; // איפוס הדגל כשסוגרים חלונית
+        }
+        
+        // התחלת המשחק עם התראה למתחילות
+        function startGame() {
+            console.log('🎮 Starting game...');
+            
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            
+            // וידוא שמסך המשחק נראה במובייל
+            const gameScreen = document.getElementById('gameScreen');
+            gameScreen.style.display = 'block';
+            gameScreen.style.visibility = 'visible';
+            
+            console.log('🎮 Game screen should be visible now');
+            
+            // איפוס המשחק
+            gameState.health = 100;
+            gameState.score = 0;
+            gameState.level = 1;
+            gameState.threats = 0;
+            gameState.gameTime = 0;
+            gameState.isGameRunning = true;
+            gameState.timeToFirstThreat = 120; // 2 דקות
+            gameState.timeBetweenThreats = 60; // 60 שניות בין איומים ברמה 1
+            gameState.isLearningModalOpen = false;
+            gameState.timeSinceLastThreat = 0;
+            activeThreats = [];
+            
+            updateGameUI();
+            startGameLoop();
+            
+            // התראה ראשונית למתחילות - רק אחרי שהמשחק התחיל!
+            setTimeout(() => {
+                console.log('🎮 Showing welcome message');
+                showBeginnerWelcome();
+            }, 1000);
+        }
+        
+        // הודעת ברכה מיוחדת למתחילות
+        function showBeginnerWelcome() {
+            const title = '🎓 ברוכה הבאה למשחק, אלינוי!';
+            const content = `
+                <p><strong>🎯 זה המשחק הראשון שלך בתחום אבטחת המידע!</strong></p>
+                
+                <h3>⏰ מה יקרה עכשיו:</h3>
+                <ul>
+                    <li><strong>דקותיים הבאות:</strong> תוכלי לחקור את העיר בשקט</li>
+                    <li><strong>בעוד 2 דקות:</strong> יופיע האיום הראשון שלך</li>
+                    <li><strong>ברמה 1:</strong> יש לך הרבה זמן לטפל בכל איום (2 דקות מלאות!)</li>
+                    <li><strong>בין איומים:</strong> דקה מנוחה ללמידה</li>
+                </ul>
+                
+                <h3>💡 טיפים להתחלה:</h3>
+                <ul>
+                    <li>🏠 בואי תכירי את הרובעים - לחצי עליהם</li>
+                    <li>🚨 כשיופיע איום, תראי התראה קטנה על המסך</li>
+                    <li>🔍 כדי לטפל באיום, תיכנסי למפה ותלחצי על הרובע</li>
+                    <li>📚 כל איום ילמד אותך משהו חדש על מחשבים!</li>
+                </ul>
+                
+                <div style="background: rgba(0,255,136,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <p><strong>🎈 זכרי:</strong> זה בטוח ללמוד! אין לחץ, יש הרבה זמן, ואנחנו פה כדי ללמוד ביחד.</p>
+                </div>
+                
+                <p><strong>🚀 בואי נתחיל לחקור את העיר!</strong></p>
+            `;
+            showModal(title, content);
+        }
+        
+        // לולאת המשחק עם מערכת זמנים מותאמת למתחילות
+        function startGameLoop() {
+            if (gameTimer) clearInterval(gameTimer);
+            
+            gameTimer = setInterval(() => {
+                if (!gameState.isGameRunning) return;
+                
+                gameState.gameTime++;
+                gameState.timeSinceLastThreat++;
+                
+                // הצגת זמן עד האיום הראשון
+                if (gameState.threats === 0 && gameState.timeToFirstThreat > 0) {
+                    gameState.timeToFirstThreat--;
+                    
+                    // הצגת התראה אחרונה לפני האיום הראשון
+                    if (gameState.timeToFirstThreat === 30) {
+                        showFirstThreatWarning();
+                    }
+                    
+                    // יצירת האיום הראשון
+                    if (gameState.timeToFirstThreat === 0) {
+                        createRandomThreat();
+                        gameState.timeSinceLastThreat = 0;
+                    }
+                } 
+                // יצירת איומים נוספים - רק אם אין חלונית למידה פתוחה
+                else if (gameState.threats > 0 && !gameState.isLearningModalOpen) {
+                    // חישוב זמן בין איומים לפי רמה (מתחיל מ-60 שניות ויורד הדרגתי)
+                    const currentTimeBetween = Math.max(30, gameState.timeBetweenThreats - (gameState.level - 1) * 10);
+                    
+                    if (gameState.timeSinceLastThreat >= currentTimeBetween) {
+                        createRandomThreat();
+                        gameState.timeSinceLastThreat = 0;
+                    }
+                }
+                
+                // עדכון איומים קיימים
+                updateThreats();
+                
+                // עדכון טיימרים בהתראות על המסך
+                updateThreatAlerts();
+                
+                // בדיקת עליית רמה - עכשיו יותר איטי ומתחשב
+                if (gameState.score >= gameState.level * 300) { // הגדלתי מ-150 ל-300 נקודות לעליית רמה
+                    gameState.level++;
+                    showLevelUp();
+                }
+                
+                updateGameUI();
+                updateDistrictStatuses();
+                
+            }, 1000);
+        }
+        
+        // התראה לפני האיום הראשון
+        function showFirstThreatWarning() {
+            const title = '⚠️ האיום הראשון מתקרב!';
+            const content = `
+                <p><strong>אלינוי, בעוד 30 שניות יופיע האיום הראשון שלך!</strong></p>
+                
+                <h3>🎯 מה לעשות:</h3>
+                <ul>
+                    <li>💀 תופיע התראה קטנה על המסך</li>
+                    <li>🗺️ תיכנסי למפה ותלחצי על הרובע עם הנקודה האדומה</li>
+                    <li>📖 תקראי בעיון את המידע על האיום</li>
+                    <li>🛡️ תלחצי על "טפלי באיום" כדי לנטרל אותו</li>
+                </ul>
+                
+                <div style="background: rgba(0,210,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <p><strong>💙 זכרי:</strong> יש לך 2 דקות מלאות לטפל באיום - הרבה זמן לקרוא וללמוד!</p>
+                </div>
+                
+                <p><strong>🎓 מוכנה ללמוד משהו חדש ומעניין?</strong></p>
+            `;
+            showModal(title, content);
+            
+            // סגירה אוטומטית אחרי 8 שניות
+            setTimeout(closeModal, 8000);
+        }
+        
+        // יצירת איום עם זמן מותאם לרמה - 2 דקות ברמה 1
+        function createRandomThreat() {
+            const districts = ['HKLM', 'HKCU', 'HKCR', 'HKU', 'HKCC'];
+            const randomDistrict = districts[Math.floor(Math.random() * districts.length)];
+            
+            // בחירת מקרה רנדומי מהבנק
+            const cases = districtCases[randomDistrict];
+            const randomCase = cases[Math.floor(Math.random() * cases.length)];
+            
+            // חישוב זמן לפי רמה - מתחיל מ-120 שניות ויורד הדרגתי
+            let timeForThreat;
+            if (gameState.level === 1) {
+                timeForThreat = 120; // 2 דקות מלאות ברמה ראשונה
+            } else if (gameState.level === 2) {
+                timeForThreat = 90; // דקה וחצי ברמה שנייה
+            } else if (gameState.level === 3) {
+                timeForThreat = 70; // 70 שניות ברמה שלישית
+            } else {
+                timeForThreat = Math.max(45, 120 - (gameState.level * 10)); // מינימום 45 שניות
+            }
+            
+            const newThreat = {
+                id: Date.now(),
+                district: randomDistrict,
+                case: randomCase,
+                severity: Math.floor(Math.random() * 3) + 1,
+                timeLeft: timeForThreat,
+                damage: Math.floor(Math.random() * 10) + 5 // פחות נזק בהתחלה
+            };
+            
+            activeThreats.push(newThreat);
+            gameState.threats++;
+            
+            // הצגת התראת איום על המסך
+            showThreatAlert(newThreat);
+            
+            console.log(`🚨 איום חדש: ${randomCase.name} ב-${randomDistrict} (${timeForThreat} שניות)`);
+        }
+        
+        // התראת איום עם עדכון טיימר בזמן אמת
+        function showThreatAlert(threat) {
+            // יצירת התראה צפה
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'threat-alert';
+            alertDiv.id = `threat-alert-${threat.id}`;
+            alertDiv.innerHTML = `
+                <div class="threat-alert-content">
+                    <div class="threat-alert-icon">🚨</div>
+                    <div class="threat-alert-text">
+                        <strong>איום זוהה!</strong><br>
+                        <span style="font-size: 0.9rem;">${threat.case.nameExplained}</span><br>
+                        <small style="color: #aaa;">ברובע: ${getDistrictName(threat.district)}</small>
+                    </div>
+                    <div class="threat-alert-timer" id="timer-${threat.id}">${Math.ceil(threat.timeLeft)}s</div>
+                </div>
+                <div style="text-align: center; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(255,68,68,0.2);">
+                    <small style="color: #aaa; font-size: 0.8rem;">
+                        🖱️ לחצי על רובע ${getDistrictName(threat.district)} לטיפול
+                    </small>
+                </div>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // הסרה אוטומטית אחרי 10 שניות
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 10000);
+        }
+        
+        // עדכון טיימרים בהתראות
+        function updateThreatAlerts() {
+            activeThreats.forEach(threat => {
+                const timerElement = document.getElementById(`timer-${threat.id}`);
+                if (timerElement) {
+                    timerElement.textContent = `${Math.ceil(threat.timeLeft)}s`;
+                    
+                    // שינוי צבע לפי דחיפות
+                    if (threat.timeLeft < 10) {
+                        timerElement.style.background = 'rgba(255, 68, 68, 0.4)';
+                        timerElement.style.color = '#ff4444';
+                    } else if (threat.timeLeft < 30) {
+                        timerElement.style.background = 'rgba(255, 170, 0, 0.4)';
+                        timerElement.style.color = '#ffaa00';
+                    }
+                }
+            });
+        }
+        
+        // קבלת שם רובע בעברית
+        function getDistrictName(code) {
+            const names = {
+                'HKLM': 'רובע הממשלה',
+                'HKCU': 'רובע המגורים', 
+                'HKCR': 'רובע המסחר',
+                'HKU': 'כיכר התושבים',
+                'HKCC': 'מרכז הבקרה'
+            };
+            return names[code] || code;
+        }
+        
+        // עדכון איומים
+        function updateThreats() {
+            activeThreats = activeThreats.filter(threat => {
+                threat.timeLeft--;
+                
+                if (threat.timeLeft <= 0) {
+                    gameState.health -= threat.damage;
+                    console.log(`💥 איום לא טופל! נזק: ${threat.damage}`);
+                    
+                    // הסרת התראת האיום מהמסך
+                    const alertElement = document.getElementById(`threat-alert-${threat.id}`);
+                    if (alertElement) {
+                        alertElement.remove();
+                    }
+                    
+                    if (gameState.health <= 0) {
+                        gameOver();
+                    }
+                    return false;
+                }
+                return true;
+            });
+        }
+        
+        // עדכון סטטוס הרובעים
+        function updateDistrictStatuses() {
+            const districts = ['HKLM', 'HKCU', 'HKCR', 'HKU', 'HKCC'];
+            
+            districts.forEach(district => {
+                const statusElement = document.getElementById(`status-${district}`);
+                if (!statusElement) return;
+                
+                const threatsInDistrict = activeThreats.filter(t => t.district === district);
+                
+                statusElement.className = 'district-status';
+                
+                if (threatsInDistrict.length > 0) {
+                    const hasUrgent = threatsInDistrict.some(t => t.timeLeft < 10);
+                    const hasCritical = threatsInDistrict.some(t => t.timeLeft < 5);
+                    
+                    if (hasCritical) {
+                        statusElement.classList.add('danger');
+                    } else if (hasUrgent) {
+                        statusElement.classList.add('warning');
+                    }
+                }
+            });
+        }
+        
+        // עליית רמה עם הסבר על השינויים
+        function showLevelUp() {
+            // חישוב זמנים חדשים לרמה הבאה
+            const newTimeBetween = Math.max(30, gameState.timeBetweenThreats - (gameState.level - 1) * 10);
+            const newThreatTime = gameState.level === 1 ? 120 : 
+                                 gameState.level === 2 ? 90 : 
+                                 gameState.level === 3 ? 70 : 
+                                 Math.max(45, 120 - (gameState.level * 10));
+            
+            const title = `🎉 רמה ${gameState.level} - כל הכבוד אלינוי!`;
+            const content = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🏆</div>
+                    <p style="font-size: 1.4rem; font-weight: bold; color: #00ff88;">עלית רמה!</p>
+                </div>
+                
+                <div style="background: rgba(0,255,136,0.1); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h3>📊 הסטטיסטיקות שלך:</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div style="text-align: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                            <div style="font-size: 2rem;">🎯</div>
+                            <div style="font-weight: bold; color: #00d2ff; font-size: 1.2rem;">${gameState.level}</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">רמה נוכחית</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                            <div style="font-size: 2rem;">💎</div>
+                            <div style="font-weight: bold; color: #00d2ff; font-size: 1.2rem;">${gameState.score}</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">נקודות</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                            <div style="font-size: 2rem;">🛡️</div>
+                            <div style="font-weight: bold; color: #00d2ff; font-size: 1.2rem;">${gameState.health}%</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">בריאות העיר</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                            <div style="font-size: 2rem;">🚨</div>
+                            <div style="font-weight: bold; color: #00d2ff; font-size: 1.2rem;">${gameState.threats - activeThreats.length}</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">איומים שטיפלת</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,170,0,0.1); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid rgba(255,170,0,0.3);">
+                    <h3 style="color: #ffaa00; margin-bottom: 1rem;">⚠️ שינויים ברמה ${gameState.level}:</h3>
+                    
+                    <div style="margin: 1rem 0;">
+                        <p><strong>⏰ זמן לטיפול באיום:</strong></p>
+                        <p style="font-size: 0.9rem; color: #ccc;">${newThreatTime} שניות (פחות מהרמה הקודמת)</p>
+                    </div>
+                    
+                    <div style="margin: 1rem 0;">
+                        <p><strong>🕒 זמן בין איומים:</strong></p>
+                        <p style="font-size: 0.9rem; color: #ccc;">${Math.floor(newTimeBetween / 60)} דקות ו-${newTimeBetween % 60} שניות</p>
+                    </div>
+                    
+                    <div style="margin: 1rem 0;">
+                        <p><strong>🎯 לרמה הבאה:</strong></p>
+                        <p style="font-size: 0.9rem; color: #ccc;">עוד ${(gameState.level + 1) * 300 - gameState.score} נקודות</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,170,0,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p style="font-weight: bold; margin-bottom: 0.5rem;">💡 טיפ לרמה הבאה:</p>
+                        <p style="font-size: 0.9rem;">האיומים הולכים ונעשים מתקדמים יותר! קראי בעיון את ההסברים כדי להבין טוב את כל מקרה.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="font-size: 1.2rem; color: #00ff88; font-weight: bold;">
+                        🌟 מצויין! את הולכת להיות מומחית אבטחת מידע נהדרת!
+                    </p>
+                    <p style="font-size: 0.9rem; color: #aaa; margin-top: 0.5rem;">
+                        המשיכי ככה והיי זהירה - האיומים מתגברים!
+                    </p>
+                </div>
+            `;
+            showModal(title, content);
+            setTimeout(closeModal, 6000); // 6 שניות לקרוא את כל המידע
+        }
+        
+        // סיום המשחק
+        function gameOver() {
+            gameState.isGameRunning = false;
+            clearInterval(gameTimer);
+            
+            const title = '💥 המשחק הסתיים!';
+            const content = `
+                <p><strong>אלינוי, העיר נפלה לתוקפים...</strong></p>
+                <p>🎯 רמה סופית: ${gameState.level}</p>
+                <p>💎 נקודות סופיות: ${gameState.score}</p>
+                <p>⏰ זמן משחק: ${Math.floor(gameState.gameTime / 60)} דקות</p>
+                <p>🚨 איומים שטיפלת: ${gameState.threats - activeThreats.length}</p>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button onclick="restartGame()" style="
+                        background: #00d2ff; 
+                        color: #000; 
+                        border: none; 
+                        padding: 1rem 2rem; 
+                        border-radius: 8px; 
+                        cursor: pointer; 
+                        font-weight: bold;
+                    ">🔄 שחקי שוב</button>
+                </div>
+            `;
+            showModal(title, content);
+        }
+        
+        // הפעלה מחדש
+        function restartGame() {
+            closeModal();
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('mainMenu').classList.remove('hidden');
+        }
+        
+        // עדכון ממשק המשחק - עם הצגת זמן עד איום
+        function updateGameUI() {
+            document.getElementById('scoreValue').textContent = gameState.score;
+            document.getElementById('levelValue').textContent = gameState.level;
+            document.getElementById('healthFill').style.width = gameState.health + '%';
+            
+            // עדכון זמן משחק
+            const minutes = Math.floor(gameState.gameTime / 60);
+            const seconds = gameState.gameTime % 60;
+            document.getElementById('timeValue').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // עדכון איומים - או זמן עד איום ראשון
+            if (gameState.threats === 0 && gameState.timeToFirstThreat > 0) {
+                const threatMinutes = Math.floor(gameState.timeToFirstThreat / 60);
+                const threatSeconds = gameState.timeToFirstThreat % 60;
+                document.getElementById('threatsValue').innerHTML = `<span style="color: #00ff88;">עוד ${threatMinutes}:${threatSeconds.toString().padStart(2, '0')}</span>`;
+            } else {
+                document.getElementById('threatsValue').textContent = activeThreats.length;
+            }
+            
+            // שינוי צבע בריאות
+            const healthFill = document.getElementById('healthFill');
+            if (gameState.health > 70) {
+                healthFill.style.background = '#00ff88';
+            } else if (gameState.health > 30) {
+                healthFill.style.background = '#ffaa00';
+            } else {
+                healthFill.style.background = '#ff4444';
+            }
+        }
+        
+        // פתיחת רובע עם הסברים מפורטים למתחילות
+        function openDistrict(districtCode) {
+            const districtNames = {
+                'HKLM': { name: 'רובע הממשלה', icon: '🏛️', fullName: 'HKEY_LOCAL_MACHINE' },
+                'HKCU': { name: 'רובע המגורים', icon: '🏠', fullName: 'HKEY_CURRENT_USER' },
+                'HKCR': { name: 'רובע המסחר', icon: '🏪', fullName: 'HKEY_CLASSES_ROOT' },
+                'HKU': { name: 'כיכר התושבים', icon: '👥', fullName: 'HKEY_USERS' },
+                'HKCC': { name: 'מרכז הבקרה', icon: '⚙️', fullName: 'HKEY_CURRENT_CONFIG' }
+            };
+            
+            const district = districtNames[districtCode];
+            const threatsInDistrict = activeThreats.filter(t => t.district === districtCode);
+            
+            let content = `
+                <p><strong>🔍 אלינוי, בחרת לחקור את ${district.name}!</strong></p>
+                
+                <div style="background: rgba(0,210,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <h3>📍 מיקום ברגיסטרי:</h3>
+                    <p style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; margin: 0.5rem 0;">
+                        ${district.fullName}
+                    </p>
+                    <p style="font-size: 0.9rem; color: #ccc;">
+                        <strong>💡 הסבר:</strong> זה הכתובת המדויקת במאגר המידע של Windows (הרגיסטרי) שבו נשמרות ההגדרות של הרובע הזה.
+                    </p>
+                </div>
+            `;
+            
+            // הצגת איומים פעילים עם הסברים מפורטים
+            if (threatsInDistrict.length > 0) {
+                content += `<h3>🚨 איומים פעילים ברובע:</h3>`;
+                
+                threatsInDistrict.forEach(threat => {
+                    const urgency = threat.timeLeft < 10 ? 'קריטי' : threat.timeLeft < 30 ? 'דחוף' : 'בינוני';
+                    const urgencyColor = threat.timeLeft < 10 ? '#ff4444' : threat.timeLeft < 30 ? '#ffaa00' : '#00ff88';
+                    
+                    content += `
+                        <div style="background: rgba(255,68,68,0.1); border: 2px solid rgba(255,68,68,0.3); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;">
+                            
+                            <!-- כותרת האיום -->
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="font-size: 2rem;">⚠️</div>
+                                <div>
+                                    <h4 style="margin: 0; color: #ff6b6b; font-size: 1.2rem;">${threat.case.name}</h4>
+                                    <p style="margin: 0; font-size: 0.9rem; color: #aaa;">${threat.case.nameExplained}</p>
+                                </div>
+                                <div style="margin-right: auto; text-align: right;">
+                                    <div style="background: ${urgencyColor}; color: #000; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">
+                                        ${urgency}
+                                    </div>
+                                    <div style="font-size: 1.1rem; margin-top: 0.5rem; font-weight: bold;">
+                                        ⏰ ${Math.ceil(threat.timeLeft)} שניות
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- תיאור האיום -->
+                            <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                <p><strong>📝 מה קרה:</strong></p>
+                                <p style="font-size: 1rem; line-height: 1.5;">${threat.case.description}</p>
+                            </div>
+                            
+                            <!-- מיקום ברגיסטרי -->
+                            <div style="margin: 1rem 0;">
+                                <p><strong>📂 מיקום ברגיסטרי:</strong></p>
+                                <div style="font-family: monospace; background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 6px; margin: 0.5rem 0; border-right: 4px solid #00d2ff;">
+                                    ${threat.case.path}
+                                </div>
+                                <p style="font-size: 0.9rem; color: #bbb; background: rgba(0,210,255,0.1); padding: 0.8rem; border-radius: 6px;">
+                                    <strong>💡 הסבר המיקום:</strong> ${threat.case.pathExplained}
+                                </p>
+                            </div>
+                            
+                            <!-- הערך הזדוני -->
+                            <div style="margin: 1rem 0;">
+                                <p><strong>🔍 הערך החשוד שזוהה:</strong></p>
+                                <div style="font-family: monospace; background: rgba(255,68,68,0.2); padding: 1rem; border-radius: 6px; margin: 0.5rem 0; border-right: 4px solid #ff4444; color: #ff6b6b;">
+                                    ${threat.case.malicious}
+                                </div>
+                                
+                                <!-- פירוק הערך החשוד -->
+                                <div style="background: rgba(255,170,0,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <p style="font-weight: bold; margin-bottom: 0.8rem;">🔬 בואי נפרק את הערך הזה:</p>
+                                    
+                                    <div style="margin-bottom: 0.8rem;">
+                                        <span style="background: rgba(255,170,0,0.3); padding: 0.2rem 0.6rem; border-radius: 4px; font-family: monospace;">
+                                            ${threat.case.maliciousBreakdown.name}
+                                        </span>
+                                        <span style="margin-right: 0.5rem;">→</span>
+                                        <span style="font-size: 0.9rem;">${threat.case.maliciousBreakdown.explanation}</span>
+                                    </div>
+                                    
+                                    <div>
+                                        <span style="background: rgba(255,170,0,0.3); padding: 0.2rem 0.6rem; border-radius: 4px; font-family: monospace;">
+                                            ${threat.case.maliciousBreakdown.path}
+                                        </span>
+                                        <span style="margin-right: 0.5rem;">→</span>
+                                        <span style="font-size: 0.9rem;">${threat.case.maliciousBreakdown.pathExplanation}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- למידה על העולם האמיתי -->
+                            <div style="background: rgba(0,255,136,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; border-right: 4px solid #00ff88;">
+                                <p style="font-weight: bold; color: #00ff88; margin-bottom: 0.5rem;">🎓 למידה:</p>
+                                <p style="font-size: 0.95rem; line-height: 1.5;">${threat.case.realWorld}</p>
+                            </div>
+                            
+                            <!-- סכנות אפשריות -->
+                            <div style="background: rgba(255,68,68,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                <p style="font-weight: bold; color: #ff6b6b; margin-bottom: 0.8rem;">⚠️ מה עלול לקרות אם לא נטפל:</p>
+                                <ul style="margin-right: 1rem;">
+                `;
+                
+                threat.case.threats.forEach(threatItem => {
+                    content += `<li style="margin-bottom: 0.3rem; font-size: 0.9rem;">${threatItem}</li>`;
+                });
+                
+                content += `
+                                </ul>
+                            </div>
+                            
+                            <!-- איך לזהות -->
+                            <div style="background: rgba(0,210,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                <p style="font-weight: bold; color: #00d2ff; margin-bottom: 0.5rem;">🔍 איך לזהות בעתיד:</p>
+                                <p style="font-size: 0.9rem;">${threat.case.howToSpot}</p>
+                            </div>
+                            
+                            <!-- כפתור טיפול -->
+                            <div style="text-align: center; margin-top: 1.5rem;">
+                                <button onclick="defuseThreat(${threat.id})" style="
+                                    background: linear-gradient(45deg, #ff4444, #ff6b6b); 
+                                    color: #fff; 
+                                    border: none; 
+                                    padding: 1rem 2rem; 
+                                    border-radius: 12px; 
+                                    cursor: pointer; 
+                                    font-weight: bold;
+                                    font-size: 1.1rem;
+                                    box-shadow: 0 4px 15px rgba(255,68,68,0.4);
+                                    transition: all 0.3s ease;
+                                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                    🛡️ טפלי באיום עכשיו!
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                content += `
+                    <div style="background: rgba(0,255,136,0.1); border: 2px solid rgba(0,255,136,0.3); padding: 1.5rem; border-radius: 12px; margin: 1rem 0; text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                        <p style="font-size: 1.2rem; font-weight: bold; color: #00ff88; margin-bottom: 0.5rem;">הרובע נקי מאיומים!</p>
+                        <p style="font-size: 0.9rem; color: #ccc;">זה הזמן המושלם ללמוד על הרובע הזה ולהכין את עצמך לאיומים עתידיים.</p>
+                    </div>
+                `;
+                
+                // הצגת דוגמאות למידה מהבנק
+                const availableCases = districtCases[districtCode];
+                if (availableCases && availableCases.length > 0) {
+                    const randomCase = availableCases[Math.floor(Math.random() * Math.min(2, availableCases.length))];
+                    
+                    content += `
+                        <h3>📚 דוגמה ללמידה - איומים נפוצים ברובע:</h3>
+                        <div style="background: rgba(0,210,255,0.1); border: 2px solid rgba(0,210,255,0.3); border-radius: 12px; padding: 1.5rem; margin: 1rem 0;">
+                            <h4 style="color: #00d2ff; margin-bottom: 0.5rem;">📋 ${randomCase.name}</h4>
+                            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 1rem;">${randomCase.nameExplained}</p>
+                            
+                            <p style="margin-bottom: 1rem;"><strong>תיאור:</strong> ${randomCase.description}</p>
+                            
+                            <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; margin: 1rem 0;">
+                                <p style="margin-bottom: 0.5rem;"><strong>מיקום:</strong></p>
+                                <div style="font-family: monospace; color: #00d2ff; font-size: 0.9rem;">
+                                    ${randomCase.path}
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(255,170,0,0.1); padding: 1rem; border-radius: 6px; margin: 1rem 0;">
+                                <p style="margin-bottom: 0.5rem;"><strong>דוגמת ערך חשוד:</strong></p>
+                                <div style="font-family: monospace; color: #ffaa00; font-size: 0.9rem; background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 4px;">
+                                    ${randomCase.malicious}
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(0,255,136,0.1); padding: 1rem; border-radius: 6px;">
+                                <p style="color: #00ff88; font-weight: bold; margin-bottom: 0.5rem;">🎓 למידה:</p>
+                                <p style="font-size: 0.9rem;">${randomCase.realWorld}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            showModal(`${district.icon} ${district.name}`, content);
+        }
+        
+        // טיפול באיום עם הסבר מפורט - ללא סגירה אוטומטית
+        function defuseThreat(threatId) {
+            const threatIndex = activeThreats.findIndex(t => t.id === threatId);
+            if (threatIndex === -1) return;
+            
+            const threat = activeThreats[threatIndex];
+            // הורדתי את הנקודות - עכשיו פחות נקודות לאיום
+            const points = threat.severity * 8 + Math.floor(threat.timeLeft / 5); // הורדתי מ-20 ל-8, ומ-/2 ל-/5
+            
+            gameState.score += points;
+            activeThreats.splice(threatIndex, 1);
+            
+            // הסרת התראת האיום מהמסך
+            const alertElement = document.getElementById(`threat-alert-${threatId}`);
+            if (alertElement) {
+                alertElement.remove();
+            }
+            
+            closeModal();
+            
+            // הגדרת הדגל שחלונית למידה פתוחה
+            gameState.isLearningModalOpen = true;
+            
+            const title = '✅ כל הכבוד אלינוי! האיום נוטרל!';
+            const content = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🛡️</div>
+                    <p style="font-size: 1.3rem; font-weight: bold; color: #00ff88;">מצויין! טיפלת בהצלחה באיום!</p>
+                </div>
+                
+                <div style="background: rgba(0,255,136,0.1); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid rgba(0,255,136,0.3);">
+                    <h3 style="color: #00ff88; margin-bottom: 1rem;">🎯 מה עשית בדיוק:</h3>
+                    
+                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p><strong>📋 האיום שנוטרל:</strong></p>
+                        <p style="font-size: 1.1rem; color: #00d2ff;">${threat.case.name}</p>
+                        <p style="font-size: 0.9rem; color: #aaa;">(${threat.case.nameExplained})</p>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p><strong>🔧 איך זה עובד בעולם האמיתי:</strong></p>
+                        <p style="font-size: 0.95rem; line-height: 1.5;">
+                            כשמומחה אבטחת מידע מזהה איום כזה, הוא:
+                        </p>
+                        <ul style="margin-right: 1.5rem; margin-top: 0.8rem;">
+                            <li style="margin-bottom: 0.5rem;">🔍 <strong>מזהה</strong> את הערך החשוד ברגיסטרי</li>
+                            <li style="margin-bottom: 0.5rem;">🗑️ <strong>מוחק</strong> את הערך הזדוני</li>
+                            <li style="margin-bottom: 0.5rem;">🛡️ <strong>סורק</strong> האם יש עוד קבצים זדוניים</li>
+                            <li style="margin-bottom: 0.5rem;">📊 <strong>מתעד</strong> את האירוע לצרכי חקירה</li>
+                            <li style="margin-bottom: 0.5rem;">🔄 <strong>מגבה</strong> רגיסטרי נקי</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(0,210,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p><strong>🎓 מה למדת היום:</strong></p>
+                        <p style="font-size: 0.95rem; line-height: 1.5;">${threat.case.realWorld}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,170,0,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p style="color: #ffaa00; font-weight: bold; margin-bottom: 0.8rem;">💡 כלים שמומחים משתמשים בהם:</p>
+                        <ul style="margin-right: 1.5rem;">
+                            <li style="margin-bottom: 0.3rem;"><strong>Sysmon:</strong> ניטור שינויי רגיסטרי בזמן אמת</li>
+                            <li style="margin-bottom: 0.3rem;"><strong>Process Monitor:</strong> מעקב אחר גישה לרגיסטרי</li>
+                            <li style="margin-bottom: 0.3rem;"><strong>Registry Editor:</strong> עריכה ידנית של ערכי רגיסטרי</li>
+                            <li style="margin-bottom: 0.3rem;"><strong>PowerShell:</strong> סקריפטים לניקוי אוטומטי</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,210,255,0.1); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
+                    <h3 style="color: #00d2ff; margin-bottom: 1rem;">🏆 התוצאות שלך:</h3>
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <div style="font-size: 2rem;">💎</div>
+                            <div style="font-weight: bold; color: #00ff88;">+${points}</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">נקודות</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem;">🎯</div>
+                            <div style="font-weight: bold; color: #00ff88;">${gameState.score}</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">סך נקודות</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem;">⏱️</div>
+                            <div style="font-weight: bold; color: #00ff88;">${Math.ceil(threat.timeLeft)}</div>
+                            <div style="font-size: 0.9rem; color: #aaa;">שניות נותרו</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="font-size: 1.1rem; color: #00ff88; font-weight: bold;">
+                        🌟 מצויין! את הולכת להיות מומחית אבטחת מידע נהדרת!
+                    </p>
+                    <p style="font-size: 0.9rem; color: #aaa; margin-top: 0.5rem;">
+                        קחי את הזמן שלך לקרוא - האיום הבא ימתין לך בסבלנות
+                    </p>
+                </div>
+            `;
+            
+            showModal(title, content);
+            // הסרת הסגירה האוטומטית - החלונית תישאר פתוחה עד שאלינוי תסגור
+            
+            updateGameUI();
+            updateDistrictStatuses();
+        }
+        
+        // פתיחת מרכז האבטחה
+        function openSecurityCenter() {
+            const title = '🚨 מרכז ההתראות';
+            
+            let healthStatus = gameState.health > 70 ? 'העיר בטוחה' : 
+                              gameState.health > 30 ? 'העיר בסיכון בינוני' : 'העיר בסכנה חמורה!';
+            
+            let content = `
+                <p><strong>ברוכה הבאה למרכז ביטחון העיר, אלינוי!</strong></p>
+                
+                <h3>📊 סטטוס כללי:</h3>
+                <div style="background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <p><strong>${healthStatus}</strong></p>
+                    <p>🛡️ בריאות העיר: ${gameState.health}%</p>
+                    <p>⏰ זמן משחק: ${Math.floor(gameState.gameTime / 60)}:${(gameState.gameTime % 60).toString().padStart(2, '0')}</p>
+                    <p>🎯 רמה נוכחית: ${gameState.level}</p>
+                    <p>🚨 איומים פעילים: ${activeThreats.length}</p>
+                </div>
+            `;
+            
+            if (activeThreats.length > 0) {
+                content += `<h3>⚠️ התראות פעילות:</h3>`;
+                
+                activeThreats.forEach(threat => {
+                    const urgencyText = threat.timeLeft < 5 ? '🔴 קריטי' : 
+                                      threat.timeLeft < 10 ? '🟡 דחוף' : '🟢 בינוני';
+                    
+                    content += `
+                        <div style="background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.3); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                            <p><strong>${urgencyText}: ${threat.case.name}</strong></p>
+                            <p>רובע: ${threat.district} | זמן נותר: ${Math.ceil(threat.timeLeft)} שניות</p>
+                            <button onclick="closeModal(); openDistrict('${threat.district}')" style="
+                                background: #00d2ff; color: #000; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-top: 0.5rem;
+                            ">🔍 חקרי רובע</button>
+                        </div>
+                    `;
+                });
+            } else {
+                content += `
+                    <div style="background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p>🟢 <strong>אין איומים פעילים כרגע</strong></p>
+                        <p>המשיכי לעקוב - איומים חדשים עלולים להופיע בכל רגע!</p>
+                    </div>
+                `;
+            }
+            
+            content += `
+                <h3>📈 סטטיסטיקות המשחק:</h3>
+                <ul>
+                    <li>🎯 איומים שטיפלת: ${gameState.threats - activeThreats.length}</li>
+                    <li>💎 נקודות שצברת: ${gameState.score}</li>
+                    <li>🛡️ שיעור הצלחה: ${Math.floor(((gameState.threats - activeThreats.length) / Math.max(gameState.threats, 1)) * 100)}%</li>
+                </ul>
+            `;
+            
+            showModal(title, content);
+        }
+        
+        // הצגת מדריך
+        function showTutorial() {
+            const title = '🎓 מדריך למתחילות - Registry City';
+            const content = `
+                <h3>🤔 אלינוי, מה זה רגיסטרי Windows?</h3>
+                <p>דמייני שהמחשב שלך הוא עיר ענקית, והרגיסטרי הוא <strong>מרכז הבקרה</strong> שמנהל את כל העיר.</p>
+                
+                <h3>🏙️ 5 רובעי העיר שלך:</h3>
+                
+                <p><strong>🏛️ רובע הממשלה (HKEY_LOCAL_MACHINE)</strong><br>
+                כמו עיריית העיר - מנהל את כל השירותים שחלים על כולם.</p>
+                
+                <p><strong>🏠 רובע המגורים (HKEY_CURRENT_USER)</strong><br>
+                הבתים הפרטיים - ההגדרות האישיות של המשתמש.</p>
+                
+                <p><strong>🏪 רובע המסחר (HKEY_CLASSES_ROOT)</strong><br>
+                המרכז המסחרי - קובע איך קבצים נפתחים.</p>
+                
+                <p><strong>👥 כיכר התושבים (HKEY_USERS)</strong><br>
+                כל המשתמשים במערכת.</p>
+                
+                <p><strong>⚙️ מרכז הבקרה (HKEY_CURRENT_CONFIG)</strong><br>
+                ההגדרות הנוכחיות של החומרה.</p>
+                
+                <h3>🎮 איך לשחק:</h3>
+                <ul>
+                    <li>עקבי אחר האיומים שמופיעים ברובעים</li>
+                    <li>לחצי על רובעים כדי לחקור איומים</li>
+                    <li>טפלי באיומים לפני שגורמים נזק</li>
+                    <li>למדי על סייבר אמיתי מכל מקרה!</li>
+                </ul>
+            `;
+            showModal(title, content);
+        }
+        
+        // אודות המשחק
+        function showAbout() {
+            const title = '🎮 Registry City - אודות המשחק';
+            const content = `
+                <h3>💡 מה זה Registry City?</h3>
+                <p>משחק חינוכי מתקדם שמלמד <strong>אבטחת מידע ורגיסטרי Windows</strong> בצורה אינטראקטיבית. מיועד במיוחד עבור אלינוי שבע!</p>
+                
+                <h3>🎯 מה תלמדי במשחק?</h3>
+                <ul>
+                    <li><strong>מבנה הרגיסטרי</strong> - איך Windows עובד מבפנים</li>
+                    <li><strong>טכניקות התקפה אמיתיות</strong> - Registry Persistence, Browser Hijacking ועוד</li>
+                    <li><strong>שיטות הגנה</strong> - כלים כמו Sysmon, Registry monitoring</li>
+                    <li><strong>מקרי בוחן אמיתיים</strong> - המבוססים על איומים מהעולם האמיתי</li>
+                </ul>
+                
+                <h3>🔥 מה חדש במשחק:</h3>
+                <ul>
+                    <li>🎲 <strong>מקרים רנדומיים</strong> - בכל משחק מקרים שונים</li>
+                    <li>⏰ <strong>זמן אמת</strong> - איומים מופיעים כל הזמן</li>
+                    <li>📚 <strong>למידה מעשית</strong> - כל מקרה מלמד משהו חדש</li>
+                    <li>🎯 <strong>אתגר אמיתי</strong> - בריאות העיר יורדת אם לא מטפלים</li>
+                </ul>
+                
+                <p><strong>🚀 המשחק מפותח במיוחד עבורך, אלינוי!</strong></p>
+            `;
+            showModal(title, content);
+        }
+        
+        // האזנה למקלדת
+        document.addEventListener('keydown', function(event) {
+            const modal = document.getElementById('modalOverlay');
+            if (modal && !modal.classList.contains('hidden')) {
+                if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    closeModal();
+                }
+            }
+        });
+        
+        // סגירת המודל בלחיצה על הרקע
+        document.getElementById('modalOverlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+        
+        // אתחול המשחק
+        window.onload = function() {
+            createStars();
+            console.log('Registry City Game Loaded Successfully! 🎮');
+            console.log('Game created especially for Elonay! 💝');
+            console.log('Window size:', window.innerWidth, 'x', window.innerHeight);
+            console.log('Screen size:', screen.width, 'x', screen.height);
+            console.log('User agent:', navigator.userAgent);
+            
+            // וידוא שהתפריט הראשי נראה
+            const mainMenu = document.getElementById('mainMenu');
+            console.log('Main menu display:', getComputedStyle(mainMenu).display);
+            console.log('Main menu visibility:', getComputedStyle(mainMenu).visibility);
+        };
+    </script>
+</body>
+</html>

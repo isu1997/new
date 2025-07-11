@@ -323,7 +323,15 @@ const playCenterProjects = [
         image: "homePage/images/snake-evolution.png",
         link: "homePage/project.html?project=snake-evolution",
         tech: ["html", "css", "scss", "js"]
-    }
+    },
+{
+    id: 'registryCity',
+    title: "Registry City",
+    description: "A modern city registry system that allows you to manage and search for city records efficiently.",
+    image: "homePage/images/registryCity.png",
+    link: "homePage/project.html?project=registryCity",
+    tech: ["html", "css", "js"]
+}
 ];
 
 // Project card generator - Creates HTML for project display
